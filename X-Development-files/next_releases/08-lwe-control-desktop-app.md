@@ -33,7 +33,14 @@ cargo check --manifest-path desktop/lwe-control/src-tauri/Cargo.toml
 npm run lwe:control-desktop:build
 ```
 
-Belangrijk: dit is nog ontwikkel-/testfunctionaliteit in Core. De desktop-app wordt nog niet automatisch naar bestaande projecten uitgerold via `lwe:update-install`.
+Belangrijk: dit is nog MVP-functionaliteit. De bronbestanden mogen met projecten meekomen via `lwe:update-install`, maar er wordt nog geen kant-en-klare eindgebruikersapp of installer gebouwd.
+
+## Release 0.2.33
+
+Release-fix:
+
+- `lwe:update` voegt nu ook de `lwe:control-desktop:*` scripts toe aan project `package.json`.
+- Het Tauri MVP-icoon is opnieuw geschreven als echte RGBA PNG zodat release-builds niet crashen.
 
 ## Gewenste UX
 

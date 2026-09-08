@@ -117,6 +117,7 @@ function listFilesRecursive(dirRel, options = {}) {
   const files = [];
   function walk(currentDir) {
     for (const entry of fs.readdirSync(currentDir, { withFileTypes: true })) {
+      if (entry.name === ".DS_Store") continue;
       const absolute = path.join(currentDir, entry.name);
       const relative = path.relative(sourceRoot, absolute);
       if (ignored.some((pattern) => relative === pattern || relative.startsWith(`${pattern}/`))) {
@@ -335,6 +336,9 @@ function scriptUpdates(runtime) {
     "lwe:update": `node ${runtime.update}`,
     "lwe:update-check": `node ${runtime.updateCheck}`,
     "lwe:update-install": `node ${runtime.updateInstall}`,
+    "lwe:control-desktop:install": "npm --prefix desktop/lwe-control install",
+    "lwe:control-desktop:dev": "npm --prefix desktop/lwe-control run tauri:dev",
+    "lwe:control-desktop:build": "npm --prefix desktop/lwe-control run tauri:build",
     "lwe:guard": `node ${runtime.next} --guard=build`,
     "lwe:audit": `node ${runtime.next}`,
   };

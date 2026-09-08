@@ -284,7 +284,7 @@ Gebruik voor bestaande LWE-projecten liever de update-tool dan `install-lcb.js -
 
 ## LWE Control Desktop MVP
 
-LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`.
+LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`. Vanaf `0.2.33` voegt de updater ook de bijbehorende npm-scripts toe aan projecten.
 
 Deze app is bedoeld als toekomstige eenvoudige starter voor websitebeheerders:
 
