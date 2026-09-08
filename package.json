@@ -20,7 +20,10 @@
     "lwe:publish-check": "node scripts/lwe-publish-check.js",
     "lwe:update": "node scripts/lwe-update.js",
     "lwe:update-check": "node scripts/lwe-update-check.js",
-    "lwe:update-install": "node scripts/lwe-update-install.js"
+    "lwe:update-install": "node scripts/lwe-update-install.js",
+    "lwe:control-desktop:install": "npm --prefix desktop/lwe-control install",
+    "lwe:control-desktop:dev": "npm --prefix desktop/lwe-control run tauri:dev",
+    "lwe:control-desktop:build": "npm --prefix desktop/lwe-control run tauri:build"
   },
   "keywords": [],
   "author": "",

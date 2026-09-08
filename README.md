@@ -282,6 +282,29 @@ Bij bestaande projecten geldt: installatie maakt de Local Website Editor beschik
 
 Gebruik voor bestaande LWE-projecten liever de update-tool dan `install-lcb.js --force`.
 
+## LWE Control Desktop MVP
+
+LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`.
+
+Deze app is bedoeld als toekomstige eenvoudige starter voor websitebeheerders:
+
+- lokale LWE-server starten;
+- lokale LWE-server stoppen;
+- website, web editor en manual openen;
+- serverstatus en poort begrijpelijk tonen.
+
+De MVP start nu nog de lokale Node-server in een bestaande LWE-projectmap. De latere eindgebruikersversie moet Node als sidecar meeleveren en als echte macOS/Windows app worden verpakt.
+
+Ontwikkelcommando's:
+
+```bash
+npm run lwe:control-desktop:install
+npm run lwe:control-desktop:dev
+npm run lwe:control-desktop:build
+```
+
+Deze desktop-MVP mag vanaf deze versie met projecten meekomen bij `npm run lwe:update-install`. Alleen de bronbestanden worden uitgerold; `node_modules/`, `dist/`, Tauri `target/` en andere build-output blijven uitgesloten.
+
 ### Update Via GitHub Releases
 
 De gewenste standaard is: LWE Core wordt als stabiele GitHub Release gepubliceerd. Een project controleert dan zelf of er een nieuwere release is:

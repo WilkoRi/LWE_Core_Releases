@@ -79,9 +79,16 @@ function plannedFileContent(sourceRel, targetRel, runtime) {
   return content;
 }
 
+function isBinaryFile(relativePath) {
+  return /\.(png|jpe?g|gif|webp|ico|icns|vsix|zip|gz|tar)$/i.test(relativePath);
+}
+
 function samePlannedFile(sourceRel, targetRel, runtime) {
   const target = path.join(targetDir, targetRel);
   if (!fs.existsSync(target)) return false;
+  if (isBinaryFile(sourceRel) || isBinaryFile(targetRel)) {
+    return fs.readFileSync(path.join(sourceRoot, sourceRel)).equals(fs.readFileSync(target));
+  }
   return plannedFileContent(sourceRel, targetRel, runtime) === fs.readFileSync(target, "utf8");
 }
 
@@ -100,6 +107,30 @@ function listFiles(dirRel) {
     .filter((entry) => entry.isFile())
     .map((entry) => path.join(dirRel, entry.name))
     .sort();
+}
+
+function listFilesRecursive(dirRel, options = {}) {
+  const dir = path.join(sourceRoot, dirRel);
+  const ignored = options.ignored || [];
+  if (!fs.existsSync(dir)) return [];
+
+  const files = [];
+  function walk(currentDir) {
+    for (const entry of fs.readdirSync(currentDir, { withFileTypes: true })) {
+      const absolute = path.join(currentDir, entry.name);
+      const relative = path.relative(sourceRoot, absolute);
+      if (ignored.some((pattern) => relative === pattern || relative.startsWith(`${pattern}/`))) {
+        continue;
+      }
+      if (entry.isDirectory()) {
+        walk(absolute);
+      } else if (entry.isFile()) {
+        files.push(relative);
+      }
+    }
+  }
+  walk(dir);
+  return files.sort();
 }
 
 function latestLweControlVsix() {
@@ -251,6 +282,14 @@ function buildFilePlan(runtime) {
     ["MANUAL.de.md", "MANUAL.de.md"],
     ...listFiles("manual_images").map((file) => [file, file]),
     ...listFiles("lcb-context").map((file) => [file, file]),
+    ...listFilesRecursive("desktop/lwe-control", {
+      ignored: [
+        "desktop/lwe-control/dist",
+        "desktop/lwe-control/node_modules",
+        "desktop/lwe-control/src-tauri/gen",
+        "desktop/lwe-control/src-tauri/target",
+      ],
+    }).map((file) => [file, file]),
   ];
 
   if (readEleventyInputMode() === "src" || fs.existsSync(path.join(targetDir, "src", "assets"))) {
@@ -275,7 +314,11 @@ function writePlannedFile(sourceRel, targetRel, runtime) {
   const target = path.join(targetDir, targetRel);
   backupExisting(targetRel);
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, plannedFileContent(sourceRel, targetRel, runtime));
+  if (isBinaryFile(sourceRel) || isBinaryFile(targetRel)) {
+    fs.copyFileSync(path.join(sourceRoot, sourceRel), target);
+  } else {
+    fs.writeFileSync(target, plannedFileContent(sourceRel, targetRel, runtime));
+  }
 }
 
 function scriptUpdates(runtime) {
@@ -494,8 +537,9 @@ console.log("Wil je alleen kijken naar de bestaande _site? Gebruik dan:");
 console.log("npm run lcb:preview-only");
 if (!jsonReadySignals) {
   console.log("");
-  console.log("Let op: dit project lijkt nog niet volledig JSON-ready.");
-  console.log("De update vernieuwt LWE-runtime en procescontrole, maar migreert websitecontent niet automatisch naar JSON.");
+  console.log("Let op: dit project gebruikt geen standaard src/_data LWE-startersstructuur.");
+  console.log("De update vernieuwt LWE-runtime en procescontrole, maar zet bestaande websitecontent niet automatisch om naar bewerkbare JSON.");
+  console.log("Als de site al LWE-editpaden heeft, blijven die gewoon werken.");
 }
 if (!calendarFilterRegistered) {
   console.log("");

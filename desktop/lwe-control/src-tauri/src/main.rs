@@ -1,0 +1,313 @@
+use serde::Serialize;
+use std::net::{SocketAddr, TcpStream};
+use std::path::{Path, PathBuf};
+use std::process::{Child, Command, Stdio};
+use std::sync::Mutex;
+use std::time::Duration;
+use tauri::Manager;
+
+#[derive(Default)]
+struct AppState {
+    child: Option<Child>,
+}
+
+#[derive(Serialize)]
+struct ControlStatus {
+    project_dir: String,
+    port: u16,
+    running: bool,
+    managed: bool,
+    website_url: String,
+    editor_url: String,
+    manual_url: String,
+}
+
+fn looks_like_lwe_project(path: &Path) -> bool {
+    path.join("package.json").exists()
+        && (path.join("lcb.config.json").exists()
+            || path.join("server.js").exists()
+            || path.join("lcb-server.js").exists())
+}
+
+fn find_lwe_project_from(start: &Path) -> Option<PathBuf> {
+    let mut current = if start.is_file() {
+        start.parent()?
+    } else {
+        start
+    };
+
+    loop {
+        if looks_like_lwe_project(current) {
+            return Some(current.to_path_buf());
+        }
+
+        current = current.parent()?;
+    }
+}
+
+fn project_dir() -> Result<PathBuf, String> {
+    let exe = std::env::current_exe().map_err(|error| error.to_string())?;
+
+    if cfg!(target_os = "macos") {
+        let mut current = exe.as_path();
+        while let Some(parent) = current.parent() {
+            if parent.extension().is_some_and(|extension| extension == "app") {
+                if let Some(project) = parent.parent().and_then(find_lwe_project_from) {
+                    return Ok(project);
+                }
+
+                return parent.parent().map(Path::to_path_buf).ok_or_else(|| {
+                    "Projectmap naast LWE Control.app niet gevonden.".to_string()
+                });
+            }
+            current = parent;
+        }
+    }
+
+    if let Some(project) = find_lwe_project_from(&exe) {
+        return Ok(project);
+    }
+
+    if let Ok(current_dir) = std::env::current_dir() {
+        if let Some(project) = find_lwe_project_from(&current_dir) {
+            return Ok(project);
+        }
+    }
+
+    std::env::current_dir().map_err(|error| error.to_string())
+}
+
+fn configured_port(project_dir: &Path) -> u16 {
+    let config_path = project_dir.join("lcb.config.json");
+    let Ok(text) = std::fs::read_to_string(config_path) else {
+        return 8082;
+    };
+    let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) else {
+        return 8082;
+    };
+
+    json.get("port")
+        .and_then(serde_json::Value::as_u64)
+        .and_then(|value| u16::try_from(value).ok())
+        .unwrap_or(8082)
+}
+
+fn server_script(project_dir: &Path) -> Result<&'static str, String> {
+    if project_dir.join("server.js").exists() {
+        return Ok("server.js");
+    }
+
+    if project_dir.join("lcb-server.js").exists() {
+        return Ok("lcb-server.js");
+    }
+
+    Err("Geen LWE serverbestand gevonden: server.js of lcb-server.js ontbreekt.".to_string())
+}
+
+fn child_is_running(app_state: &mut AppState) -> bool {
+    let Some(child) = app_state.child.as_mut() else {
+        return false;
+    };
+
+    match child.try_wait() {
+        Ok(Some(_)) => {
+            app_state.child = None;
+            false
+        }
+        Ok(None) => true,
+        Err(_) => {
+            app_state.child = None;
+            false
+        }
+    }
+}
+
+fn port_is_open(port: u16) -> bool {
+    let address = SocketAddr::from(([127, 0, 0, 1], port));
+    TcpStream::connect_timeout(&address, Duration::from_millis(250)).is_ok()
+}
+
+fn status_from_state(state: &Mutex<AppState>) -> Result<ControlStatus, String> {
+    let project = project_dir()?;
+    let port = configured_port(&project);
+    let mut app_state = state
+        .lock()
+        .map_err(|_| "Serverstatus kon niet worden gelezen.".to_string())?;
+    let managed = child_is_running(&mut app_state);
+    let running = managed || port_is_open(port);
+
+    Ok(ControlStatus {
+        project_dir: project.display().to_string(),
+        port,
+        running,
+        managed,
+        website_url: format!("http://127.0.0.1:{port}/"),
+        editor_url: format!("http://127.0.0.1:{port}/__lcb/"),
+        manual_url: format!("http://127.0.0.1:{port}/manual/"),
+    })
+}
+
+fn stop_child(app_state: &mut AppState) {
+    if let Some(mut child) = app_state.child.take() {
+        let _ = child.kill();
+        let _ = child.wait();
+    }
+}
+
+fn open_url(url: &str) -> Result<(), String> {
+    let mut command = if cfg!(target_os = "macos") {
+        let mut command = Command::new("open");
+        command.arg(url);
+        command
+    } else if cfg!(target_os = "windows") {
+        let mut command = Command::new("cmd");
+        command.args(["/C", "start", "", url]);
+        command
+    } else {
+        let mut command = Command::new("xdg-open");
+        command.arg(url);
+        command
+    };
+
+    command.spawn().map_err(|error| error.to_string())?;
+    Ok(())
+}
+
+#[tauri::command]
+fn get_status(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    status_from_state(&state)
+}
+
+#[tauri::command]
+fn start_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    {
+        let mut app_state = state
+            .lock()
+            .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
+
+        if !child_is_running(&mut app_state) {
+            let project = project_dir()?;
+            let port = configured_port(&project);
+            if port_is_open(port) {
+                return Err(format!(
+                    "Poort {port} is al actief. Waarschijnlijk draait LWE al buiten deze app. Gebruik die server, of stop hem eerst via de terminal."
+                ));
+            }
+
+            let script = server_script(&project)?;
+            let child = Command::new("node")
+                .arg(script)
+                .current_dir(&project)
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .spawn()
+                .map_err(|error| format!("LWE-server starten mislukt: {error}"))?;
+
+            app_state.child = Some(child);
+        }
+    }
+
+    status_from_state(&state)
+}
+
+#[tauri::command]
+fn stop_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    {
+        let mut app_state = state
+            .lock()
+            .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
+
+        if child_is_running(&mut app_state) {
+            stop_child(&mut app_state);
+        }
+    }
+
+    status_from_state(&state)
+}
+
+#[tauri::command]
+fn restart_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    {
+        let mut app_state = state
+            .lock()
+            .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
+
+        let project = project_dir()?;
+        let port = configured_port(&project);
+
+        if child_is_running(&mut app_state) {
+            stop_child(&mut app_state);
+        } else if port_is_open(port) {
+            return Err(format!(
+                "Poort {port} is al actief, maar deze server is niet door LWE Control gestart. Stop die eerst voordat je herstart."
+            ));
+        }
+
+        let script = server_script(&project)?;
+        let child = Command::new("node")
+            .arg(script)
+            .current_dir(&project)
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .map_err(|error| format!("LWE-server herstarten mislukt: {error}"))?;
+
+        app_state.child = Some(child);
+    }
+
+    status_from_state(&state)
+}
+
+#[tauri::command]
+fn open_website(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state)?;
+    open_url(&status.website_url)?;
+    Ok(status)
+}
+
+#[tauri::command]
+fn open_editor(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state)?;
+    open_url(&status.editor_url)?;
+    Ok(status)
+}
+
+#[tauri::command]
+fn open_manual(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state)?;
+    open_url(&status.manual_url)?;
+    Ok(status)
+}
+
+#[tauri::command]
+fn quit_app(app: tauri::AppHandle, state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+    let status = stop_server(state)?;
+    app.exit(0);
+    Ok(status)
+}
+
+fn main() {
+    tauri::Builder::default()
+        .manage(Mutex::new(AppState::default()))
+        .invoke_handler(tauri::generate_handler![
+            get_status,
+            start_server,
+            stop_server,
+            restart_server,
+            open_website,
+            open_editor,
+            open_manual,
+            quit_app
+        ])
+        .on_window_event(|window, event| {
+            if matches!(event, tauri::WindowEvent::CloseRequested { .. }) {
+                if let Some(state) = window.try_state::<Mutex<AppState>>() {
+                    if let Ok(mut app_state) = state.lock() {
+                        stop_child(&mut app_state);
+                    }
+                }
+            }
+        })
+        .run(tauri::generate_context!())
+        .expect("error while running LWE Control");
+}
