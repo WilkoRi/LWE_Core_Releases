@@ -1,0 +1,129 @@
+{
+  "phase": "build",
+  "projectType": "prototype, documentatie en demo-website",
+  "languageMode": "multi-language",
+  "userApprovedBuild": true,
+  "contextRead": false,
+  "projectInputInventoried": false,
+  "websiteIntakeChecked": true,
+  "demoContentChecked": false,
+  "navFooterChecked": false,
+  "seoChecked": false,
+  "assetsChecked": false,
+  "lweGuardSnapshot": {
+    "createdAt": "2026-09-08T11:50:57.005Z",
+    "phase": "build",
+    "files": {
+      ".eleventy.js": {
+        "size": 2261,
+        "hash": "03168d3fdc63dbe36f228ea06d1bb6e8f4edf989"
+      },
+      "lcb.config.json": {
+        "size": 263,
+        "hash": "8742e48ffd03a92a0fb9c88f80e0b3bd849026e3"
+      },
+      "lcb/editor.js": {
+        "size": 23687,
+        "hash": "eb5524efa33886b5c5b699bd6407305624c75cdb"
+      },
+      "lcb/lcb-editor.css": {
+        "size": 5515,
+        "hash": "0d48cb70703a6b9205157eb1eb0a9a8da6536cc6"
+      },
+      "package.json": {
+        "size": 1207,
+        "hash": "c4b41f0d1dd3390f41ce33ce9c2e415dc7eff889"
+      },
+      "scripts/lwe-approve-build.js": {
+        "size": 2648,
+        "hash": "65ea4224da277c58888256c837928294f8bb17de"
+      },
+      "scripts/lwe-images.js": {
+        "size": 10869,
+        "hash": "0efa8a5eb4ef52d07673814b849885e7ba0ef3c0"
+      },
+      "scripts/lwe-next.js": {
+        "size": 47051,
+        "hash": "bef0975fb81f186455110d811639b288787dd515"
+      },
+      "scripts/lwe-publish-check.js": {
+        "size": 3804,
+        "hash": "ac8e9c5eed96c47d2e027c5762956caabd62454f"
+      },
+      "scripts/lwe-reset.js": {
+        "size": 1582,
+        "hash": "56dddd02a5c378d8b824bffd7f41f174ca1b74db"
+      },
+      "scripts/lwe-rules.js": {
+        "size": 5718,
+        "hash": "5f950ec4a483a5a52f2b7548f3ab24fa1be53039"
+      },
+      "scripts/lwe-update-check.js": {
+        "size": 4506,
+        "hash": "e1aed2b5a6370f18cef1b80d4bac4476aa78657c"
+      },
+      "scripts/lwe-update-install.js": {
+        "size": 5688,
+        "hash": "cb4fa31bb72b552f3f6ce04c6f871239c5e17476"
+      },
+      "scripts/lwe-update.js": {
+        "size": 19214,
+        "hash": "62d8609236bbe853e2b237cfd5a566b15a4b422a"
+      },
+      "server.js": {
+        "size": 27508,
+        "hash": "889b300853698f5cb4f593160e5a547cd2855884"
+      },
+      "src/_data/content.json": {
+        "size": 9997,
+        "hash": "ec916b2f5c2d8d9987a0fbb7ae752c91a92afc04"
+      },
+      "src/_data/routes.json": {
+        "size": 124,
+        "hash": "d7a5471bcc1995ec2330c1936a0291f7ccfe01ed"
+      },
+      "src/assets/editor.js": {
+        "size": 8513,
+        "hash": "6169ffabd08a4b8ceba23b1fdc290a31e7e4e566"
+      },
+      "src/assets/lcb-editor.css": {
+        "size": 2716,
+        "hash": "ff4d7e841f68cdec2638abb69260af7ff0fb6e6a"
+      },
+      "src/assets/social-preview.svg": {
+        "size": 874,
+        "hash": "efba21cdb97409c8eb1128b25c51184fb88a3467"
+      },
+      "src/assets/styles.css": {
+        "size": 7765,
+        "hash": "a38dd15e706aafaf3f62067e71c6d759ecf677fe"
+      },
+      "src/assets/system-calendar.js": {
+        "size": 2553,
+        "hash": "0d924b82e53ef1f45ff8f42b6f990187f1bdca24"
+      },
+      "src/assets/system.css": {
+        "size": 446,
+        "hash": "857f92422682ee6102211cd29ba9c9b4964ae241"
+      },
+      "src/index.njk": {
+        "size": 8804,
+        "hash": "74876dc8ee8156021c82dd40e015d2aa97c57f2a"
+      },
+      "src/manual.njk": {
+        "size": 1802,
+        "hash": "f54d3671d49edd9eb7b4e1e123f1cc7d7feb9f54"
+      }
+    }
+  },
+  "resetAt": "2026-09-02T12:07:17.728Z",
+  "resetReason": "Gebruiker wil intake of scope opnieuw bekijken.",
+  "_lwe": {
+    "owner": "LWE process engine",
+    "machineOwned": true,
+    "updatedBy": "lwe:next",
+    "updatedAt": "2026-09-08T11:50:57.006Z",
+    "signature": "ddb2789edc8c882cee8a8fb61b6cbc34e53dbc9cd73c51de4fb4dec35fee2843"
+  },
+  "approvedAt": "2026-09-04T19:37:18.572Z"
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "releaseChannel": "stable",
+  "versionFile": "lwe-process/version.json",
+  "managedFiles": [
+    "server.js",
+    "lcb/editor.js",
+    "lcb/lcb-editor.css",
+    "scripts/lwe-next.js",
+    "scripts/lwe-approve-build.js",
+    "scripts/lwe-reset.js",
+    "scripts/lwe-images.js",
+    "scripts/lwe-publish-check.js",
+    "scripts/lwe-rules.js",
+    "scripts/lwe-update.js",
+    "scripts/lwe-update-check.js",
+    "scripts/lwe-update-install.js",
+    "lwe-image.config.json",
+    "lwe-release-manifest.json",
+    "lwe-process/process.json",
+    "lwe-process/version.json",
+    "lwe/filters/calendar.js",
+    "lwe/filters/text.cjs",
+    "LCB-AI-INSTRUCTIES.md",
+    "AI_START_HERE.md",
+    "MANUAL.md",
+    "MANUAL.en.md",
+    "MANUAL.de.md",
+    "manual_images/*",
+    "lcb-context/*",
+    "src/assets/system.css",
+    "src/assets/system-calendar.js",
+    ".vscode/extensions/*"
+  ],
+  "mergeOnly": [
+    "package.json",
+    "lcb.config.json",
+    ".eleventyignore",
+    ".vscode/extensions.json"
+  ],
+  "neverOverwrite": [
+    "src/_data/**",
+    "src/**/*.njk",
+    "src/**/*.html",
+    "src/assets/styles.css",
+    "_includes/**",
+    "_data/**",
+    "assets/css/**",
+    "project-input/**",
+    "lwe-process/state.json",
+    ".env",
+    ".htaccess"
+  ],
+  "notes": [
+    "Projectcontent en projectspecifieke templates worden niet automatisch overschreven.",
+    "Gebruik alleen GitHub Releases; nooit rechtstreeks main.",
+    "Maak altijd een backup voordat bestanden worden vervangen."
+  ]
+}

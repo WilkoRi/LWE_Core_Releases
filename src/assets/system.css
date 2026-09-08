@@ -1,0 +1,25 @@
+/*
+  Project system CSS.
+  This file is published with the website and contains small rendering
+  agreements that should be available before project-specific CSS loads.
+*/
+
+.text-block {
+  white-space: pre-line;
+}
+
+img[data-image-ratio] {
+  object-fit: cover;
+}
+
+img[data-image-ratio="landscape"] {
+  aspect-ratio: 16 / 10;
+}
+
+img[data-image-ratio="square"] {
+  aspect-ratio: 1 / 1;
+}
+
+img[data-image-ratio="portrait"] {
+  aspect-ratio: 3 / 4;
+}

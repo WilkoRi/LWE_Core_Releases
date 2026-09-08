@@ -1,0 +1,96 @@
+{
+  "name": "Local Website Editor process",
+  "version": "0.1.0",
+  "phases": {
+    "intake": {
+      "description": "Vul en controleer project-input/website-intake.json. Lees context en project-input. Nog geen websitebestanden aanpassen.",
+      "allowedActions": [
+        "read_context",
+        "inspect_project_input",
+        "inspect_existing_site",
+        "summarize",
+        "ask_user"
+      ],
+      "blockedActions": [
+        "edit_files",
+        "build_site",
+        "rewrite_content",
+        "create_pages"
+      ],
+      "requiredBeforeNext": [
+        "context_read",
+        "project_input_inventoried",
+        "website_intake_checked",
+        "language_choice_proposed",
+        "demo_content_checked",
+        "nav_footer_plan",
+        "seo_plan",
+        "asset_review"
+      ]
+    },
+    "proposal": {
+      "description": "Maak pas na complete intake een voorstel en vraag akkoord. Nog geen websitebestanden aanpassen.",
+      "allowedActions": [
+        "summarize",
+        "propose_information_architecture",
+        "classify_content_system",
+        "ask_user"
+      ],
+      "blockedActions": [
+        "edit_files",
+        "build_site",
+        "rewrite_content",
+        "create_pages"
+      ],
+      "requiredBeforeNext": [
+        "user_approved_build"
+      ]
+    },
+    "build": {
+      "description": "Bouw of wijzig pas na akkoord.",
+      "allowedActions": [
+        "edit_json",
+        "edit_templates",
+        "edit_css",
+        "build_site",
+        "run_checks"
+      ],
+      "blockedActions": [
+        "skip_validation",
+        "leave_demo_content_unchecked",
+        "ignore_intake_colors_logo_or_social_media",
+        "break_nav_data_template_contract",
+        "break_language_route_relation",
+        "use_unchecked_or_unapproved_images"
+      ],
+      "requiredBeforeNext": [
+        "build_succeeds",
+        "lcb_server_started",
+        "website_url_shown",
+        "editor_url_shown",
+        "preview_offered_in_vscode_when_available",
+        "lwe_check_succeeds",
+        "nav_data_template_contract_checked",
+        "language_route_relations_checked",
+        "image_asset_selection_checked",
+        "intake_visuals_and_channels_checked",
+        "user_review"
+      ]
+    },
+    "review": {
+      "description": "Controleer resultaat met gebruiker en los feedback gericht op.",
+      "allowedActions": [
+        "run_checks",
+        "summarize_changes",
+        "fix_reported_issues",
+        "ask_user"
+      ],
+      "blockedActions": [
+        "start_new_scope_without_intake"
+      ],
+      "requiredBeforeNext": [
+        "user_accepts_result"
+      ]
+    }
+  }
+}

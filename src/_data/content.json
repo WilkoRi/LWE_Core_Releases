@@ -1,0 +1,255 @@
+{
+  "languages": [
+    {
+      "code": "nl",
+      "label": "NL",
+      "name": "Nederlands"
+    },
+    {
+      "code": "en",
+      "label": "EN",
+      "name": "English"
+    },
+    {
+      "code": "de",
+      "label": "DE",
+      "name": "Deutsch"
+    }
+  ],
+  "meta": {
+    "siteUrl": "http://127.0.0.1:8082",
+    "defaultImage": "/assets/social-preview.svg",
+    "title": {
+      "nl": "Local Website Editor",
+      "en": "Local Website Editor",
+      "de": "Local Website Editor"
+    },
+    "description": {
+      "nl": "Een 11ty prototype voor een Local Website Editor met JSON als bron.",
+      "en": "An 11ty prototype for a Local Website Editor with JSON as source.",
+      "de": "Ein 11ty-Prototyp fur einen Local Website Editor mit JSON als Quelle."
+    }
+  },
+  "nav": [
+    {
+      "href": "#start",
+      "label": {
+        "nl": "Start",
+        "en": "Start",
+        "de": "Start"
+      }
+    },
+    {
+      "href": "#blokken",
+      "label": {
+        "nl": "Blokken",
+        "en": "Blocks",
+        "de": "Blocke"
+      }
+    },
+    {
+      "href": "#workflow",
+      "label": {
+        "nl": "Workflow",
+        "en": "Workflow",
+        "de": "Workflow"
+      }
+    },
+    {
+      "href": "#contentmodel",
+      "label": {
+        "nl": "Contentmodel",
+        "en": "Content model",
+        "de": "Contentmodell"
+      }
+    },
+    {
+      "href": "#seo",
+      "label": {
+        "nl": "SEO",
+        "en": "SEO",
+        "de": "SEO"
+      }
+    },
+    {
+      "href": "/manual/",
+      "label": {
+        "nl": "Manual",
+        "en": "Manual",
+        "de": "Manual"
+      }
+    }
+  ],
+  "pages": {
+    "home": {
+      "hero": {
+        "eyebrow": {
+          "nl": "11ty + lokale JSON",
+          "en": "11ty + local JSON",
+          "de": "11ty + lokales JSON"
+        },
+        "title": {
+          "nl": "Bewerk content direct op de pagina. En sla het daarna op!",
+          "en": "Edit my content directly on this page.",
+          "de": "Inhalte direkt auf der Seite bearbeiten."
+        },
+        "lead": {
+          "nl": "Deze proefsite laat zien hoe een Local Website Editor straks bovenop een gewone 11ty-site kan werken, zonder aparte database of extern CMS.",
+          "en": "This prototype shows how a Local Website Editor can sit on top of a regular 11ty site, without a separate database or external CMS.",
+          "de": "Dieser Prototyp zeigt, wie ein Local Website Editor auf einer normalen 11ty-Site arbeiten kann, ohne separate Datenbank oder externes CMS."
+        },
+        "primaryCta": {
+          "nl": "Bekijk bewerkbare blokken",
+          "en": "View editable blocks",
+          "de": "Bearbeitbare Blocke ansehen"
+        },
+        "secondaryCta": {
+          "nl": "Bekijk JSON-opzet",
+          "en": "View JSON setup",
+          "de": "JSON-Aufbau ansehen"
+        }
+      },
+      "intro": {
+        "title": {
+          "nl": "Een website als contentcanvas",
+          "en": "A website as content canvas",
+          "de": "Eine Website als Content-Leinwand"
+        },
+        "body": {
+          "nl": "De bezoeker ziet een normale website. De beheerder opent de Local Website Editor via een eigen URL, klikt teksten aan, past ze aan en schrijft de wijzigingen terug naar dezelfde JSON-bestanden waarmee 11ty de site bouwt.",
+          "en": "Visitors see a normal website. The editor opens the Local Website Editor on its own URL, clicks text, edits it, and writes the changes back to the same JSON files that 11ty uses to build the site.",
+          "de": "Besucher sehen eine normale Website. Der Redakteur offnet den Local Website Editor uber eine eigene URL, klickt Texte an, bearbeitet sie und schreibt die Anderungen in dieselben JSON-Dateien zuruck, mit denen 11ty die Site baut."
+        }
+      },
+      "blocksTitle": {
+        "nl": "Bewerkbare bouwstenen",
+        "en": "Editable building blocks",
+        "de": "Bearbeitbare Bausteine"
+      },
+      "blocks": [
+        {
+          "title": {
+            "nl": "Tekst per element",
+            "en": "Text per element",
+            "de": "Text pro Element"
+          },
+          "body": {
+            "nl": "Elke kop, alinea en knoptekst heeft een eigen pad in JSON. Daardoor hoeft de editor geen HTML te begrijpen.",
+            "en": "Every heading, paragraph and button label has its own path in JSON, so the editor does not need to understand HTML.",
+            "de": "Jede Uberschrift, jeder Absatz und jeder Buttontext hat einen eigenen Pfad in JSON. Der Editor muss kein HTML verstehen."
+          }
+        },
+        {
+          "title": {
+            "nl": "Meertalig per veld",
+            "en": "Multilingual per field",
+            "de": "Mehrsprachig pro Feld"
+          },
+          "body": {
+            "nl": "NL, EN en DE staan onder hetzelfde contentelement. De pagina kan per taal getoond en aangepast worden.",
+            "en": "NL, EN and DE live under the same content element. The page can be viewed and edited per language.",
+            "de": "NL, EN und DE stehen unter demselben Inhaltselement. Die Seite kann pro Sprache angezeigt und bearbeitet werden."
+          }
+        },
+        {
+          "title": {
+            "nl": "11ty blijft leidend",
+            "en": "11ty stays in control",
+            "de": "11ty bleibt fuhrend"
+          },
+          "body": {
+            "nl": "Templates, partials en build-output blijven gewoon 11ty. De editor wordt een laag erbovenop, alleen voor lokale contentaanpassingen.",
+            "en": "Templates, partials and build output remain plain 11ty. The editor becomes a layer on top, only for local content changes.",
+            "de": "Templates, Partials und Build-Ausgabe bleiben normales 11ty. Der Editor wird nur eine Ebene daruber fur lokale Content-Anderungen."
+          }
+        }
+      ],
+      "workflow": {
+        "title": {
+          "nl": "Voorgestelde workflow",
+          "en": "Suggested workflow",
+          "de": "Vorgeschlagener Workflow"
+        },
+        "steps": [
+          {
+            "title": {
+              "nl": "Open de lokale site",
+              "en": "Open the local site",
+              "de": "Lokale Site offnen"
+            },
+            "body": {
+              "nl": "De beheerder opent de 11ty preview en schakelt edit-modus in.",
+              "en": "The editor opens the 11ty preview and turns edit mode on.",
+              "de": "Der Redakteur offnet die 11ty-Vorschau und aktiviert den Bearbeitungsmodus."
+            }
+          },
+          {
+            "title": {
+              "nl": "Klik op tekst",
+              "en": "Click text",
+              "de": "Text anklicken"
+            },
+            "body": {
+              "nl": "De editor leest uit `data-edit-path` welk JSON-veld bij het aangeklikte element hoort.",
+              "en": "The editor reads `data-edit-path` to know which JSON field belongs to the clicked element.",
+              "de": "Der Editor liest `data-edit-path`, um das passende JSON-Feld zum angeklickten Element zu finden."
+            }
+          },
+          {
+            "title": {
+              "nl": "Sla lokaal op",
+              "en": "Save locally",
+              "de": "Lokal speichern"
+            },
+            "body": {
+              "nl": "Een kleine Node API schrijft de wijziging terug naar JSON. Daarna bouwt 11ty de site opnieuw.",
+              "en": "A small Node API writes the change back to JSON. Then 11ty rebuilds the site.",
+              "de": "Eine kleine Node-API schreibt die Anderung in JSON zuruck. Danach baut 11ty die Site neu."
+            }
+          }
+        ]
+      },
+      "contentModel": {
+        "title": {
+          "nl": "Contentmodel",
+          "en": "Content model",
+          "de": "Contentmodell"
+        },
+        "body": {
+          "nl": "Alle beheerbare content op deze pagina komt uit `src/_data/content.json`. De attributen op de HTML-elementen wijzen terug naar exact dezelfde plek in dat bestand.",
+          "en": "All manageable content on this page comes from `src/_data/content.json`. The attributes on the HTML elements point back to the exact same place in that file.",
+          "de": "Alle verwaltbaren Inhalte auf dieser Seite kommen aus `src/_data/content.json`. Die Attribute auf den HTML-Elementen zeigen exakt auf dieselbe Stelle in dieser Datei."
+        }
+      },
+      "seo": {
+        "title": {
+          "nl": "SEO hoort bij de basis",
+          "en": "SEO belongs in the foundation",
+          "de": "SEO gehort zur Basis"
+        },
+        "body": {
+          "nl": "Ook niet-zichtbare velden zoals SEO-title, meta description, canonical, Open Graph en hreflang horen in het contentmodel. Ze zijn niet altijd aanklikbaar in de editor, maar ze worden wel vanuit JSON gerenderd.",
+          "en": "Non-visible fields such as SEO title, meta description, canonical, Open Graph and hreflang also belong in the content model. They are not always clickable in the editor, but they are rendered from JSON.",
+          "de": "Auch nicht sichtbare Felder wie SEO-Title, Meta Description, Canonical, Open Graph und hreflang gehoren ins Contentmodell. Sie sind im Editor nicht immer anklickbar, werden aber aus JSON gerendert."
+        }
+      }
+    }
+  },
+  "footer": {
+    "tagline": {
+      "nl": "Prototype voor een Local Website Editor met 11ty.",
+      "en": "Prototype for a Local Website Editor with 11ty.",
+      "de": "Prototyp fur einen Local Website Editor mit 11ty."
+    },
+    "status": {
+      "nl": "JSON is de bron. HTML is de weergave.",
+      "en": "JSON is the source. HTML is the view.",
+      "de": "JSON ist die Quelle. HTML ist die Ansicht."
+    },
+    "disclaimer": {
+      "nl": "Open source hulpmiddel. Gebruik op eigen risico; controleer zelf wat je bouwt en publiceert.",
+      "en": "Open source helper tool. Use at your own risk; always check what you build and publish.",
+      "de": "Open-Source-Hilfswerkzeug. Nutzung auf eigenes Risiko; prufe selbst, was du baust und veroffentlichst."
+    }
+  }
+}

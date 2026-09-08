@@ -1,0 +1,34 @@
+{
+  "name": "lwe-core-02",
+  "version": "1.0.0",
+  "description": "Prototype voor een Local Website Editor op 11ty.",
+  "main": ".eleventy.js",
+  "scripts": {
+    "lcb": "node server.js",
+    "lcb:preview-only": "node server.js --skip-build",
+    "dev": "node server.js",
+    "serve:11ty": "eleventy --serve --port 8082",
+    "prebuild": "node scripts/lwe-next.js --guard=build",
+    "build": "eleventy",
+    "lwe:next": "node scripts/lwe-next.js",
+    "lwe:guard": "node scripts/lwe-next.js --guard=build",
+    "lwe:audit": "node scripts/lwe-next.js",
+    "lwe:approve": "node scripts/lwe-approve-build.js",
+    "lwe:reset": "node scripts/lwe-reset.js --to=intake",
+    "lwe:unapprove": "node scripts/lwe-reset.js --to=proposal",
+    "lwe:images": "node scripts/lwe-images.js",
+    "lwe:publish-check": "node scripts/lwe-publish-check.js",
+    "lwe:update": "node scripts/lwe-update.js",
+    "lwe:update-check": "node scripts/lwe-update-check.js",
+    "lwe:update-install": "node scripts/lwe-update-install.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "markdown-it": "^14.3.1",
+    "sharp": "^0.35.4"
+  }
+}

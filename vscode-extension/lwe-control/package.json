@@ -1,0 +1,45 @@
+{
+  "name": "lwe-control",
+  "displayName": "LWE Control",
+  "description": "Local control panel for Local Website Editor projects.",
+  "version": "0.1.6",
+  "publisher": "lwe-local",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:lweControl.openPanel",
+    "onView:lweControl.sidebar",
+    "workspaceContains:lcb.config.json"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lweControl.openPanel",
+        "title": "LWE: Open Control Panel"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lweControl",
+          "title": "LWE",
+          "icon": "resources/lwe.svg"
+        }
+      ]
+    },
+    "views": {
+      "lweControl": [
+        {
+          "id": "lweControl.sidebar",
+          "type": "webview",
+          "name": "Control"
+        }
+      ]
+    }
+  }
+}

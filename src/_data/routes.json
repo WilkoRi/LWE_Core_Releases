@@ -1,0 +1,10 @@
+{
+  "defaultLanguage": "nl",
+  "pages": {
+    "home": {
+      "nl": "/",
+      "en": "/en/",
+      "de": "/de/"
+    }
+  }
+}

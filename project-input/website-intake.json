@@ -1,0 +1,89 @@
+{
+  "_instruction": "Vul dit bestand voordat een AI een nieuwe website ontwerpt. Dit is stap 1 van het LWE-proces. Als je geen voorkeur hebt, is 'ik weet het niet, verras me' een geldig antwoord.",
+  "_shortAnswers": "Korte antwoorden mogen: ja, nee, niet nodig, niet relevant, onbekend, of ik weet het niet, verras me.",
+  "_captureRule": "Bewaar ook relevante extra nuance uit het gesprek. Zet die in een passend veld of in project-input/notities.md.",
+  "project": {
+    "name": "Local Website Editor demo",
+    "type": "prototype, documentatie en demo-website",
+    "goal": "Uitleggen wat Local Website Editor is en laten zien hoe een lokale 11ty-website met JSON-content bewerkbaar kan worden gemaakt.",
+    "visitorAction": "De manual lezen, de demo bekijken en begrijpen welke stappen nodig zijn om LWE veilig in een apart websiteproject te gebruiken."
+  },
+  "audience": {
+    "primary": "Beginnende gebruikers, websitebeheerders en AI-assistenten die voor het eerst met LWE werken.",
+    "notes": "De uitleg moet rustig, praktisch en niet te technisch zijn. Maak duidelijk dat LWE lokaal draait en dat alleen de inhoud van _site/ gepubliceerd hoort te worden."
+  },
+  "language": {
+    "mode": "multi-language",
+    "primary": "nl",
+    "extraLanguages": ["en", "de"]
+  },
+  "style": {
+    "colorPreference": "rustig, helder en functioneel; geen zware marketingstijl",
+    "fontPreference": "modern, goed leesbaar, systeemfonts zijn prima",
+    "brandGuidelines": "Gebruik Local Website Editor als productnaam. De technische route blijft __lcb.",
+    "visualDirection": "Praktische documentatie en demo: duidelijk, scanbaar, vriendelijk en geschikt voor mensen met weinig technische voorkennis.",
+    "referenceWebsites": ["ik weet het niet, verras me"],
+    "avoid": "Geen echte klantwebsite bouwen in de Core-map. Geen demo-data presenteren alsof het productiecontent is. Geen LWE-projectmap volledig uploaden naar public_html."
+  },
+  "content": {
+    "desiredPages": ["Manual", "Demo home"],
+    "mustInclude": [
+      "Wat LWE is",
+      "Waarom je een aparte projectkopie maakt",
+      "Welke stappen een gebruiker zet",
+      "Waar de mappen voor zijn",
+      "Hoe je poortproblemen oplost",
+      "Publiceer alleen _site/",
+      "Gebruik op eigen risico"
+    ],
+    "sourcePriority": "MANUAL.md, MANUAL.en.md, MANUAL.de.md, README.md, LCB-AI-INSTRUCTIES.md en lcb-context/ zijn leidend."
+  },
+  "functionality": {
+    "contactForm": "nee",
+    "search": "nee",
+    "agenda": "nee",
+    "eventCalendar": "nee",
+    "hidePastEvents": "niet relevant",
+    "news": "nee",
+    "registration": "nee",
+    "multilingual": "ja",
+    "downloads": "nee",
+    "other": "Manual moet lokaal leesbaar zijn via /manual/. Demo moet laten zien hoe bewerkbare content uit JSON werkt."
+  },
+  "assets": {
+    "logoStatus": "niet relevant voor deze demo",
+    "imagePreference": "minimaal; alleen functionele demo-assets gebruiken",
+    "photosOrIllustrations": "geen echte personenfoto's nodig",
+    "imageSelectionNotes": "Gebruik geen project- of klantbeelden in de Core-demo tenzij ze expliciet demo-assets zijn.",
+    "peoplePhotoApproval": "niet nodig",
+    "screenshotApproval": "niet nodig"
+  },
+  "socialMedia": {
+    "accountsStatus": "niet aanwezig",
+    "accounts": [],
+    "shareOrFollowPreference": "nee"
+  },
+  "legalAndOrganization": {
+    "privacyStatement": "niet nodig voor lokale demo",
+    "cookies": "niet nodig",
+    "terms": "niet nodig",
+    "accessibility": "streef naar duidelijke, toegankelijke documentatie",
+    "contentResponsibility": "LWE Core-maintainer"
+  },
+  "aiFreedom": {
+    "creativeFreedom": "beperkt: volg de bestaande Core-demo, manual en LWE-procesafspraken"
+  },
+  "conversationNotes": {
+    "extraNuance": [
+      "De Core-map is geen plek om een echte website te bouwen.",
+      "De demo mag helpen uitleggen waar de gebruiker naar kijkt en waarom een projectkopie nodig is.",
+      "LWE moet AI's controleren via processtappen, intake, voorstel, akkoord en build/review."
+    ],
+    "openQuestions": [],
+    "doNotForget": [
+      "Alleen de gebruiker draait npm run lwe:approve.",
+      "Publiceer alleen de inhoud van _site/.",
+      "Gebruik npm run lcb:preview-only als je alleen de bestaande build wilt bekijken."
+    ]
+  }
+}

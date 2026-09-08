@@ -1,0 +1,43 @@
+{
+  "sourceDir": "project-input/afbeeldingen",
+  "outputDir": "",
+  "defaultPreset": "general",
+  "maxInputBytesWarning": 5242880,
+  "presets": {
+    "general": {
+      "description": "Algemene website-afbeelding, zonder crop.",
+      "width": 1600,
+      "height": 1600,
+      "fit": "inside",
+      "format": "webp",
+      "quality": 82
+    },
+    "hero": {
+      "description": "Grote header/hero-afbeelding, zonder crop.",
+      "width": 2200,
+      "height": 1400,
+      "fit": "inside",
+      "format": "webp",
+      "quality": 82
+    },
+    "person": {
+      "description": "Persoonsfoto; bron mag verschillen, tonen gebeurt via CSS.",
+      "width": 1200,
+      "height": 1200,
+      "fit": "inside",
+      "format": "webp",
+      "quality": 84,
+      "includeNamePattern": "persoon|person|people|team|portrait|portret|profiel|profile|headshot|voorzitter|secretaris|penningmeester|bestuur|vertrouwens|mario|bouke|martijn",
+      "warnIfAspectRatioOutside": [0.75, 1.33]
+    },
+    "logo": {
+      "description": "Logo; nooit croppen, verhouding behouden.",
+      "width": 1200,
+      "height": 500,
+      "fit": "inside",
+      "format": "png",
+      "quality": 90,
+      "includeNamePattern": "logo"
+    }
+  }
+}

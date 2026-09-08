@@ -1,0 +1,47 @@
+---
+pagination:
+  data: content.languages
+  size: 1
+  alias: currentLang
+permalink: "{% if currentLang.code == 'nl' %}/manual/{% else %}/manual/{{ currentLang.code }}/{% endif %}"
+---
+{% set manual = manualPages[currentLang.code] or manualPages.nl %}
+<!doctype html>
+<html lang="{{ currentLang.code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ manual.title }}</title>
+    <meta name="description" content="{{ manual.description }}">
+    <link rel="canonical" href="{{ content.meta.siteUrl }}{{ currentLang.code | manualPath }}">
+    {% for lang in content.languages %}
+      <link rel="alternate" hreflang="{{ lang.code }}" href="{{ content.meta.siteUrl }}{{ lang.code | manualPath }}">
+    {% endfor %}
+    <link rel="alternate" hreflang="x-default" href="{{ content.meta.siteUrl }}/manual/">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header manual-header">
+      <a class="brand" href="/" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+      <nav class="main-nav" aria-label="Manual navigatie">
+        <a href="/">Demo</a>
+        <a href="/manual/">Manual</a>
+      </nav>
+      <div class="language-switcher" aria-label="Manual taalkeuze">
+        {% for lang in content.languages %}
+          <a class="{% if lang.code == currentLang.code %}is-active{% endif %}" href="{{ lang.code | manualPath }}">{{ lang.label }}</a>
+        {% endfor %}
+      </div>
+    </header>
+
+    <main class="manual-page">
+      <article class="manual-content">
+        {{ manual.html | safe }}
+      </article>
+    </main>
+  </body>
+</html>

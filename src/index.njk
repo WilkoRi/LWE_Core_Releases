@@ -1,0 +1,153 @@
+---
+pagination:
+  data: content.languages
+  size: 1
+  alias: currentLang
+pageKey: home
+permalink: "{% if currentLang.code == 'nl' %}/{% else %}/{{ currentLang.code }}/{% endif %}"
+---
+{% set pageRoutes = routes.pages[pageKey] %}
+{% set currentPath = pageRoutes[currentLang.code] %}
+<!doctype html>
+<html lang="{{ currentLang.code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ content.meta.title | t(currentLang.code) }}</title>
+    <meta name="description" content="{{ content.meta.description | t(currentLang.code) }}">
+    <link rel="canonical" href="{{ content.meta.siteUrl }}{{ currentPath }}">
+    {% for lang in content.languages %}
+      <link rel="alternate" hreflang="{{ lang.code }}" href="{{ content.meta.siteUrl }}{{ pageRoutes[lang.code] }}">
+    {% endfor %}
+    <link rel="alternate" hreflang="x-default" href="{{ content.meta.siteUrl }}/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ content.meta.title | t(currentLang.code) }}">
+    <meta property="og:description" content="{{ content.meta.description | t(currentLang.code) }}">
+    <meta property="og:url" content="{{ content.meta.siteUrl }}{{ currentPath }}">
+    <meta property="og:image" content="{{ content.meta.siteUrl }}{{ content.meta.defaultImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{% if currentLang.code == 'nl' %}/{% else %}/{{ currentLang.code }}/{% endif %}" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Hoofdmenu">
+        {% for item in content.nav %}
+          {% set navHref = item.href %}
+          {% if item.href == "/manual/" %}
+            {% set navHref = currentLang.code | manualPath %}
+          {% endif %}
+          <a href="{{ navHref }}" data-edit-file="content.json" data-edit-path="nav.{{ loop.index0 }}.label.{{ currentLang.code }}">{{ item.label | t(currentLang.code) }}</a>
+        {% endfor %}
+      </nav>
+
+      <div class="language-switcher" aria-label="Taalkeuze">
+        {% for lang in content.languages %}
+          <a class="{% if lang.code == currentLang.code %}is-active{% endif %}" href="{{ pageRoutes[lang.code] }}">{{ lang.label }}</a>
+        {% endfor %}
+      </div>
+    </header>
+
+    <main id="start">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-edit-file="content.json" data-edit-path="pages.home.hero.eyebrow.{{ currentLang.code }}">{{ content.pages.home.hero.eyebrow | t(currentLang.code) }}</p>
+          <h1 data-edit-file="content.json" data-edit-path="pages.home.hero.title.{{ currentLang.code }}">{{ content.pages.home.hero.title | t(currentLang.code) }}</h1>
+          <p class="lead" data-edit-file="content.json" data-edit-path="pages.home.hero.lead.{{ currentLang.code }}">{{ content.pages.home.hero.lead | t(currentLang.code) }}</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#blokken" data-edit-file="content.json" data-edit-path="pages.home.hero.primaryCta.{{ currentLang.code }}">{{ content.pages.home.hero.primaryCta | t(currentLang.code) }}</a>
+            <a class="button button-secondary" href="#contentmodel" data-edit-file="content.json" data-edit-path="pages.home.hero.secondaryCta.{{ currentLang.code }}">{{ content.pages.home.hero.secondaryCta | t(currentLang.code) }}</a>
+          </div>
+        </div>
+
+        <aside class="editor-panel" aria-label="Editor status" data-lwe-system>
+          <span class="panel-label">Local Website Editor</span>
+          <strong>data-edit-path</strong>
+          <p>Hover over teksten om te zien welke onderdelen straks aanklikbaar worden in de editor. Deze uitleg is System-tekst en daarom bewust niet bewerkbaar.</p>
+        </aside>
+      </section>
+
+      <section class="intro">
+        <div>
+          <p class="section-kicker" data-lwe-system>Concept</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.intro.title.{{ currentLang.code }}">{{ content.pages.home.intro.title | t(currentLang.code) }}</h2>
+        </div>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.intro.body.{{ currentLang.code }}">{{ content.pages.home.intro.body | t(currentLang.code) }}</p>
+      </section>
+
+      <section class="section" id="blokken">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Editor</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.blocksTitle.{{ currentLang.code }}">{{ content.pages.home.blocksTitle | t(currentLang.code) }}</h2>
+        </div>
+
+        <div class="block-grid">
+          {% for block in content.pages.home.blocks %}
+            <article class="content-card">
+              <span>{{ loop.index }}</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.{{ loop.index0 }}.title.{{ currentLang.code }}">{{ block.title | t(currentLang.code) }}</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.{{ loop.index0 }}.body.{{ currentLang.code }}">{{ block.body | t(currentLang.code) }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="section workflow" id="workflow">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Lokaal</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.workflow.title.{{ currentLang.code }}">{{ content.pages.home.workflow.title | t(currentLang.code) }}</h2>
+        </div>
+
+        <div class="timeline">
+          {% for step in content.pages.home.workflow.steps %}
+            <article>
+              <span>{{ loop.index }}</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.{{ loop.index0 }}.title.{{ currentLang.code }}">{{ step.title | t(currentLang.code) }}</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.{{ loop.index0 }}.body.{{ currentLang.code }}">{{ step.body | t(currentLang.code) }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="content-model" id="contentmodel">
+        <p class="section-kicker" data-lwe-system>JSON</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.contentModel.title.{{ currentLang.code }}">{{ content.pages.home.contentModel.title | t(currentLang.code) }}</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.contentModel.body.{{ currentLang.code }}">{{ content.pages.home.contentModel.body | t(currentLang.code) }}</p>
+        <code data-lwe-system>src/_data/content.json -> pages.home.hero.title.{{ currentLang.code }}</code>
+      </section>
+
+      <section class="content-model" id="seo">
+        <p class="section-kicker" data-lwe-system>SEO</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.seo.title.{{ currentLang.code }}">{{ content.pages.home.seo.title | t(currentLang.code) }}</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.seo.body.{{ currentLang.code }}">{{ content.pages.home.seo.body | t(currentLang.code) }}</p>
+        <code data-lwe-system>title + description + canonical + Open Graph + hreflang</code>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Local Website Editor</strong>
+        <p data-edit-file="content.json" data-edit-path="footer.tagline.{{ currentLang.code }}">{{ content.footer.tagline | t(currentLang.code) }}</p>
+      </div>
+      <nav aria-label="Footer menu">
+        {% for item in content.nav %}
+          {% set footerHref = item.href %}
+          {% if item.href == "/manual/" %}
+            {% set footerHref = currentLang.code | manualPath %}
+          {% endif %}
+          <a href="{{ footerHref }}">{{ item.label | t(currentLang.code) }}</a>
+        {% endfor %}
+      </nav>
+      <p data-edit-file="content.json" data-edit-path="footer.status.{{ currentLang.code }}">{{ content.footer.status | t(currentLang.code) }}</p>
+      <p class="footer-disclaimer" data-edit-file="content.json" data-edit-path="footer.disclaimer.{{ currentLang.code }}">{{ content.footer.disclaimer | t(currentLang.code) }}</p>
+    </footer>
+    <script src="/assets/system-calendar.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "siteDir": "_site",
+  "dataDir": "src/_data",
+  "lcbDir": "lcb",
+  "editPrefix": "/__lcb",
+  "assetPrefix": "/__lcb-assets",
+  "contentFiles": ["content.json"],
+  "buildCommand": "npm run build",
+  "port": 8082,
+  "startPath": "/manual/",
+  "demoPath": "/"
+}
