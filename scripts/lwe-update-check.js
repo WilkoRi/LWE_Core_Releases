@@ -118,10 +118,11 @@ async function main() {
 
   console.log(`Nieuwste release: ${latest}`);
   console.log(`Update beschikbaar: ${newer ? "ja" : "nee"}`);
-  console.log(`Manifest asset: ${manifestAsset ? manifestAsset.name : "niet gevonden"}`);
   if (config.releaseAssetName) {
+    console.log(`Manifest asset: ${manifestAsset ? manifestAsset.name : "niet gevonden"}`);
     console.log(`Release pakket: ${packageAsset ? packageAsset.name : "niet gevonden"}`);
   } else {
+    console.log("Manifest: wordt gecontroleerd tijdens installatie");
     console.log("Release pakket: GitHub tarball");
   }
 

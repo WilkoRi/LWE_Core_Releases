@@ -296,7 +296,9 @@ Installeren gebeurt alleen na akkoord:
 npm run lwe:update-install -- --apply
 ```
 
-Dit gebruikt alleen gepubliceerde releases, nooit rechtstreeks `main`. De release moet een `lwe-release-manifest.json` bevatten met de bestanden die LWE mag beheren. Projectcontent, `project-input/`, projectspecifieke CSS, templates, `.htaccess` en `lwe-process/state.json` mogen niet automatisch worden overschreven.
+Dit gebruikt alleen gepubliceerde releases, nooit rechtstreeks `main`. De release moet een `lwe-release-manifest.json` bevatten met de bestanden die LWE mag beheren. Projectcontent, `project-input/`, projectspecifieke CSS, templates, `.htaccess`, `_site/`, `node_modules/` en `lwe-process/state.json` mogen niet automatisch worden overschreven.
+
+`_site/` mag in Core bestaan als demo/manual-output, maar is nooit onderdeel van een automatische update naar een bestaand project.
 
 Zolang er nog geen GitHub-repository in `lwe-update.config.json` of `package.json` staat, meldt `lwe:update-check` hoe je die koppeling instelt.
 

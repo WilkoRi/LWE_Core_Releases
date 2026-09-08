@@ -43,6 +43,8 @@
     "src/**/*.njk",
     "src/**/*.html",
     "src/assets/styles.css",
+    "_site/**",
+    "node_modules/**",
     "_includes/**",
     "_data/**",
     "assets/css/**",
@@ -53,6 +55,8 @@
   ],
   "notes": [
     "Projectcontent en projectspecifieke templates worden niet automatisch overschreven.",
+    "_site/ mag in Core bestaan als demo-output, maar wordt nooit naar bestaande projecten geupdate.",
+    "node_modules/ wordt nooit door LWE updates beheerd of overschreven.",
     "Gebruik alleen GitHub Releases; nooit rechtstreeks main.",
     "Maak altijd een backup voordat bestanden worden vervangen."
   ]

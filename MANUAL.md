@@ -378,7 +378,9 @@ Na akkoord installeer je de release:
 npm run lwe:update-install -- --apply
 ```
 
-Een release mag alleen LWE-systeembestanden vervangen die in `lwe-release-manifest.json` staan. Websitecontent, projectdata, project-CSS, templates, `.htaccess`, `project-input/` en `lwe-process/state.json` blijven van het project.
+Een release mag alleen LWE-systeembestanden vervangen die in `lwe-release-manifest.json` staan. Websitecontent, projectdata, project-CSS, templates, `.htaccess`, `_site/`, `node_modules/`, `project-input/` en `lwe-process/state.json` blijven van het project.
+
+`_site/` mag in Core bestaan als demo/manual-output. Bij een update naar een bestaand project wordt `_site/` nooit overschreven.
 
 Tijdens ontwikkeling kan je ook nog lokaal updaten vanuit de Core-map. Begin dan met een dry-run:
 

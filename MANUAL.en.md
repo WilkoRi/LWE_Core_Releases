@@ -348,7 +348,9 @@ After approval, install the release:
 npm run lwe:update-install -- --apply
 ```
 
-A release may only replace LWE system files listed in `lwe-release-manifest.json`. Website content, project data, project CSS, templates, `.htaccess`, `project-input/` and `lwe-process/state.json` remain project-owned.
+A release may only replace LWE system files listed in `lwe-release-manifest.json`. Website content, project data, project CSS, templates, `.htaccess`, `_site/`, `node_modules/`, `project-input/` and `lwe-process/state.json` remain project-owned.
+
+`_site/` may exist in Core as demo/manual output. During an update to an existing project, `_site/` is never overwritten.
 
 During development you can still update locally from the Core folder. Start with a dry-run:
 
