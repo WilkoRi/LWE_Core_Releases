@@ -30,6 +30,7 @@ Vanuit de Core-map:
 npm run lwe:control-desktop:install
 npm run lwe:control-desktop:dev
 npm run lwe:control-desktop:build
+npm run lwe:control-desktop:release-macos
 ```
 
 Of direct vanuit deze map:
@@ -44,4 +45,20 @@ npm run tauri:dev
 
 Deze desktop-app is een aparte beheerlaag. De bestaande LWE editor op `__lcb` blijft de plek waar teksten, links en afbeeldingen worden aangepast.
 
-Deze MVP bouwt nog geen eindgebruikers-installer. De app start nu nog `npm run lcb`; de volgende stap is een Node-sidecar en daarna macOS/Windows packaging.
+Deze MVP bouwt nog geen eindgebruikers-installer. De app start nu nog de lokale Node/LWE-server uit de projectmap; de volgende stap is een Node-sidecar en daarna macOS/Windows packaging.
+
+## macOS App Maken
+
+Vanuit de Core-map:
+
+```bash
+npm run lwe:control-desktop:release-macos
+```
+
+De gebouwde app komt lokaal klaar te staan in:
+
+```txt
+release-assets/macos/LWE Control.app
+```
+
+Deze map is een lokaal distributie-artifact en wordt niet in Git opgenomen.

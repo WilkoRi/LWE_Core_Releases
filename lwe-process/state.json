@@ -11,7 +11,7 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-08T19:33:41.322Z",
+    "createdAt": "2026-09-08T20:25:58.843Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
@@ -31,12 +31,16 @@
         "hash": "0d48cb70703a6b9205157eb1eb0a9a8da6536cc6"
       },
       "package.json": {
-        "size": 1452,
-        "hash": "8a31299e030847c65d6adade4f9322e8d8f6a213"
+        "size": 1546,
+        "hash": "f52587f359abec448caef1c1948e9395253d3d9d"
       },
       "scripts/lwe-approve-build.js": {
         "size": 2648,
         "hash": "65ea4224da277c58888256c837928294f8bb17de"
+      },
+      "scripts/lwe-control-desktop-release-macos.js": {
+        "size": 1601,
+        "hash": "284b9e2d87c3f3aeac297b044c37ae08c75fe959"
       },
       "scripts/lwe-images.js": {
         "size": 10869,
@@ -67,8 +71,8 @@
         "hash": "cb4fa31bb72b552f3f6ce04c6f871239c5e17476"
       },
       "scripts/lwe-update.js": {
-        "size": 19335,
-        "hash": "77c685a0c47794b9e167f7f5215d6dbd862dc76d"
+        "size": 21318,
+        "hash": "f5bbf04c00f231b583dbdf173ebd38e079c426ef"
       },
       "server.js": {
         "size": 27508,
@@ -122,8 +126,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-08T19:33:41.323Z",
-    "signature": "22378fa6fc9513fe66f2feaa7f748d14dcc2c5db2edf35fbf03e73380316a1c2"
+    "updatedAt": "2026-09-08T20:25:58.843Z",
+    "signature": "ad885ab6f0d8a1e27b43de3132871e170464ee52153e8a68bdb35a9cf18930ad"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

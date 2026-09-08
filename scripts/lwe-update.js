@@ -270,6 +270,7 @@ function buildFilePlan(runtime) {
     ["scripts/lwe-update.js", runtime.update],
     ["scripts/lwe-update-check.js", runtime.updateCheck],
     ["scripts/lwe-update-install.js", runtime.updateInstall],
+    ["scripts/lwe-control-desktop-release-macos.js", "scripts/lwe-control-desktop-release-macos.js"],
     ["lwe-image.config.json", "lwe-image.config.json"],
     ["lwe-release-manifest.json", "lwe-release-manifest.json"],
     ["lwe-process/process.json", "lwe-process/process.json"],
@@ -289,6 +290,7 @@ function buildFilePlan(runtime) {
         "desktop/lwe-control/node_modules",
         "desktop/lwe-control/src-tauri/gen",
         "desktop/lwe-control/src-tauri/target",
+        "desktop/lwe-control/src-tauri/icons/icon.iconset",
       ],
     }).map((file) => [file, file]),
   ];
@@ -339,6 +341,7 @@ function scriptUpdates(runtime) {
     "lwe:control-desktop:install": "npm --prefix desktop/lwe-control install",
     "lwe:control-desktop:dev": "npm --prefix desktop/lwe-control run tauri:dev",
     "lwe:control-desktop:build": "npm --prefix desktop/lwe-control run tauri:build",
+    "lwe:control-desktop:release-macos": "node scripts/lwe-control-desktop-release-macos.js",
     "lwe:guard": `node ${runtime.next} --guard=build`,
     "lwe:audit": `node ${runtime.next}`,
   };

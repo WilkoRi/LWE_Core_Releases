@@ -42,6 +42,16 @@ Release-fix:
 - `lwe:update` voegt nu ook de `lwe:control-desktop:*` scripts toe aan project `package.json`.
 - Het Tauri MVP-icoon is opnieuw geschreven als echte RGBA PNG zodat release-builds niet crashen.
 
+## Release 0.2.34
+
+macOS app-build toegevoegd:
+
+- Tauri bundling staat aan voor een macOS `.app`.
+- `icon.icns` toegevoegd voor macOS bundling.
+- Nieuw commando `npm run lwe:control-desktop:release-macos`.
+- Het commando bouwt `LWE Control.app` en kopieert die naar `release-assets/macos/`.
+- `release-assets/` blijft lokaal en wordt niet in Git opgenomen.
+
 ## Gewenste UX
 
 De gebruiker krijgt in de projectmap een app:

@@ -284,7 +284,7 @@ Gebruik voor bestaande LWE-projecten liever de update-tool dan `install-lcb.js -
 
 ## LWE Control Desktop MVP
 
-LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`. Vanaf `0.2.33` voegt de updater ook de bijbehorende npm-scripts toe aan projecten.
+LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`. Vanaf `0.2.33` voegt de updater ook de bijbehorende npm-scripts toe aan projecten. Vanaf `0.2.34` kan lokaal een macOS `.app` worden gebouwd.
 
 Deze app is bedoeld als toekomstige eenvoudige starter voor websitebeheerders:
 
@@ -301,6 +301,13 @@ Ontwikkelcommando's:
 npm run lwe:control-desktop:install
 npm run lwe:control-desktop:dev
 npm run lwe:control-desktop:build
+npm run lwe:control-desktop:release-macos
+```
+
+Het macOS releasecommando zet de app lokaal klaar in:
+
+```txt
+release-assets/macos/LWE Control.app
 ```
 
 Deze desktop-MVP mag vanaf deze versie met projecten meekomen bij `npm run lwe:update-install`. Alleen de bronbestanden worden uitgerold; `node_modules/`, `dist/`, Tauri `target/` en andere build-output blijven uitgesloten.
