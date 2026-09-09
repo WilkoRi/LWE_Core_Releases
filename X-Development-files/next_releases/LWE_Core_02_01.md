@@ -143,6 +143,16 @@ Type: bugfix
 
 De LWE-server verwijdert editor-only `<button>` elementen uit gewone previewroutes. In `/__lcb/` blijven ze beschikbaar voor bewerken. Daarnaast blokkeert `npm run lwe:publish-check` voortaan wanneer editor-only knoppen nog in `_site/*.html` staan, zodat dit niet ongemerkt gepubliceerd kan worden.
 
+## Release 0.2.47 - Editor-only knoppen uit productiebuild
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: bugfix
+
+De Eleventy-build verwijdert editor-only `<button>` elementen nu ook uit de gegenereerde `_site/*.html`. Daardoor kan een zichtbare knop zoals `Bewerk hero-afbeelding` niet meer in de platte publicatie-output terechtkomen. De LWE-editor blijft lokaal via `/__lcb/` beschikbaar.
+
 ## 1. LCB Menu Bar Visual Bug
 
 Status: klaar  

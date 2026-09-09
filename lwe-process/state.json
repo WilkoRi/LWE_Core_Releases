@@ -11,12 +11,12 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-09T06:05:40.270Z",
+    "createdAt": "2026-09-09T11:23:40.919Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
-        "size": 2261,
-        "hash": "03168d3fdc63dbe36f228ea06d1bb6e8f4edf989"
+        "size": 2670,
+        "hash": "cee87ea6b91d71e330c4ce5d4b016e2b8df15a2b"
       },
       "lcb.config.json": {
         "size": 263,
@@ -43,16 +43,16 @@
         "hash": "e5292db3874f8f4122b784056bf3ea5acbf20013"
       },
       "scripts/lwe-images.js": {
-        "size": 10869,
-        "hash": "0efa8a5eb4ef52d07673814b849885e7ba0ef3c0"
+        "size": 14338,
+        "hash": "c525f34dc9ef593c175c22400e2780d79d3e07fd"
       },
       "scripts/lwe-next.js": {
         "size": 47051,
         "hash": "bef0975fb81f186455110d811639b288787dd515"
       },
       "scripts/lwe-publish-check.js": {
-        "size": 3804,
-        "hash": "ac8e9c5eed96c47d2e027c5762956caabd62454f"
+        "size": 4693,
+        "hash": "721eb0dea3e6a21d3cd6432a563a3ca43cca92bd"
       },
       "scripts/lwe-reset.js": {
         "size": 1582,
@@ -67,16 +67,16 @@
         "hash": "e2b2d4ea1d5ae2cca2432ab5ca6a3fe8eea40c48"
       },
       "scripts/lwe-update-install.js": {
-        "size": 5688,
-        "hash": "cb4fa31bb72b552f3f6ce04c6f871239c5e17476"
+        "size": 6953,
+        "hash": "9647c89d8bdb6310c4e6b4a9ac54306cdcb690e7"
       },
       "scripts/lwe-update.js": {
-        "size": 21318,
-        "hash": "f5bbf04c00f231b583dbdf173ebd38e079c426ef"
+        "size": 21376,
+        "hash": "6c998d3ef8bffb6a42760a43abccb32e8ee457cb"
       },
       "server.js": {
-        "size": 27508,
-        "hash": "889b300853698f5cb4f593160e5a547cd2855884"
+        "size": 27919,
+        "hash": "6d6dfa3d0aa3973f07f163d29361552c59ecd3e9"
       },
       "src/_data/content.json": {
         "size": 9997,
@@ -107,8 +107,8 @@
         "hash": "0d924b82e53ef1f45ff8f42b6f990187f1bdca24"
       },
       "src/assets/system.css": {
-        "size": 446,
-        "hash": "857f92422682ee6102211cd29ba9c9b4964ae241"
+        "size": 1285,
+        "hash": "fa633e14dda037da8afe80de6a415a934aa81c58"
       },
       "src/index.njk": {
         "size": 8804,
@@ -126,8 +126,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-09T06:05:40.271Z",
-    "signature": "bb90692609822cc413cb357aa074d5aadbca169f71ed475fc102720884d7ba32"
+    "updatedAt": "2026-09-09T11:23:40.920Z",
+    "signature": "4c386cad0830551430b85059febb373d4e9c318d137a49102e8e069ab77c3f1c"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

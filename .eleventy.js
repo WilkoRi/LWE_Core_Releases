@@ -4,6 +4,13 @@ const markdownIt = require("markdown-it");
 const { registerCalendarFilters } = require("./lwe/filters/calendar");
 const { registerTextFilters } = require("./lwe/filters/text.cjs");
 
+function stripEditorOnlyControls(content) {
+  return content.replace(
+    /<button\b(?=[^>]*\bdata-edit-(?:path|href-path|src-path)=)[\s\S]*?<\/button>/gi,
+    ""
+  );
+}
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.setFreezeReservedData(false);
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
@@ -13,6 +20,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addWatchTarget("MANUAL.de.md");
   registerCalendarFilters(eleventyConfig);
   registerTextFilters(eleventyConfig);
+
+  eleventyConfig.addTransform("strip-editor-only-controls", function (content) {
+    if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
+      return content;
+    }
+
+    return stripEditorOnlyControls(content);
+  });
 
   const markdown = markdownIt({
     html: false,
