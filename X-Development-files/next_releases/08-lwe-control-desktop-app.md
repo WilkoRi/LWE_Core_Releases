@@ -69,6 +69,14 @@ Release-fix voor projectmap kiezen:
 - De knop `Kies projectmap` mag daardoor de native mapkiezer openen.
 - Capabilitybestand toegevoegd aan het LWE release-manifest.
 
+## Release 0.2.37
+
+UI-polish:
+
+- LWE Control gebruikt een compactere basisschaal.
+- Knoppen, panels, koppen en statusruimte zijn iets kleiner gemaakt.
+- De desktopstarter voelt daardoor meer als kleine utility-app.
+
 ## Gewenste UX
 
 De gebruiker krijgt een app:
