@@ -29,7 +29,7 @@ if (!targetArg || targetArg.startsWith("--")) {
 }
 
 const targetDir = path.resolve(process.cwd(), targetArg);
-const backupRoot = path.join(targetDir, ".lwe-backups", timestamp);
+const backupRoot = path.join(path.dirname(targetDir), "_lwe-backups", path.basename(targetDir), timestamp);
 const lweControlRecommendation = "lwe-local.lwe-control";
 
 function readText(filePath, fallback = "") {

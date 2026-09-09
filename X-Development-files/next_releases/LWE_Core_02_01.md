@@ -163,6 +163,16 @@ Type: bugfix
 
 De updater patcht bestaande Eleventy-configs nu met de LWE-transform die editor-only knoppen uit `_site/*.html` verwijdert. Daardoor krijgen bestaande projecten dezelfde bescherming zonder dat hun projectspecifieke `.eleventy.js` volledig wordt overschreven.
 
+## Release 0.2.49 - Backups naast projectmap
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
+Type: verbetering
+
+LWE update-backups worden voortaan naast de projectmap gezet in `_lwe-backups/<projectnaam>/<timestamp>`. Daardoor blijft de projectmap schoner en groeit backupdata niet meer in het project zelf. De locatie is relatief aan het project en werkt dus ook als iemand geen vaste `projecten-LWE` map gebruikt.
+
 ## 1. LCB Menu Bar Visual Bug
 
 Status: klaar  
