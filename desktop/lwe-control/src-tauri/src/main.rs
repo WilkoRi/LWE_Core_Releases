@@ -23,6 +23,7 @@ struct ControlStatus {
     port: u16,
     running: bool,
     managed: bool,
+    dependencies_ready: bool,
     website_url: String,
     editor_url: String,
 }
@@ -51,7 +52,10 @@ fn find_lwe_project_from(start: &Path) -> Option<PathBuf> {
 }
 
 fn resolve_project_dir(configured_project_dir: Option<String>) -> Result<PathBuf, String> {
-    if let Some(path) = configured_project_dir.as_deref().filter(|path| !path.is_empty()) {
+    if let Some(path) = configured_project_dir
+        .as_deref()
+        .filter(|path| !path.is_empty())
+    {
         let configured = PathBuf::from(path);
         if looks_like_lwe_project(&configured) {
             return Ok(configured);
@@ -68,14 +72,18 @@ fn resolve_project_dir(configured_project_dir: Option<String>) -> Result<PathBuf
     if cfg!(target_os = "macos") {
         let mut current = exe.as_path();
         while let Some(parent) = current.parent() {
-            if parent.extension().is_some_and(|extension| extension == "app") {
+            if parent
+                .extension()
+                .is_some_and(|extension| extension == "app")
+            {
                 if let Some(project) = parent.parent().and_then(find_lwe_project_from) {
                     return Ok(project);
                 }
 
-                return parent.parent().map(Path::to_path_buf).ok_or_else(|| {
-                    "Projectmap naast LWE Control.app niet gevonden.".to_string()
-                });
+                return parent
+                    .parent()
+                    .map(Path::to_path_buf)
+                    .ok_or_else(|| "Projectmap naast LWE Control.app niet gevonden.".to_string());
             }
             current = parent;
         }
@@ -121,6 +129,64 @@ fn server_script(project_dir: &Path) -> Result<&'static str, String> {
     Err("Geen LWE serverbestand gevonden: server.js of lcb-server.js ontbreekt.".to_string())
 }
 
+fn package_manager_command() -> &'static str {
+    if cfg!(target_os = "windows") {
+        "npm.cmd"
+    } else {
+        "npm"
+    }
+}
+
+fn eleventy_bin(project_dir: &Path) -> PathBuf {
+    if cfg!(target_os = "windows") {
+        project_dir
+            .join("node_modules")
+            .join(".bin")
+            .join("eleventy.cmd")
+    } else {
+        project_dir
+            .join("node_modules")
+            .join(".bin")
+            .join("eleventy")
+    }
+}
+
+fn project_dependencies_ready(project_dir: &Path) -> bool {
+    project_dir.join("node_modules").exists() && eleventy_bin(project_dir).exists()
+}
+
+fn install_project_dependencies(project_dir: &Path) -> Result<(), String> {
+    let mut command = Command::new(package_manager_command());
+    command
+        .arg("install")
+        .current_dir(project_dir)
+        .stdout(Stdio::null())
+        .stderr(Stdio::null());
+
+    #[cfg(target_os = "windows")]
+    command.creation_flags(CREATE_NO_WINDOW);
+
+    let status = command
+        .status()
+        .map_err(|error| format!("Project voorbereiden mislukt: {error}"))?;
+
+    if !status.success() {
+        return Err(
+            "Project voorbereiden mislukt. Controleer of Node.js LTS is geinstalleerd en probeer opnieuw."
+                .to_string(),
+        );
+    }
+
+    if !project_dependencies_ready(project_dir) {
+        return Err(
+            "Project voorbereiden is klaar, maar Eleventy is nog niet gevonden. Controleer package.json en npm install."
+                .to_string(),
+        );
+    }
+
+    Ok(())
+}
+
 fn child_is_running(app_state: &mut AppState) -> bool {
     let Some(child) = app_state.child.as_mut() else {
         return false;
@@ -161,6 +227,7 @@ fn status_from_state(
         port,
         running,
         managed,
+        dependencies_ready: project_dependencies_ready(&project),
         website_url: format!("http://127.0.0.1:{port}/"),
         editor_url: format!("http://127.0.0.1:{port}/__lcb/"),
     })
@@ -228,6 +295,13 @@ fn start_server(
 
         if !child_is_running(&mut app_state) {
             let project = resolve_project_dir(project_dir.clone())?;
+            if !project_dependencies_ready(&project) {
+                return Err(
+                    "Project is nog niet voorbereid. Klik eerst op Project voorbereiden."
+                        .to_string(),
+                );
+            }
+
             let port = configured_port(&project);
             if port_is_open(port) {
                 return Err(format!(
@@ -274,6 +348,12 @@ fn restart_server(
             .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
 
         let project = resolve_project_dir(project_dir.clone())?;
+        if !project_dependencies_ready(&project) {
+            return Err(
+                "Project is nog niet voorbereid. Klik eerst op Project voorbereiden.".to_string(),
+            );
+        }
+
         let port = configured_port(&project);
 
         if child_is_running(&mut app_state) {
@@ -290,6 +370,27 @@ fn restart_server(
         app_state.child = Some(child);
     }
 
+    status_from_state(&state, project_dir)
+}
+
+#[tauri::command]
+fn prepare_project(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let project = resolve_project_dir(project_dir.clone())?;
+
+    {
+        let mut app_state = state
+            .lock()
+            .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
+
+        if child_is_running(&mut app_state) {
+            return Err("Stop eerst de server voordat je het project voorbereidt.".to_string());
+        }
+    }
+
+    install_project_dependencies(&project)?;
     status_from_state(&state, project_dir)
 }
 
@@ -333,6 +434,7 @@ fn main() {
             start_server,
             stop_server,
             restart_server,
+            prepare_project,
             open_website,
             open_editor,
             quit_app

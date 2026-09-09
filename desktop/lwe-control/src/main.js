@@ -3,14 +3,18 @@ import { open } from "@tauri-apps/plugin-dialog";
 import "./styles.css";
 
 const storageKey = "lwe-control.project-dir";
+let busy = false;
+let lastStatus = null;
 
 const elements = {
   statusBadge: document.querySelector("#statusBadge"),
   projectPath: document.querySelector("#projectPath"),
   serverStatus: document.querySelector("#serverStatus"),
   port: document.querySelector("#port"),
+  projectReady: document.querySelector("#projectReady"),
   message: document.querySelector("#message"),
   chooseProjectButton: document.querySelector("#chooseProjectButton"),
+  prepareProjectButton: document.querySelector("#prepareProjectButton"),
   startButton: document.querySelector("#startButton"),
   stopButton: document.querySelector("#stopButton"),
   restartButton: document.querySelector("#restartButton"),
@@ -25,6 +29,7 @@ function setMessage(text, isError = false) {
 }
 
 function renderStatus(status) {
+  lastStatus = status;
   elements.projectPath.textContent = status.project_dir || "-";
   elements.serverStatus.textContent = status.running
     ? status.managed
@@ -32,11 +37,18 @@ function renderStatus(status) {
       : "Actief buiten LWE Control"
     : "Inactief";
   elements.port.textContent = String(status.port || "-");
+  elements.projectReady.textContent = status.dependencies_ready ? "Voorbereid" : "Nog voorbereiden";
   elements.statusBadge.textContent = status.running ? "Actief" : "Inactief";
   elements.statusBadge.classList.toggle("is-active", Boolean(status.running));
   elements.statusBadge.classList.toggle("is-external", Boolean(status.running && !status.managed));
-  elements.stopButton.disabled = Boolean(status.running && !status.managed);
-  elements.restartButton.disabled = Boolean(status.running && !status.managed);
+  elements.chooseProjectButton.disabled = busy;
+  elements.prepareProjectButton.disabled = Boolean(busy || status.running || status.dependencies_ready);
+  elements.startButton.disabled = Boolean(busy || !status.dependencies_ready || (status.running && !status.managed));
+  elements.stopButton.disabled = Boolean(busy || (status.running && !status.managed));
+  elements.restartButton.disabled = Boolean(busy || (status.running && !status.managed));
+  elements.openEditorButton.disabled = busy;
+  elements.openWebsiteButton.disabled = busy;
+  elements.quitButton.disabled = busy;
 }
 
 function selectedProjectDir() {
@@ -67,9 +79,10 @@ async function runAction(action, successMessage) {
 }
 
 function setBusy(isBusy) {
-  document.querySelectorAll("button").forEach((button) => {
-    button.disabled = isBusy;
-  });
+  busy = isBusy;
+  if (lastStatus) {
+    renderStatus(lastStatus);
+  }
 }
 
 elements.chooseProjectButton.addEventListener("click", async () => {
@@ -91,6 +104,9 @@ elements.chooseProjectButton.addEventListener("click", async () => {
     setMessage(String(error), true);
   }
 });
+elements.prepareProjectButton.addEventListener("click", () =>
+  runAction("prepare_project", "Project voorbereid.")
+);
 elements.startButton.addEventListener("click", () => runAction("start_server", "Server gestart."));
 elements.stopButton.addEventListener("click", () => runAction("stop_server", "Server gestopt."));
 elements.restartButton.addEventListener("click", () => runAction("restart_server", "Server herstart."));
