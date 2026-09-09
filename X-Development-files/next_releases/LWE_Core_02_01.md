@@ -54,6 +54,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Editor-knoppen zichtbaar op gewone website | klaar release 0.2.45 | laag | laag | hoog | bugfix |
 | Editor-knoppen uit gewone preview en publish-check | klaar release 0.2.46 | laag | laag | hoog | bugfix |
 | Standaard image-mappen voor LWE projecten | klaar release 0.2.50 | laag | laag | hoog | workflow |
+| Hero image proxy-knop zichtbaar in edit-modus | klaar release 0.2.51 | laag | laag | hoog | bugfix |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -189,6 +190,18 @@ LWE gebruikt nu expliciet dezelfde image-locaties in Core, updateconfig en edito
 - public output: `_site/assets/images/processed/`
 
 De LWE editor zoekt bestaande afbeeldingen voortaan in de processed image-output in plaats van in oude project-specifieke assetmappen. De LWE guard herkent daarnaast project-input afbeeldingen als gebruikt wanneer ze via het processed manifest naar websitebeelden zijn verwerkt.
+
+## Release 0.2.51 - Hero image proxy-knop zichtbaar
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: bugfix
+
+De CSS voor `lcb-image-edit-proxy` is aangescherpt zodat hero-afbeeldingknoppen in `/__lcb/` zichtbaar blijven, ook wanneer `system.css` editor-only knoppen buiten edit-modus met `!important` verbergt.
+
+Daarnaast krijgen hero-proxyknoppen standaard een vaste overlaypositie linksboven in `.hero` en `.page-hero`, zodat bewerkbare hero-backgrounds en hero-afbeeldingen dezelfde beheer-UX kunnen gebruiken.
 
 ## 1. LCB Menu Bar Visual Bug
 

@@ -44,6 +44,17 @@ body.lcb-active .lcb-image-edit-proxy {
   cursor: pointer;
 }
 
+body.lcb-active button.lcb-image-edit-proxy[data-edit-src-path] {
+  display: inline-flex !important;
+}
+
+body.lcb-active .hero > .lcb-image-edit-proxy,
+body.lcb-active .page-hero > .lcb-image-edit-proxy {
+  position: absolute;
+  top: 24px;
+  left: clamp(20px, 5vw, 72px);
+}
+
 .lcb-toolbar {
   position: sticky;
   top: 0;

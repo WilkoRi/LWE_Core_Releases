@@ -64,3 +64,7 @@ body.lcb-active [data-lcb-only],
 body.lcb-active [data-lwe-editor-only] {
   display: revert !important;
 }
+
+body.lcb-active button.lcb-image-edit-proxy[data-edit-src-path] {
+  display: inline-flex !important;
+}
