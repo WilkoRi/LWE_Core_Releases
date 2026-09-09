@@ -39,6 +39,7 @@
     "desktop/lwe-control/src-tauri/build.rs",
     "desktop/lwe-control/src-tauri/capabilities/default.json",
     "desktop/lwe-control/src-tauri/icons/icon.icns",
+    "desktop/lwe-control/src-tauri/icons/icon.ico",
     "desktop/lwe-control/src-tauri/icons/icon.png",
     "desktop/lwe-control/src-tauri/src/main.rs",
     "desktop/lwe-control/src-tauri/tauri.conf.json",

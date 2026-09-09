@@ -11,7 +11,7 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-09T05:57:33.552Z",
+    "createdAt": "2026-09-09T06:05:40.270Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
@@ -39,8 +39,8 @@
         "hash": "65ea4224da277c58888256c837928294f8bb17de"
       },
       "scripts/lwe-control-desktop-release-macos.js": {
-        "size": 1601,
-        "hash": "284b9e2d87c3f3aeac297b044c37ae08c75fe959"
+        "size": 1627,
+        "hash": "e5292db3874f8f4122b784056bf3ea5acbf20013"
       },
       "scripts/lwe-images.js": {
         "size": 10869,
@@ -126,8 +126,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-09T05:57:33.553Z",
-    "signature": "e2e7bf9efa9b12eb51a5d5e959d0a384960c6e73d14ee8b14928c62b83f3685a"
+    "updatedAt": "2026-09-09T06:05:40.271Z",
+    "signature": "bb90692609822cc413cb357aa074d5aadbca169f71ed475fc102720884d7ba32"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

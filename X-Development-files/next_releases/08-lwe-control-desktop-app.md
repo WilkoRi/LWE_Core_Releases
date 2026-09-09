@@ -85,6 +85,16 @@ Desktop-control UX-fix:
 - De desktopstarter verwijst daardoor niet meer naar een route die projectwebsites niet hebben.
 - Standaard venstermaat aangepast naar `700 x 720`.
 
+## Release 0.2.39
+
+Windows build-route toegevoegd:
+
+- GitHub Actions workflow toegevoegd voor Windows build.
+- Workflow bouwt de Tauri desktop-app op `windows-latest`.
+- NSIS `.exe` wordt als workflow artifact opgeslagen.
+- Bij tag-releases wordt de `.exe` ook als GitHub Release asset geupload.
+- Windows `icon.ico` toegevoegd aan de Tauri bundle-config en het release-manifest.
+
 ## Gewenste UX
 
 De gebruiker krijgt een app:

@@ -313,6 +313,8 @@ release-assets/macos/LWE Control.app
 
 Deze desktop-MVP mag vanaf deze versie met projecten meekomen bij `npm run lwe:update-install`. Alleen de bronbestanden worden uitgerold; `node_modules/`, `dist/`, Tauri `target/` en andere build-output blijven uitgesloten.
 
+Windows builds lopen via GitHub Actions in `.github/workflows/lwe-control-windows.yml`. Die workflow bouwt op `windows-latest` een NSIS `.exe` en hangt die bij tag-releases als asset aan de GitHub Release.
+
 ### Update Via GitHub Releases
 
 De gewenste standaard is: LWE Core wordt als stabiele GitHub Release gepubliceerd. Een project controleert dan zelf of er een nieuwere release is:

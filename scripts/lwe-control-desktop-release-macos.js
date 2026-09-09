@@ -39,7 +39,7 @@ console.log("==============================");
 console.log("");
 
 run("npm", ["--prefix", "desktop/lwe-control", "install"]);
-run("npm", ["--prefix", "desktop/lwe-control", "run", "tauri:build"]);
+run("npm", ["--prefix", "desktop/lwe-control", "run", "tauri:build", "--", "--bundles", "app"]);
 
 if (!fs.existsSync(builtApp)) {
   console.error(`Gebouwde app niet gevonden: ${builtApp}`);
