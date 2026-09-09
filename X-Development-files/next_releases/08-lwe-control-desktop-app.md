@@ -61,6 +61,14 @@ Zelfstandige app-start verbeterd:
 - De app hoeft daardoor niet meer naast `package.json` in de projectmap te staan.
 - Een gedownloade app in Downloads of een app in Programma's kan dezelfde LWE-projectmap bedienen.
 
+## Release 0.2.36
+
+Release-fix voor projectmap kiezen:
+
+- Tauri capability toegevoegd voor `dialog:allow-open`.
+- De knop `Kies projectmap` mag daardoor de native mapkiezer openen.
+- Capabilitybestand toegevoegd aan het LWE release-manifest.
+
 ## Gewenste UX
 
 De gebruiker krijgt een app:

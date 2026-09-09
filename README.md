@@ -284,7 +284,7 @@ Gebruik voor bestaande LWE-projecten liever de update-tool dan `install-lcb.js -
 
 ## LWE Control Desktop MVP
 
-LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`. Vanaf `0.2.33` voegt de updater ook de bijbehorende npm-scripts toe aan projecten. Vanaf `0.2.34` kan lokaal een macOS `.app` worden gebouwd. Vanaf `0.2.35` kan de app een LWE-projectmap kiezen en onthouden.
+LWE Core bevat vanaf `0.2.32` een eerste desktop-MVP onder `desktop/lwe-control/`. Vanaf `0.2.33` voegt de updater ook de bijbehorende npm-scripts toe aan projecten. Vanaf `0.2.34` kan lokaal een macOS `.app` worden gebouwd. Vanaf `0.2.35` kan de app een LWE-projectmap kiezen en onthouden. Vanaf `0.2.36` staat de Tauri-permissie voor de native mapkiezer correct aan.
 
 Deze app is bedoeld als toekomstige eenvoudige starter voor websitebeheerders:
 
