@@ -52,6 +52,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Update-install installeert dezelfde release opnieuw | klaar release 0.2.43 | laag | laag | middel | bugfix |
 | VS Code Control update-popup verduidelijken | klaar release 0.2.44 | laag | laag | middel | UX |
 | Editor-knoppen zichtbaar op gewone website | klaar release 0.2.45 | laag | laag | hoog | bugfix |
+| Editor-knoppen uit gewone preview en publish-check | klaar release 0.2.46 | laag | laag | hoog | bugfix |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -131,6 +132,16 @@ Impact: hoog
 Type: bugfix
 
 Knoppen met `data-edit-path`, `data-edit-href-path` of `data-edit-src-path` worden standaard verborgen op de gewone website. Ze worden alleen zichtbaar wanneer de LWE editor actief is (`body.lcb-active`). Daardoor kan een project geen zichtbare "Bewerk ..." knop meer op de publieke preview of productiepagina tonen.
+
+## Release 0.2.46 - Editor-only knoppen strippen en blokkeren
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: bugfix
+
+De LWE-server verwijdert editor-only `<button>` elementen uit gewone previewroutes. In `/__lcb/` blijven ze beschikbaar voor bewerken. Daarnaast blokkeert `npm run lwe:publish-check` voortaan wanneer editor-only knoppen nog in `_site/*.html` staan, zodat dit niet ongemerkt gepubliceerd kan worden.
 
 ## 1. LCB Menu Bar Visual Bug
 

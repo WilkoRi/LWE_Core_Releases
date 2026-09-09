@@ -84,6 +84,12 @@ const localOnlyPaths = [
 
 const siteFiles = listFiles(siteDir);
 const forbiddenInSite = siteFiles.filter(isForbiddenPublishPath);
+const editorOnlyButtonPattern = /<button\b(?=[^>]*\bdata-edit-(?:path|href-path|src-path)=)[\s\S]*?<\/button>/i;
+const editorOnlyButtonsInSite = siteFiles.filter((rel) => {
+  if (!rel.endsWith(".html")) return false;
+  const filePath = path.join(siteDir, rel);
+  return editorOnlyButtonPattern.test(fs.readFileSync(filePath, "utf8"));
+});
 
 console.log("LWE PUBLISH CHECK");
 console.log("=================");
@@ -132,7 +138,21 @@ if (forbiddenInSite.length) {
   process.exit(1);
 }
 
+if (editorOnlyButtonsInSite.length) {
+  console.error("- violation: editor-only knoppen aangetroffen in de publicatie-output");
+  for (const item of editorOnlyButtonsInSite.slice(0, 20)) {
+    console.error(`- bevat editor-knop: ${siteDirName}/${item}`);
+  }
+  if (editorOnlyButtonsInSite.length > 20) {
+    console.error(`- plus ${editorOnlyButtonsInSite.length - 20} extra item(s)`);
+  }
+  console.error("");
+  console.error("LWE PUBLISH CHECK BLOCKED");
+  process.exit(1);
+}
+
 console.log("- ok: geen bekende lokale LWE-bestanden in de publicatie-output");
+console.log("- ok: geen editor-only knoppen in de publicatie-output");
 console.log("");
 console.log("Als je FTP of hosting gebruikt:");
 console.log(`- open ${siteDirName}/`);

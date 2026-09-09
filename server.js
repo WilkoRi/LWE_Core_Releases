@@ -180,6 +180,13 @@ function injectLcb(html) {
     .replace("</body>", `    <script>window.LCB_CONFIG = ${JSON.stringify({ editPrefix: lcbPrefix, assetPrefix: lcbAssetPrefix, rootEditPath: lcbRootPath, editToken, contentVersions: contentFileVersions() })};</script>\n    <script src="${editorUrl}" defer></script>\n  </body>`);
 }
 
+function stripEditorOnlyControls(html) {
+  return html.replace(
+    /<button\b(?=[^>]*\bdata-edit-(?:path|href-path|src-path)=)[\s\S]*?<\/button>/gi,
+    ""
+  );
+}
+
 function lcbAssetUrl(assetName) {
   const filePath = resolveInside(lcbDir, assetName);
   let version = "dev";
@@ -800,8 +807,9 @@ async function serveFile(request, response) {
     let file = await fs.readFile(filePath);
     const ext = path.extname(filePath);
 
-    if (isLcbRequest && ext === ".html") {
-      file = Buffer.from(injectLcb(file.toString("utf8")));
+    if (ext === ".html") {
+      const html = file.toString("utf8");
+      file = Buffer.from(isLcbRequest ? injectLcb(html) : stripEditorOnlyControls(html));
     }
 
     send(response, 200, file, mimeTypes[ext] || "application/octet-stream");
