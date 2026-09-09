@@ -7,6 +7,7 @@ const { spawnSync } = require("node:child_process");
 
 const root = path.resolve(__dirname, "..");
 const configPath = path.join(root, "lwe-update.config.json");
+const versionPath = path.join(root, "lwe-process", "version.json");
 const manifestName = "lwe-release-manifest.json";
 
 function readJson(filePath, fallback) {
@@ -108,9 +109,29 @@ function assertManifest(extractedRoot) {
   }
 }
 
+function normalizeVersion(value) {
+  return String(value || "0.0.0").replace(/^v/i, "");
+}
+
+function compareVersions(a, b) {
+  const left = normalizeVersion(a).split(".").map((part) => Number.parseInt(part, 10) || 0);
+  const right = normalizeVersion(b).split(".").map((part) => Number.parseInt(part, 10) || 0);
+  const length = Math.max(left.length, right.length);
+
+  for (let index = 0; index < length; index += 1) {
+    const diff = (left[index] || 0) - (right[index] || 0);
+    if (diff !== 0) return diff;
+  }
+
+  return 0;
+}
+
 async function main() {
   const apply = process.argv.includes("--apply");
+  const force = process.argv.includes("--force");
   const config = updateConfig();
+  const version = readJson(versionPath, { lwe: {} });
+  const current = version.lwe?.runtimeVersion || version.lwe?.coreVersion || "unknown";
 
   console.log("LWE UPDATE INSTALL");
   console.log("==================");
@@ -131,11 +152,22 @@ async function main() {
   }
 
   const release = await requestJson(`https://api.github.com/repos/${config.repo}/releases/latest`);
+  const latest = release.tag_name || release.name || "unknown";
+  const hasNewerRelease = current === "unknown" ? true : compareVersions(latest, current) > 0;
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "lwe-release-"));
   const tarPath = path.join(tmpDir, "release.tar.gz");
 
-  console.log(`Release: ${release.tag_name || release.name || "unknown"}`);
+  console.log(`Huidige runtime: ${current}`);
+  console.log(`Release: ${latest}`);
   console.log(`Bron: ${release.tarball_url}`);
+
+  if (!hasNewerRelease && !force) {
+    console.log("");
+    console.log("Je bent al up-to-date. Er hoeft niets geinstalleerd te worden.");
+    console.log("Wil je dezelfde release bewust opnieuw installeren, gebruik dan:");
+    console.log("npm run lwe:update-install -- --apply --force");
+    return;
+  }
 
   if (!apply) {
     console.log("");

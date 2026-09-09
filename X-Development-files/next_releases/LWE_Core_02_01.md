@@ -49,6 +49,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Headerhoogte bij andere afbeeldingsverhouding | klaar release 0.2.41 | laag | laag | hoog | bugfix |
 | Productiepool voor actieve afbeeldingen | klaar basis release 0.2.41 | middel | middel | hoog | workflow |
 | Update-config ontbreekt na bootstrap-update | klaar release 0.2.42 | laag | laag | hoog | bugfix |
+| Update-install installeert dezelfde release opnieuw | klaar release 0.2.43 | laag | laag | middel | bugfix |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -98,6 +99,16 @@ Impact: hoog
 Type: bugfix
 
 `lwe-update.config.json` is nu officieel onderdeel van de Core updatebestanden. Daardoor krijgen oudere projecten na een eenmalige bootstrap-update direct de juiste publieke GitHub release-repo (`WilkoRi/LWE_Core_Releases`) mee en werkt `npm run lwe:update-check` zonder handmatig configbestand.
+
+## Release 0.2.43 - Update-install overslaan bij gelijke versie
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
+Type: bugfix
+
+`npm run lwe:update-install -- --apply` slaat nu standaard over wanneer de nieuwste GitHub release niet nieuwer is dan de lokale runtime. Dezelfde release opnieuw installeren kan alleen nog bewust met `--force`.
 
 ## 1. LCB Menu Bar Visual Bug
 
