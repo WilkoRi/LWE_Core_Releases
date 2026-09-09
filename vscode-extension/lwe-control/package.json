@@ -2,7 +2,7 @@
   "name": "lwe-control",
   "displayName": "LWE Control",
   "description": "Local control panel for Local Website Editor projects.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "publisher": "lwe-local",
   "engines": {
     "vscode": "^1.90.0"

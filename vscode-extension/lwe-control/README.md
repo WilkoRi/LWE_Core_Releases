@@ -61,7 +61,7 @@ Daarna werkt LWE Control zonder `F5` of debugvenster.
 - `Check afbeeldingen` -> toont met `npm run lwe:images` een veilig dry-run plan
 - `Publicatiecheck` -> `npm run lwe:publish-check`
 - `Update controleren` -> `npm run lwe:update-check`
-- `Update installeren` -> vraagt bevestiging en draait daarna `npm run lwe:update-install -- --apply`
+- `Update installeren` -> vraagt bevestiging en draait daarna `npm run lwe:update-install -- --apply`; als de runtime al up-to-date is, wordt niets overschreven
 
 ## Veiligheidsregel
 

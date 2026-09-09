@@ -50,6 +50,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Productiepool voor actieve afbeeldingen | klaar basis release 0.2.41 | middel | middel | hoog | workflow |
 | Update-config ontbreekt na bootstrap-update | klaar release 0.2.42 | laag | laag | hoog | bugfix |
 | Update-install installeert dezelfde release opnieuw | klaar release 0.2.43 | laag | laag | middel | bugfix |
+| VS Code Control update-popup verduidelijken | klaar release 0.2.44 | laag | laag | middel | UX |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -109,6 +110,16 @@ Impact: middel
 Type: bugfix
 
 `npm run lwe:update-install -- --apply` slaat nu standaard over wanneer de nieuwste GitHub release niet nieuwer is dan de lokale runtime. Dezelfde release opnieuw installeren kan alleen nog bewust met `--force`.
+
+## Release 0.2.44 - Update-popup verduidelijkt
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
+Type: UX
+
+De VS Code LWE Control-popup bij `Update installeren` zegt nu duidelijk dat LWE alleen installeert wanneer er een nieuwere stabiele release is. Als het project al up-to-date is, gebeurt er niets. De meegeleverde VSIX is bijgewerkt naar `0.1.7`.
 
 ## 1. LCB Menu Bar Visual Bug
 

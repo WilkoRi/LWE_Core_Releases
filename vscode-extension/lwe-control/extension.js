@@ -240,7 +240,7 @@ async function runNamedCommand(name) {
 
   if (name === "updateInstall") {
     const answer = await vscode.window.showWarningMessage(
-      "Dit installeert de nieuwste stabiele LWE-release in dit project. Er wordt eerst een backup gemaakt. Doe dit alleen als je de update-check hebt gelezen.",
+      "LWE controleert en installeert alleen als er een nieuwere stabiele release is. Als je al up-to-date bent, gebeurt er niets. Er wordt eerst een backup gemaakt.",
       { modal: true },
       "Update installeren"
     );
@@ -650,7 +650,7 @@ function renderPanel(project, options = {}) {
 
         <article class="card">
           <h2>Updates</h2>
-          <p>Controleer of er een stabiele LWE-release beschikbaar is. Installeer alleen na akkoord en met backup.</p>
+          <p>Controleer of er een stabiele LWE-release beschikbaar is. Installeren slaat automatisch over als je al up-to-date bent.</p>
           <div class="actions">
             <button data-run="updateCheck">Update controleren</button>
             <button class="warning" data-run="updateInstall">Update installeren</button>
