@@ -153,6 +153,16 @@ Type: bugfix
 
 De Eleventy-build verwijdert editor-only `<button>` elementen nu ook uit de gegenereerde `_site/*.html`. Daardoor kan een zichtbare knop zoals `Bewerk hero-afbeelding` niet meer in de platte publicatie-output terechtkomen. De LWE-editor blijft lokaal via `/__lcb/` beschikbaar.
 
+## Release 0.2.48 - Eleventy transform uitgerold naar bestaande projecten
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: bugfix
+
+De updater patcht bestaande Eleventy-configs nu met de LWE-transform die editor-only knoppen uit `_site/*.html` verwijdert. Daardoor krijgen bestaande projecten dezelfde bescherming zonder dat hun projectspecifieke `.eleventy.js` volledig wordt overschreven.
+
 ## 1. LCB Menu Bar Visual Bug
 
 Status: klaar  
@@ -864,3 +874,5 @@ in EduCar_rc_05 heb ik bij componenten een image met andere afmetingen gebruikt 
 Belangrijk ! 
 Image komen en staan nu in 1 folder. Naddeel is ik gebruik 100 foto's om uit te kiezen maar gebruik er maar 12 in _site dat houdt in dat ik onnodig data heen en weer stuur. 
 liever eiegen pool met actieve afbeelding in de _site wat niet wordt gebriukt eruit wat we l.. erin 
+
+# duidelijke link op nemen in de app en exe waar je nodejs.org

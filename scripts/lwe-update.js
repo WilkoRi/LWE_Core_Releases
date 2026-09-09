@@ -256,6 +256,56 @@ function nextEleventyIgnore() {
   return nextLines.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
 }
 
+function eleventyConfigPath() {
+  return [".eleventy.js", "eleventy.config.js", "eleventy.config.cjs"]
+    .map((file) => path.join(targetDir, file))
+    .find((filePath) => fs.existsSync(filePath)) || "";
+}
+
+function stripEditorOnlyTransformSnippet() {
+  return `
+
+  // LWE: houd editor-only knoppen uit de platte publicatie-output.
+  eleventyConfig.addTransform("lwe-strip-editor-only-controls", function (content) {
+    if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
+      return content;
+    }
+
+    return content.replace(
+      /<button\\b(?=[^>]*\\bdata-edit-(?:path|href-path|src-path)=)[\\s\\S]*?<\\/button>/gi,
+      ""
+    );
+  });
+`;
+}
+
+function nextEleventyConfig(current) {
+  if (/lwe-strip-editor-only-controls|strip-editor-only-controls/.test(current)) {
+    return current;
+  }
+
+  const snippet = stripEditorOnlyTransformSnippet();
+  const registerTextIndex = current.indexOf("registerTextFilters(eleventyConfig);");
+  if (registerTextIndex !== -1) {
+    const insertAt = registerTextIndex + "registerTextFilters(eleventyConfig);".length;
+    return `${current.slice(0, insertAt)}${snippet}${current.slice(insertAt)}`;
+  }
+
+  const registerCalendarIndex = current.indexOf("registerCalendarFilters(eleventyConfig);");
+  if (registerCalendarIndex !== -1) {
+    const insertAt = registerCalendarIndex + "registerCalendarFilters(eleventyConfig);".length;
+    return `${current.slice(0, insertAt)}${snippet}${current.slice(insertAt)}`;
+  }
+
+  const moduleStartMatch = current.match(/module\.exports\s*=\s*function\s*\([^)]*eleventyConfig[^)]*\)\s*\{/);
+  if (moduleStartMatch?.index !== undefined) {
+    const insertAt = moduleStartMatch.index + moduleStartMatch[0].length;
+    return `${current.slice(0, insertAt)}${snippet}${current.slice(insertAt)}`;
+  }
+
+  return current;
+}
+
 function buildFilePlan(runtime) {
   const files = [
     ["server.js", runtime.server],
@@ -437,6 +487,12 @@ const shouldManageEleventyIgnore = eleventyInputMode === "root";
 const eleventyIgnoreAction = shouldManageEleventyIgnore
   ? (currentEleventyIgnore === plannedEleventyIgnore ? "unchanged" : fs.existsSync(eleventyIgnorePath) ? "update" : "add")
   : "not needed";
+const currentEleventyConfigPath = eleventyConfigPath();
+const currentEleventyConfig = currentEleventyConfigPath ? readText(currentEleventyConfigPath) : "";
+const plannedEleventyConfig = currentEleventyConfig ? nextEleventyConfig(currentEleventyConfig) : "";
+const eleventyConfigAction = !currentEleventyConfigPath
+  ? "missing"
+  : currentEleventyConfig === plannedEleventyConfig ? "unchanged" : "patch";
 const vscodeExtensionsPath = path.join(targetDir, ".vscode", "extensions.json");
 const currentVsCodeExtensions = readJson(vscodeExtensionsPath, {});
 const plannedVsCodeExtensions = nextVsCodeExtensionsJson();
@@ -482,6 +538,7 @@ if (packageWarnings.length) {
 console.log(`lcb.config.json: ${configAction}`);
 console.log(`lwe-process/state.json: ${stateAction}`);
 console.log(`.eleventyignore: ${eleventyIgnoreAction}`);
+console.log(`Eleventy config: ${eleventyConfigAction}${currentEleventyConfigPath ? ` (${path.basename(currentEleventyConfigPath)})` : ""}`);
 console.log(`.vscode/extensions.json: ${vscodeExtensionsAction}`);
 console.log(`LWE Control VSIX: ${vscodeVsixAction}${targetVsixRel ? ` (${targetVsixRel})` : ""}`);
 if (apply) console.log(`Backup: ${backupRoot}`);
@@ -509,6 +566,12 @@ if (configAction !== "unchanged") {
 if (eleventyIgnoreAction === "add" || eleventyIgnoreAction === "update") {
   backupExisting(".eleventyignore");
   fs.writeFileSync(eleventyIgnorePath, plannedEleventyIgnore);
+}
+
+if (eleventyConfigAction === "patch") {
+  const relativeConfigPath = path.relative(targetDir, currentEleventyConfigPath);
+  backupExisting(relativeConfigPath);
+  fs.writeFileSync(currentEleventyConfigPath, plannedEleventyConfig);
 }
 
 if (vscodeExtensionsAction === "add" || vscodeExtensionsAction === "merge") {
