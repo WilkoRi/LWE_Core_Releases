@@ -272,6 +272,7 @@ function buildFilePlan(runtime) {
     ["scripts/lwe-update-install.js", runtime.updateInstall],
     ["scripts/lwe-control-desktop-release-macos.js", "scripts/lwe-control-desktop-release-macos.js"],
     ["lwe-image.config.json", "lwe-image.config.json"],
+    ["lwe-update.config.json", "lwe-update.config.json"],
     ["lwe-release-manifest.json", "lwe-release-manifest.json"],
     ["lwe-process/process.json", "lwe-process/process.json"],
     ["lwe-process/version.json", "lwe-process/version.json"],

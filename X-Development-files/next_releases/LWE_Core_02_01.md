@@ -48,6 +48,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | --- | --- | --- | --- | --- | --- |
 | Headerhoogte bij andere afbeeldingsverhouding | klaar release 0.2.41 | laag | laag | hoog | bugfix |
 | Productiepool voor actieve afbeeldingen | klaar basis release 0.2.41 | middel | middel | hoog | workflow |
+| Update-config ontbreekt na bootstrap-update | klaar release 0.2.42 | laag | laag | hoog | bugfix |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -87,6 +88,16 @@ npm run lwe:images -- --preset=general --prune --apply
 ```
 
 Belangrijk: de editor-knop voor afbeeldingen verversen gebruikt bewust geen `--prune`, zodat nieuwe beelden eerst gekozen kunnen worden.
+
+## Release 0.2.42 - Update-config bootstrap fix
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: bugfix
+
+`lwe-update.config.json` is nu officieel onderdeel van de Core updatebestanden. Daardoor krijgen oudere projecten na een eenmalige bootstrap-update direct de juiste publieke GitHub release-repo (`WilkoRi/LWE_Core_Releases`) mee en werkt `npm run lwe:update-check` zonder handmatig configbestand.
 
 ## 1. LCB Menu Bar Visual Bug
 

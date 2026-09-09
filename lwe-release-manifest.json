@@ -17,6 +17,7 @@
     "scripts/lwe-update-install.js",
     "scripts/lwe-control-desktop-release-macos.js",
     "lwe-image.config.json",
+    "lwe-update.config.json",
     "lwe-release-manifest.json",
     "lwe-process/process.json",
     "lwe-process/version.json",
