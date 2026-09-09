@@ -15,8 +15,32 @@ const root = process.cwd();
 const args = process.argv.slice(2);
 const apply = args.includes("--apply");
 const force = args.includes("--force");
+const prune = args.includes("--prune");
 const supportedExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".tif", ".tiff"]);
 const skippedExtensions = new Set([".svg", ".gif"]);
+const imageOutputExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
+const ignoredReferenceDirs = new Set([
+  ".git",
+  ".lwe-backups",
+  "_site",
+  "dist",
+  "node_modules",
+  "release-assets",
+  "target",
+]);
+const referenceExtensions = new Set([
+  ".cjs",
+  ".css",
+  ".html",
+  ".js",
+  ".json",
+  ".md",
+  ".njk",
+  ".txt",
+  ".yml",
+  ".yaml",
+]);
+const maxReferenceBytes = 1024 * 1024;
 
 const defaultConfig = {
   sourceDir: "project-input/afbeeldingen",
@@ -125,6 +149,106 @@ function listFiles(dir) {
 
   walk(dir);
   return out.sort();
+}
+
+function listProjectTextFiles() {
+  const out = [];
+
+  function walk(current) {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      if (entry.name.startsWith(".") && entry.name !== ".eleventy.js") {
+        continue;
+      }
+
+      const full = path.join(current, entry.name);
+      const rel = path.relative(root, full);
+      const parts = rel.split(path.sep);
+
+      if (parts.some((part) => ignoredReferenceDirs.has(part))) {
+        continue;
+      }
+
+      if (entry.isDirectory()) {
+        walk(full);
+        continue;
+      }
+
+      if (!entry.isFile()) {
+        continue;
+      }
+
+      if (!referenceExtensions.has(path.extname(entry.name).toLowerCase())) {
+        continue;
+      }
+
+      const stats = fs.statSync(full);
+      if (stats.size > maxReferenceBytes) {
+        continue;
+      }
+
+      out.push(full);
+    }
+  }
+
+  walk(root);
+  return out.sort();
+}
+
+function outputPublicUrl(outputDirRel, filePath) {
+  const outputRel = path.relative(root, filePath).split(path.sep).join("/");
+  const outputDir = outputDirRel.split(path.sep).join("/").replace(/^\/+|\/+$/g, "");
+
+  if (outputRel.startsWith("src/assets/")) {
+    return `/assets/${outputRel.slice("src/assets/".length)}`;
+  }
+
+  if (outputRel.startsWith("assets/")) {
+    return `/${outputRel}`;
+  }
+
+  if (outputDir && outputRel.startsWith(outputDir)) {
+    return `/${outputRel}`;
+  }
+
+  return `/${outputRel}`;
+}
+
+function referencedOutputFiles(outputDirRel, outputFiles) {
+  const references = listProjectTextFiles().map((file) => fs.readFileSync(file, "utf8"));
+
+  return new Set(
+    outputFiles.filter((file) => {
+      const rel = path.relative(root, file).split(path.sep).join("/");
+      const publicUrl = outputPublicUrl(outputDirRel, file);
+      return references.some((source) => source.includes(rel) || source.includes(publicUrl));
+    })
+  );
+}
+
+function pruneUnusedOutputImages(outputDir, outputDirRel) {
+  const outputFiles = listFiles(outputDir).filter((file) => {
+    const ext = path.extname(file).toLowerCase();
+    return imageOutputExtensions.has(ext) && path.basename(file) !== "manifest.json";
+  });
+  const referenced = referencedOutputFiles(outputDirRel, outputFiles);
+  const unused = outputFiles.filter((file) => !referenced.has(file));
+
+  if (!unused.length) {
+    console.log("Prune: geen ongebruikte productie-afbeeldingen gevonden.");
+    return [];
+  }
+
+  for (const file of unused) {
+    const rel = path.relative(root, file);
+    if (apply) {
+      fs.unlinkSync(file);
+      console.log(`prune: ${rel}`);
+    } else {
+      console.log(`prune-plan: ${rel}`);
+    }
+  }
+
+  return unused;
 }
 
 function fileSizeLabel(bytes) {
@@ -295,16 +419,22 @@ async function main() {
   if (matchPattern) console.log(`Match: ${matchPattern}`);
   console.log(`Input:  ${sourceDirRel}`);
   console.log(`Output: ${outputDirRel}`);
+  if (prune) console.log("Prune: ongebruikte output-afbeeldingen worden opgeschoond");
   console.log("");
   console.log("Veiligheidsregels:");
   console.log("- originelen worden nooit overschreven");
   console.log("- output gaat naar een aparte generated/processed map");
   console.log("- standaard wordt niet gecropt; verhouding blijft behouden");
   console.log("- bestaande output wordt niet overschreven zonder --force");
+  console.log("- --prune verwijdert alleen ongebruikte output-afbeeldingen, nooit bronbestanden");
   console.log("");
 
   if (!plans.length) {
     console.log("Geen afbeeldingen gevonden.");
+    if (prune) {
+      console.log("");
+      pruneUnusedOutputImages(outputDir, outputDirRel);
+    }
     return;
   }
 
@@ -344,6 +474,11 @@ async function main() {
     fs.writeFileSync(manifestPath, `${JSON.stringify({ generatedAt: new Date().toISOString(), items: manifest }, null, 2)}\n`);
     console.log("");
     console.log(`Manifest: ${path.relative(root, manifestPath)}`);
+  }
+
+  if (prune) {
+    console.log("");
+    pruneUnusedOutputImages(outputDir, outputDirRel);
   }
 
   if (!apply) {

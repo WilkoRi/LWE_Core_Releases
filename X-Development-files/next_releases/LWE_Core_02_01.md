@@ -46,6 +46,8 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 
 | Item | Status | Complexiteit | Risico | Impact | Type |
 | --- | --- | --- | --- | --- | --- |
+| Headerhoogte bij andere afbeeldingsverhouding | klaar release 0.2.41 | laag | laag | hoog | bugfix |
+| Productiepool voor actieve afbeeldingen | klaar basis release 0.2.41 | middel | middel | hoog | workflow |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -61,6 +63,30 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Image replacement functie | open | middel | middel | middel | feature |
 
 ---
+
+## Release 0.2.41 - Image fixes
+
+Status: klaar  
+Complexiteit: middel  
+Risico: middel  
+Impact: hoog  
+Type: bugfix / workflow
+
+### Headerhoogte bij andere afbeeldingsverhouding
+
+Afbeeldingen met `data-image-ratio` en optioneel een `data-image-ratio-frame` krijgen nu een stabiele breedte/hoogte-afspraak vanuit `src/assets/system.css`. Daardoor mag een andere bronverhouding niet automatisch de hoogte van een header/component veranderen.
+
+### Productiepool voor actieve afbeeldingen
+
+`npm run lwe:images` ondersteunt nu `--prune`. Daarmee kunnen ongebruikte generated/processed output-afbeeldingen worden opgeschoond uit de productiepool, zonder bronbestanden in `project-input/afbeeldingen` te verwijderen.
+
+Gebruik:
+
+```bash
+npm run lwe:images -- --preset=general --prune --apply
+```
+
+Belangrijk: de editor-knop voor afbeeldingen verversen gebruikt bewust geen `--prune`, zodat nieuwe beelden eerst gekozen kunnen worden.
 
 ## 1. LCB Menu Bar Visual Bug
 
@@ -763,3 +789,13 @@ Nog nodig voor echte release:
 * `lwe-update.config.json` of `package.json.repository` vullen met de officiele GitHub repository.
 * GitHub Release maken met `lwe-release-manifest.json` in de release.
 * Changelog per release consequent invullen.
+
+# BUG Header veranderd als de afnetingen van de image veranderen 
+Belangrijk !
+in EduCar_rc_05 heb ik bij componenten een image met andere afmetingen gebruikt de ho=gte van de header wijzigde wat niet de bedoeling was. 
+
+# image voor productie los van Source
+
+Belangrijk ! 
+Image komen en staan nu in 1 folder. Naddeel is ik gebruik 100 foto's om uit te kiezen maar gebruik er maar 12 in _site dat houdt in dat ik onnodig data heen en weer stuur. 
+liever eiegen pool met actieve afbeelding in de _site wat niet wordt gebriukt eruit wat we l.. erin 
