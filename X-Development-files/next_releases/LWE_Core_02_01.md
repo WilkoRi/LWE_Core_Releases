@@ -55,12 +55,13 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | Editor-knoppen uit gewone preview en publish-check | klaar release 0.2.46 | laag | laag | hoog | bugfix |
 | Standaard image-mappen voor LWE projecten | klaar release 0.2.50 | laag | laag | hoog | workflow |
 | Hero image proxy-knop zichtbaar in edit-modus | klaar release 0.2.51 | laag | laag | hoog | bugfix |
+| SEO-context aangescherpt | klaar release 0.2.52 | laag | laag | middel | documentatie |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
 | Prototype-tekst vervangen | in onderzoek | laag | laag | laag | documentatie |
 | Improved lcb-context | klaar basisversie | middel | laag | middel | workflow |
-| SEO-bestanden | open | middel | laag | middel | feature |
+| SEO-bestanden | in onderzoek | middel | laag | middel | feature |
 | `.htaccess` / redirects | in onderzoek | middel | middel | middel | migratie |
 | `lwe:update` voor bestaande projecten | klaar release 0.2.15 | hoog | middel | hoog | workflow |
 | Tekstblokken en lijsten als 1 editveld | klaar | middel | laag | hoog | editor |
@@ -202,6 +203,22 @@ Type: bugfix
 De CSS voor `lcb-image-edit-proxy` is aangescherpt zodat hero-afbeeldingknoppen in `/__lcb/` zichtbaar blijven, ook wanneer `system.css` editor-only knoppen buiten edit-modus met `!important` verbergt.
 
 Daarnaast krijgen hero-proxyknoppen standaard een vaste overlaypositie linksboven in `.hero` en `.page-hero`, zodat bewerkbare hero-backgrounds en hero-afbeeldingen dezelfde beheer-UX kunnen gebruiken.
+
+## Release 0.2.52 - SEO-context aangescherpt
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
+Type: documentatie / workflow
+
+`lcb-context/06-seo-basis.md` is uitgebreid met een praktischer SEO-kader voor LWE-projecten:
+
+- SEO Content versus SEO System: SEO-teksten blijven content, URL-relaties worden waar mogelijk afgeleid uit `pageId`, routes en taal.
+- Duidelijkere regels voor canonical URLs, `hreflang`, `x-default`, sitemap en `robots.txt`.
+- `robots.txt` wordt niet meer behandeld als manier om pagina's uit de index te houden; daarvoor hoort `noindex` of serverstatus gebruikt te worden.
+- Structured data is opgenomen als relevant en verifieerbaar onderdeel, niet als verplicht schema voor iedere pagina.
+- Performance en Core Web Vitals staan als SEO/UX-controlepunt bij productieoplevering.
 
 ## 1. LCB Menu Bar Visual Bug
 
