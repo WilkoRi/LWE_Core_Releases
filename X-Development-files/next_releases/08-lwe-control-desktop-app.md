@@ -77,6 +77,14 @@ UI-polish:
 - Knoppen, panels, koppen en statusruimte zijn iets kleiner gemaakt.
 - De desktopstarter voelt daardoor meer als kleine utility-app.
 
+## Release 0.2.38
+
+Desktop-control UX-fix:
+
+- `Open manual` verwijderd uit LWE Control.
+- De desktopstarter verwijst daardoor niet meer naar een route die projectwebsites niet hebben.
+- Standaard venstermaat aangepast naar `700 x 720`.
+
 ## Gewenste UX
 
 De gebruiker krijgt een app:

@@ -19,7 +19,6 @@ struct ControlStatus {
     managed: bool,
     website_url: String,
     editor_url: String,
-    manual_url: String,
 }
 
 fn looks_like_lwe_project(path: &Path) -> bool {
@@ -158,7 +157,6 @@ fn status_from_state(
         managed,
         website_url: format!("http://127.0.0.1:{port}/"),
         editor_url: format!("http://127.0.0.1:{port}/__lcb/"),
-        manual_url: format!("http://127.0.0.1:{port}/manual/"),
     })
 }
 
@@ -306,16 +304,6 @@ fn open_editor(
 }
 
 #[tauri::command]
-fn open_manual(
-    state: tauri::State<Mutex<AppState>>,
-    project_dir: Option<String>,
-) -> Result<ControlStatus, String> {
-    let status = status_from_state(&state, project_dir)?;
-    open_url(&status.manual_url)?;
-    Ok(status)
-}
-
-#[tauri::command]
 fn quit_app(
     app: tauri::AppHandle,
     state: tauri::State<Mutex<AppState>>,
@@ -337,7 +325,6 @@ fn main() {
             restart_server,
             open_website,
             open_editor,
-            open_manual,
             quit_app
         ])
         .on_window_event(|window, event| {

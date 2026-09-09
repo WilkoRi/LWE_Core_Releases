@@ -12,7 +12,6 @@ Deze app is bedoeld voor websitebeheerders die een bestaande LWE-projectmap will
 - Kies LWE-projectmap
 - Open website
 - Open web editor
-- Open manual
 
 De MVP start de lokale Node/LWE-server in de gekozen projectmap. De latere productversie bundelt Node als Tauri sidecar.
 

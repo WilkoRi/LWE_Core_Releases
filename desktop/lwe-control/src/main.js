@@ -16,7 +16,6 @@ const elements = {
   restartButton: document.querySelector("#restartButton"),
   openEditorButton: document.querySelector("#openEditorButton"),
   openWebsiteButton: document.querySelector("#openWebsiteButton"),
-  openManualButton: document.querySelector("#openManualButton"),
   quitButton: document.querySelector("#quitButton"),
 };
 
@@ -97,7 +96,6 @@ elements.stopButton.addEventListener("click", () => runAction("stop_server", "Se
 elements.restartButton.addEventListener("click", () => runAction("restart_server", "Server herstart."));
 elements.openEditorButton.addEventListener("click", () => runAction("open_editor", "Web editor geopend."));
 elements.openWebsiteButton.addEventListener("click", () => runAction("open_website", "Website geopend."));
-elements.openManualButton.addEventListener("click", () => runAction("open_manual", "Manual geopend."));
 elements.quitButton.addEventListener("click", () => runAction("quit_app", "LWE Control sluit af."));
 
 refreshStatus();
