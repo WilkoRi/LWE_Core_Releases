@@ -461,6 +461,10 @@ const processedImageManifestFiles = [
   "src/assets/images/processed/manifest.json",
   "assets/images/processed/manifest.json",
 ].filter((file) => exists(file));
+const processedImageManifestItems = processedImageManifestFiles.flatMap((file) => {
+  const manifest = readJson(file, { items: [] });
+  return Array.isArray(manifest.items) ? manifest.items : [];
+});
 const routesData = readJson(path.join(dataDir, "routes.json"), content.routes || null);
 const routePages =
   routesData && typeof routesData === "object" && routesData.pages && typeof routesData.pages === "object"
@@ -544,12 +548,40 @@ const intakeStrings = flattenStrings(intake);
 const requestedHexColors = intakeStrings.flatMap((value) => value.match(/#[0-9a-f]{3,8}\b/gi) || []);
 const requestedLogoFiles = imageFiles.filter((file) => /logo/i.test(file));
 const nonLogoImageFiles = imageFiles.filter((file) => !/logo/i.test(path.basename(file)));
-const implementedInputImages = imageFiles.filter((file) =>
-  sourceText.includes(file) || sourceText.includes(path.basename(file))
+function publicUrlForProcessedOutput(outputRel) {
+  const normalized = String(outputRel || "").split(path.sep).join("/");
+
+  if (normalized.startsWith("src/assets/")) {
+    return `/assets/${normalized.slice("src/assets/".length)}`;
+  }
+
+  if (normalized.startsWith("assets/")) {
+    return `/${normalized}`;
+  }
+
+  return `/${normalized}`;
+}
+
+const implementedProcessedImageSources = new Set(
+  processedImageManifestItems
+    .filter((item) => {
+      if (!item || typeof item.source !== "string" || typeof item.output !== "string") {
+        return false;
+      }
+
+      const outputPublicUrl = publicUrlForProcessedOutput(item.output);
+      return (
+        sourceText.includes(item.output) ||
+        sourceText.includes(outputPublicUrl) ||
+        sourceText.includes(path.basename(item.output))
+      );
+    })
+    .map((item) => item.source)
 );
-const implementedNonLogoInputImages = nonLogoImageFiles.filter((file) =>
-  sourceText.includes(file) || sourceText.includes(path.basename(file))
-);
+const isImplementedInputImage = (file) =>
+  sourceText.includes(file) || sourceText.includes(path.basename(file)) || implementedProcessedImageSources.has(file);
+const implementedInputImages = imageFiles.filter(isImplementedInputImage);
+const implementedNonLogoInputImages = nonLogoImageFiles.filter(isImplementedInputImage);
 const likelyPersonImageFiles = nonLogoImageFiles.filter((file) =>
   /(persoon|personen|person|people|team|portrait|portret|profiel|profile|headshot|mario|bouke|martijn)/i.test(
     path.basename(file)
@@ -558,12 +590,8 @@ const likelyPersonImageFiles = nonLogoImageFiles.filter((file) =>
 const likelyScreenshotImageFiles = nonLogoImageFiles.filter((file) =>
   /(screenshot|screen|scherm|capture|browser|website)/i.test(path.basename(file))
 );
-const usedLikelyPersonImages = likelyPersonImageFiles.filter((file) =>
-  sourceText.includes(file) || sourceText.includes(path.basename(file))
-);
-const usedLikelyScreenshotImages = likelyScreenshotImageFiles.filter((file) =>
-  sourceText.includes(file) || sourceText.includes(path.basename(file))
-);
+const usedLikelyPersonImages = likelyPersonImageFiles.filter(isImplementedInputImage);
+const usedLikelyScreenshotImages = likelyScreenshotImageFiles.filter(isImplementedInputImage);
 const imageSelectionNotes = getPathValue(intake, "assets.imageSelectionNotes");
 const peoplePhotoApproval = hasAffirmativeAnswer(getPathValue(intake, "assets.peoplePhotoApproval"));
 const screenshotApproval = hasAffirmativeAnswer(getPathValue(intake, "assets.screenshotApproval"));

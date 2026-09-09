@@ -14,6 +14,8 @@ const defaultConfig = {
   assetPrefix: "/__lcb-assets",
   contentFiles: ["content.json"],
   buildCommand: "npm run build",
+  imageSourceDir: "project-input/afbeeldingen",
+  imageOutputDir: "",
   port: 8082,
   startPath: "/",
   demoPath: "/"
@@ -60,6 +62,16 @@ function loadConfig() {
     ...defaultConfig,
     ...JSON.parse(fsSync.readFileSync(configPath, "utf8")),
   };
+}
+
+function loadImageConfig() {
+  const configPath = path.join(root, "lwe-image.config.json");
+
+  if (!fsSync.existsSync(configPath)) {
+    return {};
+  }
+
+  return JSON.parse(fsSync.readFileSync(configPath, "utf8"));
 }
 
 function normalizePrefix(prefix) {
@@ -526,13 +538,7 @@ async function walkImageDirectory(baseDir, results = []) {
 }
 
 async function listAvailableImages() {
-  const candidateDirs = [
-    path.join(root, "src", "assets", "images", "processed"),
-    path.join(root, "assets", "images", "processed"),
-    path.join(root, "src", "assets", "images"),
-    path.join(root, "assets", "images"),
-    path.join(siteDir, "assets", "images"),
-  ];
+  const candidateDirs = imageOutputDirectories();
   const seenUrls = new Set();
   const images = [];
 
@@ -557,6 +563,40 @@ async function listAvailableImages() {
   return images;
 }
 
+function detectDefaultImageOutputDir() {
+  if (fsSync.existsSync(path.join(root, "src", "assets"))) {
+    return "src/assets/images/processed";
+  }
+
+  return "assets/images/processed";
+}
+
+function imageOutputDirectories() {
+  const imageConfig = loadImageConfig();
+  const configuredOutputDir = config.imageOutputDir || imageConfig.outputDir || detectDefaultImageOutputDir();
+  const candidates = [
+    configuredOutputDir,
+    "src/assets/images/processed",
+    "assets/images/processed",
+    path.join(siteDir, "assets", "images", "processed"),
+  ];
+  const seen = new Set();
+  const directories = [];
+
+  for (const candidate of candidates) {
+    const directoryPath = path.isAbsolute(candidate) ? candidate : resolveInside(root, candidate);
+
+    if (!directoryPath || seen.has(directoryPath)) {
+      continue;
+    }
+
+    seen.add(directoryPath);
+    directories.push(directoryPath);
+  }
+
+  return directories;
+}
+
 function runImageRefresh() {
   return new Promise((resolve, reject) => {
     const command = process.platform === "win32" ? "npm.cmd" : "npm";
@@ -579,7 +619,9 @@ function runImageRefresh() {
 }
 
 function sourceImageDirectory() {
-  return path.join(root, "project-input", "afbeeldingen");
+  const imageConfig = loadImageConfig();
+  const sourceDir = config.imageSourceDir || imageConfig.sourceDir || "project-input/afbeeldingen";
+  return resolveInside(root, sourceDir) || path.join(root, "project-input", "afbeeldingen");
 }
 
 function openDirectory(directoryPath) {

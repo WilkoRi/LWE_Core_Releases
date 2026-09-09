@@ -53,6 +53,7 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 | VS Code Control update-popup verduidelijken | klaar release 0.2.44 | laag | laag | middel | UX |
 | Editor-knoppen zichtbaar op gewone website | klaar release 0.2.45 | laag | laag | hoog | bugfix |
 | Editor-knoppen uit gewone preview en publish-check | klaar release 0.2.46 | laag | laag | hoog | bugfix |
+| Standaard image-mappen voor LWE projecten | klaar release 0.2.50 | laag | laag | hoog | workflow |
 | LCB menu bar visual bug | klaar | laag | laag | middel | bugfix |
 | Clean old code | in onderzoek | middel | middel | laag | onderhoud |
 | Import oude website | in onderzoek | hoog | middel | hoog | migratie |
@@ -172,6 +173,22 @@ Impact: middel
 Type: verbetering
 
 LWE update-backups worden voortaan naast de projectmap gezet in `_lwe-backups/<projectnaam>/<timestamp>`. Daardoor blijft de projectmap schoner en groeit backupdata niet meer in het project zelf. De locatie is relatief aan het project en werkt dus ook als iemand geen vaste `projecten-LWE` map gebruikt.
+
+## Release 0.2.50 - Standaard image-mappen
+
+Status: klaar  
+Complexiteit: laag  
+Risico: laag  
+Impact: hoog  
+Type: workflow
+
+LWE gebruikt nu expliciet dezelfde image-locaties in Core, updateconfig en editor:
+
+- bron / keuze-map: `project-input/afbeeldingen/`
+- geoptimaliseerde websitebeelden: `src/assets/images/processed/`
+- public output: `_site/assets/images/processed/`
+
+De LWE editor zoekt bestaande afbeeldingen voortaan in de processed image-output in plaats van in oude project-specifieke assetmappen. De LWE guard herkent daarnaast project-input afbeeldingen als gebruikt wanneer ze via het processed manifest naar websitebeelden zijn verwerkt.
 
 ## 1. LCB Menu Bar Visual Bug
 

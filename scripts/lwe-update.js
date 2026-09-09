@@ -188,6 +188,8 @@ function defaultLcbConfig() {
     assetPrefix: "/__lcb-assets",
     contentFiles: ["content.json"],
     buildCommand: "npm run build",
+    imageSourceDir: "project-input/afbeeldingen",
+    imageOutputDir: "",
     port: 8082,
     startPath: "/",
     demoPath: "/",
