@@ -1,3 +1,5 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use serde::Serialize;
 use std::net::{SocketAddr, TcpStream};
 use std::path::{Path, PathBuf};
@@ -248,6 +250,8 @@ fn open_url(url: &str) -> Result<(), String> {
     } else if cfg!(target_os = "windows") {
         let mut command = Command::new("cmd");
         command.args(["/C", "start", "", url]);
+        #[cfg(target_os = "windows")]
+        command.creation_flags(CREATE_NO_WINDOW);
         command
     } else {
         let mut command = Command::new("xdg-open");
