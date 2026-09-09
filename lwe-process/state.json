@@ -11,7 +11,7 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-08T20:25:58.843Z",
+    "createdAt": "2026-09-09T05:27:26.997Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
@@ -126,8 +126,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-08T20:25:58.843Z",
-    "signature": "ad885ab6f0d8a1e27b43de3132871e170464ee52153e8a68bdb35a9cf18930ad"
+    "updatedAt": "2026-09-09T05:27:26.997Z",
+    "signature": "c4a31981f9a06a136185bee720ffc1c6a74d6c167974e4c2badf73405143c12c"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

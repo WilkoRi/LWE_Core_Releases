@@ -45,7 +45,19 @@ fn find_lwe_project_from(start: &Path) -> Option<PathBuf> {
     }
 }
 
-fn project_dir() -> Result<PathBuf, String> {
+fn resolve_project_dir(configured_project_dir: Option<String>) -> Result<PathBuf, String> {
+    if let Some(path) = configured_project_dir.as_deref().filter(|path| !path.is_empty()) {
+        let configured = PathBuf::from(path);
+        if looks_like_lwe_project(&configured) {
+            return Ok(configured);
+        }
+
+        return Err(format!(
+            "Gekozen projectmap is geen LWE-project: {}",
+            configured.display()
+        ));
+    }
+
     let exe = std::env::current_exe().map_err(|error| error.to_string())?;
 
     if cfg!(target_os = "macos") {
@@ -74,7 +86,7 @@ fn project_dir() -> Result<PathBuf, String> {
         }
     }
 
-    std::env::current_dir().map_err(|error| error.to_string())
+    Err("Kies eerst een LWE projectmap.".to_string())
 }
 
 fn configured_port(project_dir: &Path) -> u16 {
@@ -127,8 +139,11 @@ fn port_is_open(port: u16) -> bool {
     TcpStream::connect_timeout(&address, Duration::from_millis(250)).is_ok()
 }
 
-fn status_from_state(state: &Mutex<AppState>) -> Result<ControlStatus, String> {
-    let project = project_dir()?;
+fn status_from_state(
+    state: &Mutex<AppState>,
+    configured_project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let project = resolve_project_dir(configured_project_dir)?;
     let port = configured_port(&project);
     let mut app_state = state
         .lock()
@@ -174,19 +189,25 @@ fn open_url(url: &str) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn get_status(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
-    status_from_state(&state)
+fn get_status(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    status_from_state(&state, project_dir)
 }
 
 #[tauri::command]
-fn start_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+fn start_server(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
     {
         let mut app_state = state
             .lock()
             .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
 
         if !child_is_running(&mut app_state) {
-            let project = project_dir()?;
+            let project = resolve_project_dir(project_dir.clone())?;
             let port = configured_port(&project);
             if port_is_open(port) {
                 return Err(format!(
@@ -207,11 +228,14 @@ fn start_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, S
         }
     }
 
-    status_from_state(&state)
+    status_from_state(&state, project_dir)
 }
 
 #[tauri::command]
-fn stop_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+fn stop_server(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
     {
         let mut app_state = state
             .lock()
@@ -222,17 +246,20 @@ fn stop_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, St
         }
     }
 
-    status_from_state(&state)
+    status_from_state(&state, project_dir)
 }
 
 #[tauri::command]
-fn restart_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
+fn restart_server(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
     {
         let mut app_state = state
             .lock()
             .map_err(|_| "Serverstatus kon niet worden aangepast.".to_string())?;
 
-        let project = project_dir()?;
+        let project = resolve_project_dir(project_dir.clone())?;
         let port = configured_port(&project);
 
         if child_is_running(&mut app_state) {
@@ -255,39 +282,53 @@ fn restart_server(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus,
         app_state.child = Some(child);
     }
 
-    status_from_state(&state)
+    status_from_state(&state, project_dir)
 }
 
 #[tauri::command]
-fn open_website(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
-    let status = status_from_state(&state)?;
+fn open_website(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state, project_dir)?;
     open_url(&status.website_url)?;
     Ok(status)
 }
 
 #[tauri::command]
-fn open_editor(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
-    let status = status_from_state(&state)?;
+fn open_editor(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state, project_dir)?;
     open_url(&status.editor_url)?;
     Ok(status)
 }
 
 #[tauri::command]
-fn open_manual(state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
-    let status = status_from_state(&state)?;
+fn open_manual(
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let status = status_from_state(&state, project_dir)?;
     open_url(&status.manual_url)?;
     Ok(status)
 }
 
 #[tauri::command]
-fn quit_app(app: tauri::AppHandle, state: tauri::State<Mutex<AppState>>) -> Result<ControlStatus, String> {
-    let status = stop_server(state)?;
+fn quit_app(
+    app: tauri::AppHandle,
+    state: tauri::State<Mutex<AppState>>,
+    project_dir: Option<String>,
+) -> Result<ControlStatus, String> {
+    let status = stop_server(state, project_dir)?;
     app.exit(0);
     Ok(status)
 }
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .manage(Mutex::new(AppState::default()))
         .invoke_handler(tauri::generate_handler![
             get_status,

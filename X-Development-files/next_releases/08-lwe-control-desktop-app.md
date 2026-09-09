@@ -52,9 +52,18 @@ macOS app-build toegevoegd:
 - Het commando bouwt `LWE Control.app` en kopieert die naar `release-assets/macos/`.
 - `release-assets/` blijft lokaal en wordt niet in Git opgenomen.
 
+## Release 0.2.35
+
+Zelfstandige app-start verbeterd:
+
+- LWE Control kan nu een LWE-projectmap kiezen via een native mapkiezer.
+- De gekozen projectmap wordt lokaal onthouden.
+- De app hoeft daardoor niet meer naast `package.json` in de projectmap te staan.
+- Een gedownloade app in Downloads of een app in Programma's kan dezelfde LWE-projectmap bedienen.
+
 ## Gewenste UX
 
-De gebruiker krijgt in de projectmap een app:
+De gebruiker krijgt een app:
 
 ```txt
 LWE Control.app

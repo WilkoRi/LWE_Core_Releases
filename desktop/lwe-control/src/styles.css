@@ -138,6 +138,10 @@ dd {
   gap: 10px;
 }
 
+.actions-spaced {
+  margin-top: 14px;
+}
+
 .message {
   min-height: 24px;
   margin: 12px 0 0;
