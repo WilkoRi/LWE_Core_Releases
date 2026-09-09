@@ -420,7 +420,7 @@ function buildSite() {
       return;
     }
 
-    execFile(buildCommand.command, buildCommand.args, { cwd: root }, (error, stdout, stderr) => {
+    execFile(buildCommand.command, buildCommand.args, commandOptions({ cwd: root }), (error, stdout, stderr) => {
       if (error) {
         reject(new Error(stderr || stdout || error.message));
         return;
@@ -450,6 +450,13 @@ function parseBuildCommand(buildCommand) {
   }
 
   throw new Error(`Build command niet toegestaan zonder allowlist: ${commandText}`);
+}
+
+function commandOptions(options = {}) {
+  return {
+    ...options,
+    shell: process.platform === "win32",
+  };
 }
 
 function publicUrlForAsset(sourcePath) {
@@ -548,14 +555,19 @@ function runImageRefresh() {
     const command = process.platform === "win32" ? "npm.cmd" : "npm";
     const args = ["run", "lwe:images", "--", "--preset=general", "--apply"];
 
-    execFile(command, args, { cwd: root, timeout: 120_000, maxBuffer: 1024 * 1024 * 6 }, (error, stdout, stderr) => {
-      if (error) {
-        reject(new Error(stderr || stdout || error.message));
-        return;
-      }
+    execFile(
+      command,
+      args,
+      commandOptions({ cwd: root, timeout: 120_000, maxBuffer: 1024 * 1024 * 6 }),
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(new Error(stderr || stdout || error.message));
+          return;
+        }
 
-      resolve({ stdout, stderr });
-    });
+        resolve({ stdout, stderr });
+      }
+    );
   });
 }
 

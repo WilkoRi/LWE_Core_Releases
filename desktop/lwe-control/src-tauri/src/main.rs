@@ -6,6 +6,12 @@ use std::sync::Mutex;
 use std::time::Duration;
 use tauri::Manager;
 
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+
+#[cfg(target_os = "windows")]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
+
 #[derive(Default)]
 struct AppState {
     child: Option<Child>,
@@ -186,6 +192,22 @@ fn open_url(url: &str) -> Result<(), String> {
     Ok(())
 }
 
+fn spawn_server_command(project: &Path, script: &str) -> Result<Child, String> {
+    let mut command = Command::new("node");
+    command
+        .arg(script)
+        .current_dir(project)
+        .stdout(Stdio::null())
+        .stderr(Stdio::null());
+
+    #[cfg(target_os = "windows")]
+    command.creation_flags(CREATE_NO_WINDOW);
+
+    command
+        .spawn()
+        .map_err(|error| format!("LWE-server starten mislukt: {error}"))
+}
+
 #[tauri::command]
 fn get_status(
     state: tauri::State<Mutex<AppState>>,
@@ -214,13 +236,7 @@ fn start_server(
             }
 
             let script = server_script(&project)?;
-            let child = Command::new("node")
-                .arg(script)
-                .current_dir(&project)
-                .stdout(Stdio::null())
-                .stderr(Stdio::null())
-                .spawn()
-                .map_err(|error| format!("LWE-server starten mislukt: {error}"))?;
+            let child = spawn_server_command(&project, script)?;
 
             app_state.child = Some(child);
         }
@@ -269,13 +285,7 @@ fn restart_server(
         }
 
         let script = server_script(&project)?;
-        let child = Command::new("node")
-            .arg(script)
-            .current_dir(&project)
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .spawn()
-            .map_err(|error| format!("LWE-server herstarten mislukt: {error}"))?;
+        let child = spawn_server_command(&project, script)?;
 
         app_state.child = Some(child);
     }

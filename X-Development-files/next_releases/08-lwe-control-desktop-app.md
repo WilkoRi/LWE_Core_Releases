@@ -95,6 +95,15 @@ Windows build-route toegevoegd:
 - Bij tag-releases wordt de `.exe` ook als GitHub Release asset geupload.
 - Windows `icon.ico` toegevoegd aan de Tauri bundle-config en het release-manifest.
 
+## Release 0.2.40
+
+Windows compatibiliteitsfix:
+
+- `server.js` start npm-buildcommando's op Windows via shell.
+- `npm.cmd` en `npx.cmd` werken daardoor betrouwbaarder in PowerShell/Windows.
+- LWE Control start de Node-server op Windows met `CREATE_NO_WINDOW`.
+- Het extra consolevenster beweegt daardoor niet meer mee naast de desktop-app.
+
 ## Gewenste UX
 
 De gebruiker krijgt een app:
