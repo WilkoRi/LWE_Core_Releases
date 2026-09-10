@@ -139,6 +139,8 @@ Bij een eenvoudige onepager mag SEO op siteniveau worden ingericht. Bij meerdere
 
 `index` is standaard `true`. Gebruik `false` alleen bewust, bijvoorbeeld voor een bedankpagina, interne hulppagina of andere pagina die niet in zoekmachines hoort.
 
+Als een project `project-input/navigation-contract.json` gebruikt met `standard: "lwe-page-menu-seo-v1"`, dan zijn `seo.title` en `seo.description` onderdeel van het navigatie- en paginacontract. Ze moeten per taal gevuld en uniek zijn. Dit voorkomt generieke paginanamen zoals alleen `Home`, `Contact` of `Over ons` zonder herkenbare projectnaam of onderscheidende omschrijving.
+
 ## Template-eisen
 
 Elke pagina rendert de actuele taal:

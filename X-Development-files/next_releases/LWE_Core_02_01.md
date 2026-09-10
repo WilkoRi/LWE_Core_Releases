@@ -1,6 +1,6 @@
 # LWE Core Release & Backlog
 
-Doel van dit document: een compact overzicht open non released ontwikkelpunten en long term planning overige op GitHub.
+Doel van dit document: een compact overzicht open non released ontwikkelpunten en long term planning overige op GitHub. 
 
 
 
@@ -34,12 +34,28 @@ Een item is pas klaar als de acceptatiecriteria zijn gehaald en er een korte tes
 
 -------------------------------- TO DO ----------------------------------
 
-## Clean Old Code
+## Rollback en Backups
 
-Status: in onderzoek
+Status: open
 Complexiteit: middel
 Risico: middel
-Impact: laag
+Impact: middel
+Type: workflow
+
+De huidige update-backup bewaart de LWE-runtimebestanden die door een update worden vervangen. Dat is geen volledige projectmap-snapshot. Werk uit:
+
+- duidelijke naamgeving: runtime-backup versus volledige projectbackup
+- rollback-check met beschikbare backups en datum/runtimeversie
+- herstelactie die alleen na expliciete bevestiging schrijft
+- documentatie in LWE Control en manual
+
+---------------------
+## Clean Old Code
+
+Status: in onderzoek  
+Complexiteit: middel  
+Risico: middel  
+Impact: laag  
 Type: onderhoud
 
 ### Vraag
@@ -68,10 +84,10 @@ Niet zomaar runtimebestanden verwijderen. Sommige bestanden zijn bronmateriaal v
 
 ## Import Oude Website
 
-Status: in onderzoek
-Complexiteit: hoog
-Risico: middel
-Impact: hoog
+Status: in onderzoek  
+Complexiteit: hoog  
+Risico: middel  
+Impact: hoog  
 Type: migratie
 
 ### Huidige situatie
@@ -119,10 +135,10 @@ Met daarin:
 
 ## Prototype-Tekst Vervangen
 
-Status: in onderzoek
-Complexiteit: laag
-Risico: laag
-Impact: laag
+Status: in onderzoek  
+Complexiteit: laag  
+Risico: laag  
+Impact: laag  
 Type: documentatie
 
 ### Probleem
@@ -144,10 +160,10 @@ rg -n -i "prototype|proof of concept"
 
 ## SEO-Bestanden
 
-Status: in onderzoek
-Complexiteit: middel
-Risico: laag
-Impact: middel
+Status: in onderzoek  
+Complexiteit: middel  
+Risico: laag  
+Impact: middel  
 Type: feature
 
 ### Probleem
@@ -188,10 +204,10 @@ Of gelijkwaardige Eleventy-output.
 
 ## `.htaccess` / Redirects
 
-Status: in onderzoek
-Complexiteit: middel
-Risico: middel
-Impact: middel
+Status: in onderzoek  
+Complexiteit: middel  
+Risico: middel  
+Impact: middel  
 Type: migratie
 
 ### Vraag
@@ -232,10 +248,10 @@ Redirects zijn hosting-afhankelijk. Apache `.htaccess` is niet overal bruikbaar.
 
 ## LCB/LWE Editorlabels Vertalen
 
-Status: open
-Complexiteit: laag
-Risico: laag
-Impact: middel
+Status: open  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
 Type: editor
 
 ### Probleem
@@ -265,10 +281,10 @@ Maak een klein editor-i18n object in de runtime en kies de taal op basis van `<h
 
 ## Image Replacement Functie
 
-Status: open
-Complexiteit: middel
-Risico: middel
-Impact: middel
+Status: open  
+Complexiteit: middel  
+Risico: middel  
+Impact: middel  
 Type: feature
 
 ### Idee
@@ -300,10 +316,10 @@ Afbeeldingen raken snel aan publicatie, auteursrecht, privacy en bestandspaden. 
 
 ## Lokale Publicatie via `__publish`
 
-Status: open
-Complexiteit: middel
-Risico: hoog
-Impact: hoog
+Status: open  
+Complexiteit: middel  
+Risico: hoog  
+Impact: hoog  
 Type: feature / publicatie / security
 
 ### Doel
@@ -425,10 +441,10 @@ Voor SFTP kan dit meestal via `chmod`. Bij FTP/FTPS hangt dit af van server en l
 
 ## VSIX Cleanup
 
-Status: open
-Complexiteit: laag
-Risico: laag
-Impact: laag
+Status: open  
+Complexiteit: laag  
+Risico: laag  
+Impact: laag  
 Type: onderhoud
 
 ### Probleem
@@ -460,10 +476,10 @@ Zorg dat er bij update nooit meer dan de twee nieuwste versies blijven staan van
 
 ## Node.js Uitleg/Link in Desktop App
 
-Status: open
-Complexiteit: laag
-Risico: laag
-Impact: middel
+Status: open  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
 Type: UX
 
 ### Probleem
@@ -490,10 +506,10 @@ Als `node` of `npm` ontbreekt.
 
 ## `_site` Processed Images Automatisch Schoonhouden
 
-Status: open
-Complexiteit: laag
-Risico: laag
-Impact: middel
+Status: open  
+Complexiteit: laag  
+Risico: laag  
+Impact: middel  
 Type: workflow
 
 ### Probleem
@@ -544,5 +560,6 @@ Korte lijst van afgeronde mijlpalen. Detail staat in GitHub Releases, commits en
 | 0.2.50 | Standaard image-mappen |
 | 0.2.51 | Hero image proxy-knop zichtbaar in edit-modus |
 | 0.2.52 | SEO-context aangescherpt |
-| 0.2.54 | Desktop console fix
+| 0.2.54 | Desktop console fix |
 | 0.2.55 | Editable navigatieknoppen en accordions blijven intact in public output |
+| 0.2.56 | Navigatie/SEO-contract standaard `lwe-page-menu-seo-v1` toegevoegd |

@@ -11,7 +11,7 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-10T13:23:01.215Z",
+    "createdAt": "2026-09-10T18:22:36.465Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
@@ -47,8 +47,8 @@
         "hash": "c525f34dc9ef593c175c22400e2780d79d3e07fd"
       },
       "scripts/lwe-nav-check.js": {
-        "size": 8010,
-        "hash": "5b37da807615d1f6f9f7468fd0f050b2adb67b4b"
+        "size": 11721,
+        "hash": "c4208601d40abfdc3b1bbaaceaefbee29b430437"
       },
       "scripts/lwe-next.js": {
         "size": 48030,
@@ -130,8 +130,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-10T13:23:01.215Z",
-    "signature": "77abf160779483c039640e19e51a31cfff9917cdafb100f351ff190fdac01785"
+    "updatedAt": "2026-09-10T18:22:36.466Z",
+    "signature": "9ea03bdbbc323bb2abd0f38b75a13a1525ce6a7ae53749b306f58f14d45182ba"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

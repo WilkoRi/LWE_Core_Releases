@@ -390,7 +390,7 @@ Header/navigatiecomponent:
 - eventueel primaire actie
 - mobiel hamburger/offcanvas
 
-Navigatie gebruikt een consistent data-contract. Als `content.nav` `href` bevat, rendert het template `item.href`. Als `content.nav` `slug` bevat, berekent het template de URL uit `item.slug` en de huidige taal. Zet geen Nunjucks-templatecode in `content.json`; routinglogica hoort in `nav.njk` of een gedeelde helper. Desktopmenu en mobiel menu gebruiken dezelfde URL-logica.
+Navigatie gebruikt een consistent data-contract. Nieuwe LWE-projecten gebruiken bij voorkeur `key`, `slug`, `label` en `seo` per menu-item. `key` is de stabiele interne identiteit, `slug` is de route per taal, `label` is de zichtbare tekst en `seo.title`/`seo.description` zijn unieke contentvelden per taal. Als `content.nav` `href` bevat, rendert het template `item.href`. Als `content.nav` `slug` bevat, berekent het template de URL uit `item.slug` en de huidige taal. Zet geen Nunjucks-templatecode in `content.json`; routinglogica hoort in `nav.njk` of een gedeelde helper. Desktopmenu en mobiel menu gebruiken dezelfde URL-logica.
 
 Footer:
 

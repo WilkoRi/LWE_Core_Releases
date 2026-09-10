@@ -91,6 +91,18 @@ Gebruik bij productie- of migratiesites een navigatiecontract:
 - controleer met `npm run lwe:nav-check`
 - `npm run lwe:publish-check` voert de navigatiecheck automatisch uit als het contract bestaat
 
+Nieuwe LWE-projecten gebruiken bij voorkeur standaard `lwe-page-menu-seo-v1`.
+
+Per intern menu-item is dan minimaal vastgelegd:
+
+- `key`: stabiele interne identiteit, verandert niet door tekst of URL
+- `slug`: URL-deel per taal
+- `label`: zichtbare menutekst per taal
+- `seo.title`: unieke SEO-titel per taal
+- `seo.description`: unieke SEO-omschrijving per taal
+
+Gebruik `pageKey` alleen als het menu-item bewust verwijst naar een centrale pagina-definitie elders in de data, bijvoorbeeld `pages.contact`. Voor bestaande projecten blijven `slug`, `key` en `pageKey` ondersteund.
+
 De footer moet onderaan blijven staan bij pagina's met weinig content.
 
 ## Afbeeldingen en logo's

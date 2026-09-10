@@ -11,6 +11,7 @@ const contractPath = path.resolve(root, contractRel);
 const config = readJson("lcb.config.json", {});
 const siteDirName = config.siteDir || "_site";
 const siteDir = path.resolve(root, siteDirName);
+const standardName = "lwe-page-menu-seo-v1";
 
 function readJson(rel, fallback = null) {
   try {
@@ -92,10 +93,31 @@ function maxDepth(items) {
   return flattenItems(items).reduce((max, entry) => Math.max(max, entry.depth), 0);
 }
 
+function identityValues(value, languages = []) {
+  if (!value) return [];
+  if (typeof value === "string") return [value];
+  if (typeof value === "object") {
+    return languages
+      .map((lang) => value[lang] || value.default)
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function itemIdentityValues(item, languages = []) {
+  return [
+    ...identityValues(item.key, languages),
+    ...identityValues(item.pageKey, languages),
+    ...identityValues(item.slug, languages),
+  ];
+}
+
 function findItem(items, expected) {
-  const key = expected.key || expected.pageKey;
-  if (!key) return null;
-  return flattenItems(items).find(({ item }) => item.key === key || item.pageKey === key) || null;
+  const keys = itemIdentityValues(expected, languages);
+  if (!keys.length) return null;
+  return flattenItems(items).find(({ item }) => keys.some((key) => (
+    itemIdentityValues(item, languages).includes(key)
+  ))) || null;
 }
 
 function resolveLocalized(value, lang) {
@@ -110,7 +132,23 @@ function resolveExpectedUrl(item, lang, siteData) {
 
   const pageKey = item.pageKey || item.key;
   const pageUrl = pageKey ? siteData?.pages?.[pageKey]?.[lang] : "";
-  return pageUrl || "";
+  if (pageUrl) return pageUrl;
+
+  const slug = resolveLocalized(item.slug, lang);
+  if (slug || slug === "") {
+    return slugToUrl(slug, lang);
+  }
+
+  return "";
+}
+
+function slugToUrl(slug, lang) {
+  const cleanSlug = String(slug || "").replace(/^\/+|\/+$/g, "");
+  const languagePrefix = lang === defaultLanguage ? "" : `/${lang}`;
+  if (!cleanSlug || cleanSlug === "home" || cleanSlug === "index") {
+    return `${languagePrefix || ""}/`;
+  }
+  return `${languagePrefix}/${cleanSlug}/`;
 }
 
 function escapeRegExp(value) {
@@ -144,6 +182,8 @@ const siteData = siteLoad.data || {};
 const languages = Array.isArray(contract.languages)
   ? contract.languages
   : Object.keys(siteData.languages || { nl: true });
+const defaultLanguage = contract.defaultLanguage || languages[0] || "nl";
+const enforceStandard = contract.standard === standardName || contract.requireSeo === true;
 const htmlFiles = listHtmlFiles(siteDir);
 const htmlCache = new Map();
 
@@ -163,6 +203,8 @@ function anyHtmlContainsHref(href) {
 
 const menus = contract.menus || {};
 const menuNames = Object.keys(menus);
+const seoTitlesByLang = new Map();
+const seoDescriptionsByLang = new Map();
 
 if (!menuNames.length) {
   errors.push("contract bevat geen menus-object");
@@ -206,12 +248,15 @@ for (const menuName of menuNames) {
 
   for (const entry of flattenItems(items)) {
     const item = entry.item;
-    const label = item.key || item.pageKey || JSON.stringify(item.label || item.url || item.href || {});
+    const label = itemLabel(item);
     const sourceMatch = findItem(sourceItems, item);
+    const itemIsInternal = !/^(https?:|mailto:|tel:|#)/.test(resolveLocalized(item.href || item.url, languages[0]) || "");
 
     if (!sourceMatch && item.required !== false) {
       errors.push(`${menuName}: contract-item ontbreekt in bronmenu: ${label}`);
     }
+
+    validateStandardItem(menuName, item, label, entry.depth, itemIsInternal);
 
     for (const lang of languages) {
       const expectedUrl = resolveExpectedUrl(item, lang, siteData);
@@ -234,6 +279,66 @@ for (const menuName of menuNames) {
   console.log(`- bron items: ${flattenItems(sourceItems).length}`);
   console.log(`- max depth: contract ${contractDepth}, bron ${sourceDepth}, toegestaan ${allowedDepth}`);
   console.log("");
+}
+
+function validateStandardItem(menuName, item, label, depth, itemIsInternal) {
+  if (!enforceStandard || item.required === false || item.external === true || !itemIsInternal) return;
+
+  if (!item.key) {
+    errors.push(`${menuName}: ${label} mist verplichte key`);
+  }
+
+  if (depth === 1 || item.url == null) {
+    if (!item.slug && item.slug !== "") {
+      errors.push(`${menuName}: ${label} mist verplichte slug`);
+    }
+  }
+
+  for (const lang of languages) {
+    const localizedLabel = resolveLocalized(item.label, lang);
+    const seoTitle = resolveLocalized(item.seo?.title, lang);
+    const seoDescription = resolveLocalized(item.seo?.description, lang);
+
+    if (!localizedLabel) {
+      errors.push(`${menuName}: ${label} mist label voor taal ${lang}`);
+    }
+    if (!seoTitle) {
+      errors.push(`${menuName}: ${label} mist seo.title voor taal ${lang}`);
+    }
+    if (!seoDescription) {
+      errors.push(`${menuName}: ${label} mist seo.description voor taal ${lang}`);
+    }
+
+    if (seoTitle) {
+      rememberUnique(seoTitlesByLang, lang, seoTitle, `${menuName}: ${label}`, "seo.title");
+      if (seoTitle.length < 10 || seoTitle.length > 70) {
+        warnings.push(`${menuName}: ${label} seo.title voor ${lang} is ${seoTitle.length} tekens; richtwaarde is 10-70`);
+      }
+    }
+
+    if (seoDescription) {
+      rememberUnique(seoDescriptionsByLang, lang, seoDescription, `${menuName}: ${label}`, "seo.description");
+      if (seoDescription.length < 50 || seoDescription.length > 170) {
+        warnings.push(`${menuName}: ${label} seo.description voor ${lang} is ${seoDescription.length} tekens; richtwaarde is 50-170`);
+      }
+    }
+  }
+}
+
+function rememberUnique(map, lang, value, owner, fieldName) {
+  const normalized = String(value).trim().toLowerCase();
+  if (!normalized) return;
+  const byValue = map.get(lang) || new Map();
+  const previous = byValue.get(normalized);
+  if (previous && previous !== owner) {
+    errors.push(`${fieldName} voor ${lang} is niet uniek: ${owner} gebruikt dezelfde waarde als ${previous}`);
+  }
+  byValue.set(normalized, owner);
+  map.set(lang, byValue);
+}
+
+function itemLabel(item) {
+  return item.key || item.pageKey || resolveLocalized(item.slug, defaultLanguage) || JSON.stringify(item.label || item.url || item.href || {});
 }
 
 if (warnings.length) {

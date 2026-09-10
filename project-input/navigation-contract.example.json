@@ -1,5 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
+  "standard": "lwe-page-menu-seo-v1",
+  "defaultLanguage": "nl",
   "languages": ["nl", "en"],
   "siteDataFile": "site.js",
   "menus": {
@@ -10,6 +12,10 @@
       "items": [
         {
           "key": "home",
+          "slug": {
+            "nl": "",
+            "en": ""
+          },
           "label": {
             "nl": "Home",
             "en": "Home"
@@ -17,6 +23,37 @@
           "url": {
             "nl": "/nl/",
             "en": "/en/"
+          },
+          "seo": {
+            "title": {
+              "nl": "Voorbeeldsite voor LWE beheer",
+              "en": "Example Website for LWE Editing"
+            },
+            "description": {
+              "nl": "Voorbeeldpagina voor een Local Website Editor project met beheerbaar menu en vaste SEO-velden.",
+              "en": "Example page for a Local Website Editor project with editable navigation and fixed SEO fields."
+            }
+          }
+        },
+        {
+          "key": "contact",
+          "slug": {
+            "nl": "contact",
+            "en": "contact"
+          },
+          "label": {
+            "nl": "Contact",
+            "en": "Contact"
+          },
+          "seo": {
+            "title": {
+              "nl": "Contact met de Voorbeeldsite",
+              "en": "Contact the Example Website"
+            },
+            "description": {
+              "nl": "Neem contact op met de Voorbeeldsite voor vragen over dit LWE project en de inhoud van de website.",
+              "en": "Contact the Example Website for questions about this LWE project and the website content."
+            }
           }
         }
       ]

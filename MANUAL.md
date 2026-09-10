@@ -351,6 +351,17 @@ node_modules/
 
 ## Veelvoorkomende Situaties
 
+### LWE Control Start Niet Op Mac
+
+Zet `LWE Control.app` eerst in de map `Apps` / `Applications`.
+
+Als macOS meldt dat de app beschadigd is of niet geopend kan worden, verwijder dan de download-blokkade met:
+
+```bash
+xattr -cr "/Applications/LWE Control.app"
+open -n "/Applications/LWE Control.app"
+```
+
 ### LWE Control Zegt Inactief
 
 Dat betekent dat de lokale server niet draait. Klik **Start**.
