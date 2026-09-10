@@ -6,7 +6,7 @@ const { registerTextFilters } = require("./lwe/filters/text.cjs");
 
 function stripEditorOnlyControls(content) {
   return content.replace(
-    /<button\b(?=[^>]*\bdata-edit-(?:path|href-path|src-path)=)[\s\S]*?<\/button>/gi,
+    /<([a-z][\w:-]*)\b(?=[^>]*\bdata-lcb-only\b)[^>]*>[\s\S]*?<\/\1>/gi,
     ""
   );
 }

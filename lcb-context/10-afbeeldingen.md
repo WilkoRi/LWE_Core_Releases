@@ -138,6 +138,39 @@ De nieuwe afbeelding moet al als bestand in het project staan, bijvoorbeeld in:
 src/assets/images/processed/
 ```
 
+## Klikbare Afbeeldingen
+
+Als een bewerkbare afbeelding in een link staat, moet de link ook bewust worden gemodelleerd.
+
+Voor content-afbeeldingen, cards en promotieblokken geldt:
+
+- zet `href`, `image.src` en `image.alt` bij voorkeur in hetzelfde content-object
+- geef de omringende `<a>` een `data-edit-href-path`
+- geef de afbeelding een `data-edit-src-path`
+- geef de alt-tekst een `data-edit-path` met `data-edit-attribute="alt"`
+
+Voorbeeld:
+
+```njk
+<a
+  href="{{ card.href[currentLang.code] }}"
+  data-edit-file="content.json"
+  data-edit-href-path="cards.0.href.{{ currentLang.code }}"
+>
+  <img
+    src="{{ card.image.src }}"
+    alt="{{ card.image.alt[currentLang.code] }}"
+    data-edit-src-path="cards.0.image.src"
+    data-edit-path="cards.0.image.alt.{{ currentLang.code }}"
+    data-edit-attribute="alt"
+  >
+</a>
+```
+
+Als de link niet zo is gemodelleerd, kan LWE bij het bewerken van de afbeelding alleen de afbeelding en alt-tekst tonen, niet de linkbestemming. Gebruik daarom geen verborgen afgeleide route voor klikbare content-afbeeldingen als de beheerder die link normaal gesproken verwacht te kunnen wijzigen.
+
+Uitzonderingen zijn system-links zoals het logo naar home, de hoofdnavigatie en taalwissels.
+
 ## Toonverhouding Bewerken
 
 LWE mag de bronafbeelding niet automatisch croppen om een verhouding af te dwingen. De gebruiker mag wel kiezen hoe de afbeelding in het websitevak getoond wordt.

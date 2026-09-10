@@ -17,6 +17,7 @@
     "lwe:reset": "node scripts/lwe-reset.js --to=intake",
     "lwe:unapprove": "node scripts/lwe-reset.js --to=proposal",
     "lwe:images": "node scripts/lwe-images.js",
+    "lwe:nav-check": "node scripts/lwe-nav-check.js",
     "lwe:publish-check": "node scripts/lwe-publish-check.js",
     "lwe:update": "node scripts/lwe-update.js",
     "lwe:update-check": "node scripts/lwe-update-check.js",

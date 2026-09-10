@@ -49,17 +49,11 @@ img[data-image-ratio="portrait"] {
   aspect-ratio: 3 / 4;
 }
 
-button[data-edit-path],
-button[data-edit-href-path],
-button[data-edit-src-path],
 [data-lcb-only],
 [data-lwe-editor-only] {
   display: none !important;
 }
 
-body.lcb-active button[data-edit-path],
-body.lcb-active button[data-edit-href-path],
-body.lcb-active button[data-edit-src-path],
 body.lcb-active [data-lcb-only],
 body.lcb-active [data-lwe-editor-only] {
   display: revert !important;

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 
 const root = process.cwd();
 const config = readJson("lcb.config.json", {});
@@ -84,12 +85,18 @@ const localOnlyPaths = [
 
 const siteFiles = listFiles(siteDir);
 const forbiddenInSite = siteFiles.filter(isForbiddenPublishPath);
-const editorOnlyButtonPattern = /<button\b(?=[^>]*\bdata-edit-(?:path|href-path|src-path)=)[\s\S]*?<\/button>/i;
+const lcbOnlyControlPattern = /\bdata-lcb-only\b/i;
 const editorOnlyButtonsInSite = siteFiles.filter((rel) => {
   if (!rel.endsWith(".html")) return false;
   const filePath = path.join(siteDir, rel);
-  return editorOnlyButtonPattern.test(fs.readFileSync(filePath, "utf8"));
+  const content = fs.readFileSync(filePath, "utf8");
+  return lcbOnlyControlPattern.test(content);
 });
+const navigationContractPath = path.join(root, "project-input", "navigation-contract.json");
+const navCheckPath = [
+  path.join(__dirname, "lwe-nav-check.js"),
+  path.join(__dirname, "lwe-nav-check.cjs"),
+].find((filePath) => fs.existsSync(filePath));
 
 console.log("LWE PUBLISH CHECK");
 console.log("=================");
@@ -149,6 +156,26 @@ if (editorOnlyButtonsInSite.length) {
   console.error("");
   console.error("LWE PUBLISH CHECK BLOCKED");
   process.exit(1);
+}
+
+if (fs.existsSync(navigationContractPath)) {
+  if (!navCheckPath) {
+    console.error("- violation: navigation-contract.json bestaat, maar scripts/lwe-nav-check ontbreekt");
+    console.error("");
+    console.error("LWE PUBLISH CHECK BLOCKED");
+    process.exit(1);
+  }
+
+  console.log("");
+  const result = spawnSync(process.execPath, [navCheckPath], {
+    cwd: root,
+    stdio: "inherit",
+  });
+  if (result.status !== 0) {
+    console.error("");
+    console.error("LWE PUBLISH CHECK BLOCKED: navigatiecontract klopt niet");
+    process.exit(result.status || 1);
+  }
 }
 
 console.log("- ok: geen bekende lokale LWE-bestanden in de publicatie-output");

@@ -82,6 +82,15 @@ Controleer dat `content.nav` en het navigatiecomponent hetzelfde data-contract g
 - Nunjucks-templatecode hoort niet in `content.json`.
 - Desktopmenu en mobiel menu gebruiken dezelfde linklogica.
 
+Gebruik bij productie- of migratiesites een navigatiecontract:
+
+- bestand: `project-input/navigation-contract.json`
+- menu-zones zoals `primary`, `topbar`, `footer` en `quickLinks` mogen apart worden vastgelegd
+- quick links zijn ook een menu-zone: een beheerbare verzameling links naar pagina's of externe hrefs
+- het contract mag alleen na expliciet akkoord worden aangepast
+- controleer met `npm run lwe:nav-check`
+- `npm run lwe:publish-check` voert de navigatiecheck automatisch uit als het contract bestaat
+
 De footer moet onderaan blijven staan bij pagina's met weinig content.
 
 ## Afbeeldingen en logo's

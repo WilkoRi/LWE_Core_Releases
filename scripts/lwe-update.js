@@ -170,6 +170,7 @@ function runtimeFileNames(pkg) {
     next: `scripts/lwe-next${commonJsExt}`,
     approve: `scripts/lwe-approve-build${commonJsExt}`,
     reset: `scripts/lwe-reset${commonJsExt}`,
+    navCheck: `scripts/lwe-nav-check${commonJsExt}`,
     publishCheck: `scripts/lwe-publish-check${commonJsExt}`,
     images: `scripts/lwe-images${commonJsExt}`,
     rules: `scripts/lwe-rules${commonJsExt}`,
@@ -215,6 +216,7 @@ function initialLweState() {
 function projectInputStarterFiles() {
   return [
     "project-input/README.md",
+    "project-input/navigation-contract.example.json",
     "project-input/website-intake.json",
     "project-input/online-bronnen.md",
     "project-input/notities.md",
@@ -267,16 +269,14 @@ function eleventyConfigPath() {
 function stripEditorOnlyTransformSnippet() {
   return `
 
-  // LWE: houd editor-only knoppen uit de platte publicatie-output.
+  // LWE: houd editor-only controls uit de platte publicatie-output.
   eleventyConfig.addTransform("lwe-strip-editor-only-controls", function (content) {
     if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
       return content;
     }
 
-    return content.replace(
-      /<button\\b(?=[^>]*\\bdata-edit-(?:path|href-path|src-path)=)[\\s\\S]*?<\\/button>/gi,
-      ""
-    );
+    return content
+      .replace(/<([a-z][\\w:-]*)\\b(?=[^>]*\\bdata-lcb-only\\b)[^>]*>[\\s\\S]*?<\\/\\1>/gi, "");
   });
 `;
 }
@@ -316,6 +316,7 @@ function buildFilePlan(runtime) {
     ["scripts/lwe-next.js", runtime.next],
     ["scripts/lwe-approve-build.js", runtime.approve],
     ["scripts/lwe-reset.js", runtime.reset],
+    ["scripts/lwe-nav-check.js", runtime.navCheck],
     ["scripts/lwe-images.js", runtime.images],
     ["scripts/lwe-publish-check.js", runtime.publishCheck],
     ["scripts/lwe-rules.js", runtime.rules],
@@ -387,6 +388,7 @@ function scriptUpdates(runtime) {
     "lwe:reset": `node ${runtime.reset} --to=intake`,
     "lwe:unapprove": `node ${runtime.reset} --to=proposal`,
     "lwe:images": `node ${runtime.images}`,
+    "lwe:nav-check": `node ${runtime.navCheck}`,
     "lwe:publish-check": `node ${runtime.publishCheck}`,
     "lwe:update": `node ${runtime.update}`,
     "lwe:update-check": `node ${runtime.updateCheck}`,
@@ -601,6 +603,7 @@ console.log("LWE UPDATE DONE");
 console.log("Draai in het bijgewerkte project:");
 console.log("npm install");
 console.log("npm run lwe:next");
+console.log("npm run lwe:nav-check");
 console.log("npm run lwe:publish-check");
 console.log("npm run lwe:images -- --preset=general");
 console.log("");

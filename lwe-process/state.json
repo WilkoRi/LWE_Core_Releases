@@ -11,28 +11,28 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-09T06:05:40.270Z",
+    "createdAt": "2026-09-10T13:23:01.215Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
-        "size": 2261,
-        "hash": "03168d3fdc63dbe36f228ea06d1bb6e8f4edf989"
+        "size": 2657,
+        "hash": "2d72171a7cc88a0de8e47b4a4f199e31516ea593"
       },
       "lcb.config.json": {
-        "size": 263,
-        "hash": "8742e48ffd03a92a0fb9c88f80e0b3bd849026e3"
+        "size": 330,
+        "hash": "c2e917278e745d1ec30eb0f6cfdde9bc1e09f3b9"
       },
       "lcb/editor.js": {
         "size": 23687,
         "hash": "eb5524efa33886b5c5b699bd6407305624c75cdb"
       },
       "lcb/lcb-editor.css": {
-        "size": 5515,
-        "hash": "0d48cb70703a6b9205157eb1eb0a9a8da6536cc6"
+        "size": 5789,
+        "hash": "6a5df5159e07d805cda922f9f94ea2f9cab768bd"
       },
       "package.json": {
-        "size": 1546,
-        "hash": "f52587f359abec448caef1c1948e9395253d3d9d"
+        "size": 1600,
+        "hash": "a2cd2596e6130acf48120098cdbdeea45a9ec9f6"
       },
       "scripts/lwe-approve-build.js": {
         "size": 2648,
@@ -43,16 +43,20 @@
         "hash": "e5292db3874f8f4122b784056bf3ea5acbf20013"
       },
       "scripts/lwe-images.js": {
-        "size": 10869,
-        "hash": "0efa8a5eb4ef52d07673814b849885e7ba0ef3c0"
+        "size": 14338,
+        "hash": "c525f34dc9ef593c175c22400e2780d79d3e07fd"
+      },
+      "scripts/lwe-nav-check.js": {
+        "size": 8010,
+        "hash": "5b37da807615d1f6f9f7468fd0f050b2adb67b4b"
       },
       "scripts/lwe-next.js": {
-        "size": 47051,
-        "hash": "bef0975fb81f186455110d811639b288787dd515"
+        "size": 48030,
+        "hash": "241ea9924beccbeffd047f215b011c7364e33157"
       },
       "scripts/lwe-publish-check.js": {
-        "size": 3804,
-        "hash": "ac8e9c5eed96c47d2e027c5762956caabd62454f"
+        "size": 5533,
+        "hash": "7278a37be1c92d8263359eb361e8928da06bf321"
       },
       "scripts/lwe-reset.js": {
         "size": 1582,
@@ -67,16 +71,16 @@
         "hash": "e2b2d4ea1d5ae2cca2432ab5ca6a3fe8eea40c48"
       },
       "scripts/lwe-update-install.js": {
-        "size": 5688,
-        "hash": "cb4fa31bb72b552f3f6ce04c6f871239c5e17476"
+        "size": 6953,
+        "hash": "9647c89d8bdb6310c4e6b4a9ac54306cdcb690e7"
       },
       "scripts/lwe-update.js": {
-        "size": 21318,
-        "hash": "f5bbf04c00f231b583dbdf173ebd38e079c426ef"
+        "size": 24311,
+        "hash": "7576438bf7723814a3fa51a342b72902e259be5d"
       },
       "server.js": {
-        "size": 27508,
-        "hash": "889b300853698f5cb4f593160e5a547cd2855884"
+        "size": 29057,
+        "hash": "1391412655746fedfa6c0f9e8ee043ab887c2474"
       },
       "src/_data/content.json": {
         "size": 9997,
@@ -107,8 +111,8 @@
         "hash": "0d924b82e53ef1f45ff8f42b6f990187f1bdca24"
       },
       "src/assets/system.css": {
-        "size": 446,
-        "hash": "857f92422682ee6102211cd29ba9c9b4964ae241"
+        "size": 1179,
+        "hash": "2a28fbc46f28b1d99634a9567b3817a4c89b3f88"
       },
       "src/index.njk": {
         "size": 8804,
@@ -126,8 +130,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-09T06:05:40.271Z",
-    "signature": "bb90692609822cc413cb357aa074d5aadbca169f71ed475fc102720884d7ba32"
+    "updatedAt": "2026-09-10T13:23:01.215Z",
+    "signature": "77abf160779483c039640e19e51a31cfff9917cdafb100f351ff190fdac01785"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

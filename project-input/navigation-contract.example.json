@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "languages": ["nl", "en"],
+  "siteDataFile": "site.js",
+  "menus": {
+    "primary": {
+      "required": true,
+      "sourcePath": "nav",
+      "maxDepth": 2,
+      "items": [
+        {
+          "key": "home",
+          "label": {
+            "nl": "Home",
+            "en": "Home"
+          },
+          "url": {
+            "nl": "/nl/",
+            "en": "/en/"
+          }
+        }
+      ]
+    },
+    "quickLinks": {
+      "required": false,
+      "dataFile": "homePage.js",
+      "sourcePath": "quickLinks",
+      "maxDepth": 1,
+      "items": []
+    },
+    "footer": {
+      "required": false,
+      "sourcePath": "footer.links",
+      "maxDepth": 2,
+      "items": []
+    }
+  }
+}

@@ -9,6 +9,7 @@
     "scripts/lwe-next.js",
     "scripts/lwe-approve-build.js",
     "scripts/lwe-reset.js",
+    "scripts/lwe-nav-check.js",
     "scripts/lwe-images.js",
     "scripts/lwe-publish-check.js",
     "scripts/lwe-rules.js",

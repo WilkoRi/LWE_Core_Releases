@@ -90,9 +90,9 @@ npm run lwe:reset
 De website en editor staan dan op:
 
 ```txt
-Start hier: http://127.0.0.1:8082/manual/
 Demo:       http://127.0.0.1:8082/
 Editor:     http://127.0.0.1:8082/__lcb/
+Manual:     http://127.0.0.1:8082/manual/
 ```
 
 ## AI-proces starten
@@ -291,7 +291,7 @@ Deze app is bedoeld als toekomstige eenvoudige starter voor websitebeheerders:
 - lokale LWE-server starten;
 - lokale LWE-server stoppen;
 - LWE-projectmap kiezen;
-- website, web editor en manual openen;
+- website en web editor openen;
 - serverstatus en poort begrijpelijk tonen.
 
 De MVP start nu nog de lokale Node-server in een bestaande LWE-projectmap. De latere eindgebruikersversie moet Node als sidecar meeleveren en als echte macOS/Windows app worden verpakt.

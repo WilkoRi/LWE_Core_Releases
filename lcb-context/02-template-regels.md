@@ -141,6 +141,64 @@ Als de linkbestemming in een ander contentbestand staat, gebruik je ook `data-ed
 
 In editmodus opent klikken op een bewerkbare link de Local Website Editor-drawer. De link navigeert dan niet. Zet editmodus uit om links normaal te openen.
 
+## Klikbare Afbeeldingen En Cards
+
+Als een afbeelding, card of contentblok klikbaar is, behandel de link dan als onderdeel van datzelfde contentblok.
+
+Gebruik dus niet alleen een afgeleide route zoals:
+
+```njk
+href="{{ routes.pages.detail[currentLang.code] }}"
+```
+
+als de gebruiker die link logisch bij de afbeelding of card verwacht te kunnen beheren. Zet de bestemming dan ook in het content-object.
+
+Voorbeeld:
+
+```json
+{
+  "promoCard": {
+    "href": {
+      "nl": "/nl/beginnen/",
+      "en": "/en/start/"
+    },
+    "image": {
+      "src": "/assets/images/processed/start-card.webp",
+      "alt": {
+        "nl": "Starten met de hobby",
+        "en": "Getting started with the hobby"
+      }
+    },
+    "title": {
+      "nl": "Begin hier",
+      "en": "Start here"
+    }
+  }
+}
+```
+
+Render de link en afbeelding samen met editpaden:
+
+```njk
+<a
+  href="{{ content.promoCard.href[currentLang.code] }}"
+  data-edit-file="content.json"
+  data-edit-href-path="promoCard.href.{{ currentLang.code }}"
+>
+  <img
+    src="{{ content.promoCard.image.src }}"
+    alt="{{ content.promoCard.image.alt[currentLang.code] }}"
+    data-edit-src-path="promoCard.image.src"
+    data-edit-path="promoCard.image.alt.{{ currentLang.code }}"
+    data-edit-attribute="alt"
+  >
+</a>
+```
+
+Bij externe links mag `href` een enkel veld zijn. Bij interne meertalige links gebruik je meestal `href.nl`, `href.en` en eventueel `href.de`, omdat routes per taal kunnen verschillen.
+
+Uitzondering: echte system-links zoals logo naar home, hoofdnavigatie, taalwissel of vaste technische routes mogen centraal uit routes worden afgeleid. Contentkaarten, promotieblokken en klikbare afbeeldingen horen hun beheerbare link bij de contentdata te hebben.
+
 ## Attributen
 
 Sommige content staat niet als zichtbare tekst in een element, maar in een attribuut. Gebruik dan `data-edit-attribute`.
