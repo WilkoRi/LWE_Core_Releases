@@ -1,0 +1,64 @@
+/*
+  Project system CSS.
+  This file is published with the website and contains small rendering
+  agreements that should be available before project-specific CSS loads.
+*/
+
+.text-block {
+  white-space: pre-line;
+}
+
+img[data-image-ratio] {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+img[data-image-ratio="landscape"] {
+  aspect-ratio: 16 / 10;
+}
+
+img[data-image-ratio="square"] {
+  aspect-ratio: 1 / 1;
+}
+
+img[data-image-ratio="portrait"] {
+  aspect-ratio: 3 / 4;
+}
+
+[data-image-ratio-frame] {
+  display: block;
+  overflow: hidden;
+}
+
+[data-image-ratio-frame] > img[data-image-ratio] {
+  width: 100%;
+  height: 100%;
+}
+
+[data-image-ratio-frame][data-image-ratio="landscape"] {
+  aspect-ratio: 16 / 10;
+}
+
+[data-image-ratio-frame][data-image-ratio="square"] {
+  aspect-ratio: 1 / 1;
+}
+
+[data-image-ratio-frame][data-image-ratio="portrait"] {
+  aspect-ratio: 3 / 4;
+}
+
+[data-lcb-only],
+[data-lwe-editor-only] {
+  display: none !important;
+}
+
+body.lcb-active [data-lcb-only],
+body.lcb-active [data-lwe-editor-only] {
+  display: revert !important;
+}
+
+body.lcb-active button.lcb-image-edit-proxy[data-edit-src-path] {
+  display: inline-flex !important;
+}

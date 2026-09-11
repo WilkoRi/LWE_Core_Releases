@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LWE Manual</title>
+    <meta name="description" content="Handbuch fur den Local Website Editor.">
+    <link rel="canonical" href="http://127.0.0.1:8082/manual/de/">
+    
+      <link rel="alternate" hreflang="nl" href="http://127.0.0.1:8082/manual/">
+    
+      <link rel="alternate" hreflang="en" href="http://127.0.0.1:8082/manual/en/">
+    
+      <link rel="alternate" hreflang="de" href="http://127.0.0.1:8082/manual/de/">
+    
+    <link rel="alternate" hreflang="x-default" href="http://127.0.0.1:8082/manual/">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header manual-header">
+      <a class="brand" href="/" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+      <nav class="main-nav" aria-label="Manual navigatie">
+        <a href="/">Demo</a>
+        <a href="/manual/">Manual</a>
+      </nav>
+      <div class="language-switcher" aria-label="Manual taalkeuze">
+        
+          <a class="" href="/manual/">NL</a>
+        
+          <a class="" href="/manual/en/">EN</a>
+        
+          <a class="is-active" href="/manual/de/">DE</a>
+        
+      </div>
+    </header>
+
+    <main class="manual-page">
+      <article class="manual-content">
+        <h1>LWE Handbuch</h1>
+<p>LWE ist kein Programm wie Word und es wird keine separate App benoetigt.</p>
+<p>Du startest den Website-Editor aus dem Projektordner mit ein paar Befehlen. Danach benutzt du den Editor einfach im Browser.</p>
+<h2>1. Node.js installieren</h2>
+<p>Installiere zuerst Node.js LTS von:</p>
+<p><a href="https://nodejs.org/">https://nodejs.org/</a></p>
+<p>Waehle den normalen Installer fuer Windows oder Mac.</p>
+<p>Nach der Installation: CMD/Terminal schliessen und wieder neu oeffnen.</p>
+<p>Dann pruefen:</p>
+<pre><code class="language-bash">node -v
+npm -v
+</code></pre>
+<p>Wenn Versionsnummern angezeigt werden, ist Node.js richtig installiert.</p>
+<h2>2. Projektordner oeffnen</h2>
+<p>Der Projektordner ist der Ordner, in dem <code>package.json</code> steht.</p>
+<h3>Windows</h3>
+<p><img src="/manual_images/win_install.jpg" alt="Windows CMD mit LWE Startbefehl"></p>
+<ol>
+<li>Oeffne den Projektordner im Explorer.</li>
+<li>Pruefe, ob du <code>package.json</code> siehst.</li>
+<li>Klicke oben in die Adressleiste vom Explorer.</li>
+<li>Tippe:</li>
+</ol>
+<pre><code class="language-cmd">cmd
+</code></pre>
+<ol start="5">
+<li>Druecke Enter.</li>
+</ol>
+<p>Jetzt oeffnet sich ein schwarzes CMD-Fenster im richtigen Ordner.</p>
+<p>Optional pruefen:</p>
+<pre><code class="language-cmd">dir package.json
+</code></pre>
+<h3>Mac</h3>
+<p><img src="/manual_images/mac_install.jpg" alt="Mac Terminal mit LWE Startbefehl"></p>
+<p>Oeffne Terminal im Projektordner, oder ziehe den Projektordner nach <code>cd </code> in das Terminal-Fenster.</p>
+<p>Pruefe:</p>
+<pre><code class="language-bash">ls package.json
+</code></pre>
+<p>Wenn <code>package.json</code> nicht gefunden wird, bist du im falschen Ordner.</p>
+<h2>3. Zum ersten Mal starten</h2>
+<p>Fuehre dies einmal im Projektordner aus:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+<p>Danach starten:</p>
+<pre><code class="language-bash">npm run lcb
+</code></pre>
+<p>Lass dieses Fenster offen, solange du an der Website arbeitest.</p>
+<h2>4. Editor oeffnen</h2>
+<p>Oeffne deinen Browser, zum Beispiel Edge, Chrome oder Safari.</p>
+<p>Tippe oder fuege dies oben in die Adressleiste ein:</p>
+<pre><code class="language-txt">http://127.0.0.1:8082/__lcb/
+</code></pre>
+<p>Das ist der lokale LWE Editor.</p>
+<p>Die normale Website steht hier:</p>
+<pre><code class="language-txt">http://127.0.0.1:8082/
+</code></pre>
+<h2>5. Stoppen</h2>
+<p>Klicke in das CMD/Terminal-Fenster und druecke:</p>
+<pre><code class="language-txt">Ctrl + C
+</code></pre>
+<p>Unter Windows kann gefragt werden:</p>
+<pre><code class="language-txt">Terminate batch job (Y/N)?
+</code></pre>
+<p>Tippe dann:</p>
+<pre><code class="language-txt">Y
+</code></pre>
+<h2>6. Wenn LWE blockiert</h2>
+<p>Manchmal sagt LWE, dass zuerst eine Kontrolle noetig ist. Dann ausfuehren:</p>
+<pre><code class="language-bash">npm run lwe:next
+</code></pre>
+<p>Lies die Meldung.</p>
+<p>Wenn alles stimmt und du einverstanden bist:</p>
+<pre><code class="language-bash">npm run lwe:approve
+npm run lcb
+</code></pre>
+<h2>7. Nur ansehen</h2>
+<p>Willst du nur die bestehende Website ansehen, ohne neu zu bauen oder zu speichern?</p>
+<pre><code class="language-bash">npm run lcb:preview-only
+</code></pre>
+<h2>8. Veroeffentlichen</h2>
+<p>Vor dem Veroeffentlichen:</p>
+<pre><code class="language-bash">npm run build
+npm run lwe:publish-check
+</code></pre>
+<p>Danach nur den Inhalt von diesem Ordner hochladen:</p>
+<pre><code class="language-txt">_site/
+</code></pre>
+<p>Niemals den ganzen Projektordner hochladen.</p>
+<h2>9. Wichtig</h2>
+<p>Benutze immer den Projektordner, in dem <code>package.json</code> steht.</p>
+<p>Zum Veroeffentlichen benutzt du nur:</p>
+<pre><code class="language-txt">_site/
+</code></pre>
+<p>Den Ordner <code>node_modules/</code> musst du nicht oeffnen oder aendern.</p>
+
+      </article>
+    </main>
+  </body>
+</html>

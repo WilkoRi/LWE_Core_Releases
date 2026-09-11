@@ -1,0 +1,221 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Website Editor</title>
+    <meta name="description" content="An 11ty prototype for a Local Website Editor with JSON as source.">
+    <link rel="canonical" href="http://127.0.0.1:8082/en/">
+    
+      <link rel="alternate" hreflang="nl" href="http://127.0.0.1:8082/">
+    
+      <link rel="alternate" hreflang="en" href="http://127.0.0.1:8082/en/">
+    
+      <link rel="alternate" hreflang="de" href="http://127.0.0.1:8082/de/">
+    
+    <link rel="alternate" hreflang="x-default" href="http://127.0.0.1:8082/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Local Website Editor">
+    <meta property="og:description" content="An 11ty prototype for a Local Website Editor with JSON as source.">
+    <meta property="og:url" content="http://127.0.0.1:8082/en/">
+    <meta property="og:image" content="http://127.0.0.1:8082/assets/social-preview.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/en/" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Hoofdmenu">
+        
+          
+          
+          <a href="#start" data-edit-file="content.json" data-edit-path="nav.0.label.en">Start</a>
+        
+          
+          
+          <a href="#blokken" data-edit-file="content.json" data-edit-path="nav.1.label.en">Blocks</a>
+        
+          
+          
+          <a href="#workflow" data-edit-file="content.json" data-edit-path="nav.2.label.en">Workflow</a>
+        
+          
+          
+          <a href="#contentmodel" data-edit-file="content.json" data-edit-path="nav.3.label.en">Content model</a>
+        
+          
+          
+          <a href="#seo" data-edit-file="content.json" data-edit-path="nav.4.label.en">SEO</a>
+        
+          
+          
+            
+          
+          <a href="/manual/en/" data-edit-file="content.json" data-edit-path="nav.5.label.en">Manual</a>
+        
+      </nav>
+
+      <div class="language-switcher" aria-label="Taalkeuze">
+        
+          <a class="" href="/">NL</a>
+        
+          <a class="is-active" href="/en/">EN</a>
+        
+          <a class="" href="/de/">DE</a>
+        
+      </div>
+    </header>
+
+    <main id="start">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-edit-file="content.json" data-edit-path="pages.home.hero.eyebrow.en">11ty + local JSON</p>
+          <h1 data-edit-file="content.json" data-edit-path="pages.home.hero.title.en">Edit my content directly on this page.</h1>
+          <p class="lead" data-edit-file="content.json" data-edit-path="pages.home.hero.lead.en">This prototype shows how a Local Website Editor can sit on top of a regular 11ty site, without a separate database or external CMS.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#blokken" data-edit-file="content.json" data-edit-path="pages.home.hero.primaryCta.en">View editable blocks</a>
+            <a class="button button-secondary" href="#contentmodel" data-edit-file="content.json" data-edit-path="pages.home.hero.secondaryCta.en">View JSON setup</a>
+          </div>
+        </div>
+
+        <aside class="editor-panel" aria-label="Editor status" data-lwe-system>
+          <span class="panel-label">Local Website Editor</span>
+          <strong>data-edit-path</strong>
+          <p>Hover over teksten om te zien welke onderdelen straks aanklikbaar worden in de editor. Deze uitleg is System-tekst en daarom bewust niet bewerkbaar.</p>
+        </aside>
+      </section>
+
+      <section class="intro">
+        <div>
+          <p class="section-kicker" data-lwe-system>Concept</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.intro.title.en">A website as content canvas</h2>
+        </div>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.intro.body.en">Visitors see a normal website. The editor opens the Local Website Editor on its own URL, clicks text, edits it, and writes the changes back to the same JSON files that 11ty uses to build the site.</p>
+      </section>
+
+      <section class="section" id="blokken">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Editor</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.blocksTitle.en">Editable building blocks</h2>
+        </div>
+
+        <div class="block-grid">
+          
+            <article class="content-card">
+              <span>1</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.0.title.en">Text per element</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.0.body.en">Every heading, paragraph and button label has its own path in JSON, so the editor does not need to understand HTML.</p>
+            </article>
+          
+            <article class="content-card">
+              <span>2</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.1.title.en">Multilingual per field</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.1.body.en">NL, EN and DE live under the same content element. The page can be viewed and edited per language.</p>
+            </article>
+          
+            <article class="content-card">
+              <span>3</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.2.title.en">11ty stays in control</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.2.body.en">Templates, partials and build output remain plain 11ty. The editor becomes a layer on top, only for local content changes.</p>
+            </article>
+          
+        </div>
+      </section>
+
+      <section class="section workflow" id="workflow">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Lokaal</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.workflow.title.en">Suggested workflow</h2>
+        </div>
+
+        <div class="timeline">
+          
+            <article>
+              <span>1</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.0.title.en">Open the local site</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.0.body.en">The editor opens the 11ty preview and turns edit mode on.</p>
+              </div>
+            </article>
+          
+            <article>
+              <span>2</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.1.title.en">Click text</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.1.body.en">The editor reads `data-edit-path` to know which JSON field belongs to the clicked element.</p>
+              </div>
+            </article>
+          
+            <article>
+              <span>3</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.2.title.en">Save locally</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.2.body.en">A small Node API writes the change back to JSON. Then 11ty rebuilds the site.</p>
+              </div>
+            </article>
+          
+        </div>
+      </section>
+
+      <section class="content-model" id="contentmodel">
+        <p class="section-kicker" data-lwe-system>JSON</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.contentModel.title.en">Content model</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.contentModel.body.en">All manageable content on this page comes from `src/_data/content.json`. The attributes on the HTML elements point back to the exact same place in that file.</p>
+        <code data-lwe-system>src/_data/content.json -> pages.home.hero.title.en</code>
+      </section>
+
+      <section class="content-model" id="seo">
+        <p class="section-kicker" data-lwe-system>SEO</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.seo.title.en">SEO belongs in the foundation</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.seo.body.en">Non-visible fields such as SEO title, meta description, canonical, Open Graph and hreflang also belong in the content model. They are not always clickable in the editor, but they are rendered from JSON.</p>
+        <code data-lwe-system>title + description + canonical + Open Graph + hreflang</code>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Local Website Editor</strong>
+        <p data-edit-file="content.json" data-edit-path="footer.tagline.en">Prototype for a Local Website Editor with 11ty.</p>
+      </div>
+      <nav aria-label="Footer menu">
+        
+          
+          
+          <a href="#start">Start</a>
+        
+          
+          
+          <a href="#blokken">Blocks</a>
+        
+          
+          
+          <a href="#workflow">Workflow</a>
+        
+          
+          
+          <a href="#contentmodel">Content model</a>
+        
+          
+          
+          <a href="#seo">SEO</a>
+        
+          
+          
+            
+          
+          <a href="/manual/en/">Manual</a>
+        
+      </nav>
+      <p data-edit-file="content.json" data-edit-path="footer.status.en">JSON is the source. HTML is the view.</p>
+      <p class="footer-disclaimer" data-edit-file="content.json" data-edit-path="footer.disclaimer.en">Open source helper tool. Use at your own risk; always check what you build and publish.</p>
+    </footer>
+    <script src="/assets/system-calendar.js" defer></script>
+  </body>
+</html>

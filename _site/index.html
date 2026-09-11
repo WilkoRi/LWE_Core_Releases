@@ -1,0 +1,221 @@
+
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Website Editor</title>
+    <meta name="description" content="Een 11ty prototype voor een Local Website Editor met JSON als bron.">
+    <link rel="canonical" href="http://127.0.0.1:8082/">
+    
+      <link rel="alternate" hreflang="nl" href="http://127.0.0.1:8082/">
+    
+      <link rel="alternate" hreflang="en" href="http://127.0.0.1:8082/en/">
+    
+      <link rel="alternate" hreflang="de" href="http://127.0.0.1:8082/de/">
+    
+    <link rel="alternate" hreflang="x-default" href="http://127.0.0.1:8082/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Local Website Editor">
+    <meta property="og:description" content="Een 11ty prototype voor een Local Website Editor met JSON als bron.">
+    <meta property="og:url" content="http://127.0.0.1:8082/">
+    <meta property="og:image" content="http://127.0.0.1:8082/assets/social-preview.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Hoofdmenu">
+        
+          
+          
+          <a href="#start" data-edit-file="content.json" data-edit-path="nav.0.label.nl">Start</a>
+        
+          
+          
+          <a href="#blokken" data-edit-file="content.json" data-edit-path="nav.1.label.nl">Blokken</a>
+        
+          
+          
+          <a href="#workflow" data-edit-file="content.json" data-edit-path="nav.2.label.nl">Workflow</a>
+        
+          
+          
+          <a href="#contentmodel" data-edit-file="content.json" data-edit-path="nav.3.label.nl">Contentmodel</a>
+        
+          
+          
+          <a href="#seo" data-edit-file="content.json" data-edit-path="nav.4.label.nl">SEO</a>
+        
+          
+          
+            
+          
+          <a href="/manual/" data-edit-file="content.json" data-edit-path="nav.5.label.nl">Manual</a>
+        
+      </nav>
+
+      <div class="language-switcher" aria-label="Taalkeuze">
+        
+          <a class="is-active" href="/">NL</a>
+        
+          <a class="" href="/en/">EN</a>
+        
+          <a class="" href="/de/">DE</a>
+        
+      </div>
+    </header>
+
+    <main id="start">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-edit-file="content.json" data-edit-path="pages.home.hero.eyebrow.nl">11ty + lokale JSON</p>
+          <h1 data-edit-file="content.json" data-edit-path="pages.home.hero.title.nl">Bewerk content direct op de pagina. En sla het daarna op!</h1>
+          <p class="lead" data-edit-file="content.json" data-edit-path="pages.home.hero.lead.nl">Deze proefsite laat zien hoe een Local Website Editor straks bovenop een gewone 11ty-site kan werken, zonder aparte database of extern CMS.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#blokken" data-edit-file="content.json" data-edit-path="pages.home.hero.primaryCta.nl">Bekijk bewerkbare blokken</a>
+            <a class="button button-secondary" href="#contentmodel" data-edit-file="content.json" data-edit-path="pages.home.hero.secondaryCta.nl">Bekijk JSON-opzet</a>
+          </div>
+        </div>
+
+        <aside class="editor-panel" aria-label="Editor status" data-lwe-system>
+          <span class="panel-label">Local Website Editor</span>
+          <strong>data-edit-path</strong>
+          <p>Hover over teksten om te zien welke onderdelen straks aanklikbaar worden in de editor. Deze uitleg is System-tekst en daarom bewust niet bewerkbaar.</p>
+        </aside>
+      </section>
+
+      <section class="intro">
+        <div>
+          <p class="section-kicker" data-lwe-system>Concept</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.intro.title.nl">Een website als contentcanvas</h2>
+        </div>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.intro.body.nl">De bezoeker ziet een normale website. De beheerder opent de Local Website Editor via een eigen URL, klikt teksten aan, past ze aan en schrijft de wijzigingen terug naar dezelfde JSON-bestanden waarmee 11ty de site bouwt.</p>
+      </section>
+
+      <section class="section" id="blokken">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Editor</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.blocksTitle.nl">Bewerkbare bouwstenen</h2>
+        </div>
+
+        <div class="block-grid">
+          
+            <article class="content-card">
+              <span>1</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.0.title.nl">Tekst per element</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.0.body.nl">Elke kop, alinea en knoptekst heeft een eigen pad in JSON. Daardoor hoeft de editor geen HTML te begrijpen.</p>
+            </article>
+          
+            <article class="content-card">
+              <span>2</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.1.title.nl">Meertalig per veld</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.1.body.nl">NL, EN en DE staan onder hetzelfde contentelement. De pagina kan per taal getoond en aangepast worden.</p>
+            </article>
+          
+            <article class="content-card">
+              <span>3</span>
+              <h3 data-edit-file="content.json" data-edit-path="pages.home.blocks.2.title.nl">11ty blijft leidend</h3>
+              <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.blocks.2.body.nl">Templates, partials en build-output blijven gewoon 11ty. De editor wordt een laag erbovenop, alleen voor lokale contentaanpassingen.</p>
+            </article>
+          
+        </div>
+      </section>
+
+      <section class="section workflow" id="workflow">
+        <div class="section-heading">
+          <p class="section-kicker" data-lwe-system>Lokaal</p>
+          <h2 data-edit-file="content.json" data-edit-path="pages.home.workflow.title.nl">Voorgestelde workflow</h2>
+        </div>
+
+        <div class="timeline">
+          
+            <article>
+              <span>1</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.0.title.nl">Open de lokale site</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.0.body.nl">De beheerder opent de 11ty preview en schakelt edit-modus in.</p>
+              </div>
+            </article>
+          
+            <article>
+              <span>2</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.1.title.nl">Klik op tekst</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.1.body.nl">De editor leest uit `data-edit-path` welk JSON-veld bij het aangeklikte element hoort.</p>
+              </div>
+            </article>
+          
+            <article>
+              <span>3</span>
+              <div>
+                <h3 data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.2.title.nl">Sla lokaal op</h3>
+                <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.workflow.steps.2.body.nl">Een kleine Node API schrijft de wijziging terug naar JSON. Daarna bouwt 11ty de site opnieuw.</p>
+              </div>
+            </article>
+          
+        </div>
+      </section>
+
+      <section class="content-model" id="contentmodel">
+        <p class="section-kicker" data-lwe-system>JSON</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.contentModel.title.nl">Contentmodel</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.contentModel.body.nl">Alle beheerbare content op deze pagina komt uit `src/_data/content.json`. De attributen op de HTML-elementen wijzen terug naar exact dezelfde plek in dat bestand.</p>
+        <code data-lwe-system>src/_data/content.json -> pages.home.hero.title.nl</code>
+      </section>
+
+      <section class="content-model" id="seo">
+        <p class="section-kicker" data-lwe-system>SEO</p>
+        <h2 data-edit-file="content.json" data-edit-path="pages.home.seo.title.nl">SEO hoort bij de basis</h2>
+        <p class="text-block" data-edit-file="content.json" data-edit-path="pages.home.seo.body.nl">Ook niet-zichtbare velden zoals SEO-title, meta description, canonical, Open Graph en hreflang horen in het contentmodel. Ze zijn niet altijd aanklikbaar in de editor, maar ze worden wel vanuit JSON gerenderd.</p>
+        <code data-lwe-system>title + description + canonical + Open Graph + hreflang</code>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Local Website Editor</strong>
+        <p data-edit-file="content.json" data-edit-path="footer.tagline.nl">Prototype voor een Local Website Editor met 11ty.</p>
+      </div>
+      <nav aria-label="Footer menu">
+        
+          
+          
+          <a href="#start">Start</a>
+        
+          
+          
+          <a href="#blokken">Blokken</a>
+        
+          
+          
+          <a href="#workflow">Workflow</a>
+        
+          
+          
+          <a href="#contentmodel">Contentmodel</a>
+        
+          
+          
+          <a href="#seo">SEO</a>
+        
+          
+          
+            
+          
+          <a href="/manual/">Manual</a>
+        
+      </nav>
+      <p data-edit-file="content.json" data-edit-path="footer.status.nl">JSON is de bron. HTML is de weergave.</p>
+      <p class="footer-disclaimer" data-edit-file="content.json" data-edit-path="footer.disclaimer.nl">Open source hulpmiddel. Gebruik op eigen risico; controleer zelf wat je bouwt en publiceert.</p>
+    </footer>
+    <script src="/assets/system-calendar.js" defer></script>
+  </body>
+</html>

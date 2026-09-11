@@ -26,6 +26,7 @@ const forbiddenPublishNames = new Set([
   "scripts",
   "server.js",
   "lcb-server.js",
+  "lcb-server.cjs",
 ]);
 
 function exists(rel) {
@@ -72,6 +73,7 @@ const localOnlyPaths = [
   "scripts",
   "server.js",
   "lcb-server.js",
+  "lcb-server.cjs",
   "LCB-AI-INSTRUCTIES.md",
   "AI_START_HERE.md",
   "MANUAL.md",

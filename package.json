@@ -1,7 +1,7 @@
 {
-  "name": "lwe-core-02",
+  "name": "lwe-core-03",
   "version": "1.0.0",
-  "description": "Prototype voor een Local Website Editor op 11ty.",
+  "description": "Terminal-first Local Website Editor op 11ty.",
   "main": ".eleventy.js",
   "scripts": {
     "lcb": "node server.js",
@@ -21,11 +21,7 @@
     "lwe:publish-check": "node scripts/lwe-publish-check.js",
     "lwe:update": "node scripts/lwe-update.js",
     "lwe:update-check": "node scripts/lwe-update-check.js",
-    "lwe:update-install": "node scripts/lwe-update-install.js",
-    "lwe:control-desktop:install": "npm --prefix desktop/lwe-control install",
-    "lwe:control-desktop:dev": "npm --prefix desktop/lwe-control run tauri:dev",
-    "lwe:control-desktop:build": "npm --prefix desktop/lwe-control run tauri:build",
-    "lwe:control-desktop:release-macos": "node scripts/lwe-control-desktop-release-macos.js"
+    "lwe:update-install": "node scripts/lwe-update-install.js"
   },
   "keywords": [],
   "author": "",

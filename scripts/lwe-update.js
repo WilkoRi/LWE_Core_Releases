@@ -323,7 +323,6 @@ function buildFilePlan(runtime) {
     ["scripts/lwe-update.js", runtime.update],
     ["scripts/lwe-update-check.js", runtime.updateCheck],
     ["scripts/lwe-update-install.js", runtime.updateInstall],
-    ["scripts/lwe-control-desktop-release-macos.js", "scripts/lwe-control-desktop-release-macos.js"],
     ["lwe-image.config.json", "lwe-image.config.json"],
     ["lwe-update.config.json", "lwe-update.config.json"],
     ["lwe-release-manifest.json", "lwe-release-manifest.json"],
@@ -336,17 +335,12 @@ function buildFilePlan(runtime) {
     ["MANUAL.md", "MANUAL.md"],
     ["MANUAL.en.md", "MANUAL.en.md"],
     ["MANUAL.de.md", "MANUAL.de.md"],
+    ["start-lwe-windows.cmd", "start-lwe-windows.cmd"],
+    ["preview-lwe-windows.cmd", "preview-lwe-windows.cmd"],
+    ["start-lwe-mac.command", "start-lwe-mac.command"],
+    ["preview-lwe-mac.command", "preview-lwe-mac.command"],
     ...listFiles("manual_images").map((file) => [file, file]),
     ...listFiles("lcb-context").map((file) => [file, file]),
-    ...listFilesRecursive("desktop/lwe-control", {
-      ignored: [
-        "desktop/lwe-control/dist",
-        "desktop/lwe-control/node_modules",
-        "desktop/lwe-control/src-tauri/gen",
-        "desktop/lwe-control/src-tauri/target",
-        "desktop/lwe-control/src-tauri/icons/icon.iconset",
-      ],
-    }).map((file) => [file, file]),
   ];
 
   if (readEleventyInputMode() === "src" || fs.existsSync(path.join(targetDir, "src", "assets"))) {
@@ -393,10 +387,6 @@ function scriptUpdates(runtime) {
     "lwe:update": `node ${runtime.update}`,
     "lwe:update-check": `node ${runtime.updateCheck}`,
     "lwe:update-install": `node ${runtime.updateInstall}`,
-    "lwe:control-desktop:install": "npm --prefix desktop/lwe-control install",
-    "lwe:control-desktop:dev": "npm --prefix desktop/lwe-control run tauri:dev",
-    "lwe:control-desktop:build": "npm --prefix desktop/lwe-control run tauri:build",
-    "lwe:control-desktop:release-macos": "node scripts/lwe-control-desktop-release-macos.js",
     "lwe:guard": `node ${runtime.next} --guard=build`,
     "lwe:audit": `node ${runtime.next}`,
   };

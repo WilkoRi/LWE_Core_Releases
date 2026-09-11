@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LWE Manual</title>
+    <meta name="description" content="Handleiding voor de Local Website Editor.">
+    <link rel="canonical" href="http://127.0.0.1:8082/manual/">
+    
+      <link rel="alternate" hreflang="nl" href="http://127.0.0.1:8082/manual/">
+    
+      <link rel="alternate" hreflang="en" href="http://127.0.0.1:8082/manual/en/">
+    
+      <link rel="alternate" hreflang="de" href="http://127.0.0.1:8082/manual/de/">
+    
+    <link rel="alternate" hreflang="x-default" href="http://127.0.0.1:8082/manual/">
+    <link rel="stylesheet" href="/assets/system.css">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header manual-header">
+      <a class="brand" href="/" aria-label="Local Website Editor">
+        <span class="brand-mark">LWE</span>
+        <span>Local Website Editor</span>
+      </a>
+      <nav class="main-nav" aria-label="Manual navigatie">
+        <a href="/">Demo</a>
+        <a href="/manual/">Manual</a>
+      </nav>
+      <div class="language-switcher" aria-label="Manual taalkeuze">
+        
+          <a class="is-active" href="/manual/">NL</a>
+        
+          <a class="" href="/manual/en/">EN</a>
+        
+          <a class="" href="/manual/de/">DE</a>
+        
+      </div>
+    </header>
+
+    <main class="manual-page">
+      <article class="manual-content">
+        <h1>LWE Handleiding</h1>
+<p>LWE is geen programma zoals Word en er is geen aparte app nodig.</p>
+<p>Je start de website-editor vanuit de projectmap met een paar commando's. Daarna gebruik je de editor gewoon in je browser.</p>
+<h2>1. Node.js installeren</h2>
+<p>Installeer eerst Node.js LTS via:</p>
+<p><a href="https://nodejs.org/">https://nodejs.org/</a></p>
+<p>Kies de normale installer voor Windows of Mac.</p>
+<p>Na installatie: sluit CMD/Terminal en open die opnieuw.</p>
+<p>Controleer daarna:</p>
+<pre><code class="language-bash">node -v
+npm -v
+</code></pre>
+<p>Als je versienummers ziet, is Node.js goed geinstalleerd.</p>
+<h2>2. Projectmap openen</h2>
+<p>De projectmap is de map waar <code>package.json</code> in staat.</p>
+<h3>Windows</h3>
+<p><img src="/manual_images/win_install.jpg" alt="Windows CMD met LWE startcommando"></p>
+<ol>
+<li>Open de projectmap in Verkenner.</li>
+<li>Controleer dat je <code>package.json</code> ziet.</li>
+<li>Klik bovenin de adresbalk van Verkenner.</li>
+<li>Typ:</li>
+</ol>
+<pre><code class="language-cmd">cmd
+</code></pre>
+<ol start="5">
+<li>Druk op Enter.</li>
+</ol>
+<p>Er opent nu een zwart CMD-venster in de juiste map.</p>
+<p>Controleer eventueel:</p>
+<pre><code class="language-cmd">dir package.json
+</code></pre>
+<h3>Mac</h3>
+<p><img src="/manual_images/mac_install.jpg" alt="Mac Terminal met LWE startcommando"></p>
+<p>Open Terminal in de projectmap, of sleep de projectmap naar Terminal na <code>cd </code>.</p>
+<p>Controleer:</p>
+<pre><code class="language-bash">ls package.json
+</code></pre>
+<p>Als <code>package.json</code> niet gevonden wordt, zit je in de verkeerde map.</p>
+<h2>3. Eerste keer starten</h2>
+<p>Doe dit eenmalig in de projectmap:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+<p>Daarna starten:</p>
+<pre><code class="language-bash">npm run lcb
+</code></pre>
+<p>Laat dit venster openstaan zolang je met de website werkt.</p>
+<h2>4. Editor openen</h2>
+<p>Open je browser, bijvoorbeeld Edge, Chrome of Safari.</p>
+<p>Typ of plak bovenin de adresbalk:</p>
+<pre><code class="language-txt">http://127.0.0.1:8082/__lcb/
+</code></pre>
+<p>Dat is de lokale LWE editor.</p>
+<p>De gewone website staat hier:</p>
+<pre><code class="language-txt">http://127.0.0.1:8082/
+</code></pre>
+<h2>5. Stoppen</h2>
+<p>Klik in het CMD/Terminal venster en druk:</p>
+<pre><code class="language-txt">Ctrl + C
+</code></pre>
+<p>Op Windows kan gevraagd worden:</p>
+<pre><code class="language-txt">Terminate batch job (Y/N)?
+</code></pre>
+<p>Typ dan:</p>
+<pre><code class="language-txt">Y
+</code></pre>
+<h2>6. Als LWE blokkeert</h2>
+<p>Soms zegt LWE dat er eerst controle nodig is. Draai dan:</p>
+<pre><code class="language-bash">npm run lwe:next
+</code></pre>
+<p>Lees de melding.</p>
+<p>Als alles klopt en je akkoord bent:</p>
+<pre><code class="language-bash">npm run lwe:approve
+npm run lcb
+</code></pre>
+<h2>7. Alleen kijken</h2>
+<p>Wil je alleen kijken naar de bestaande website zonder opnieuw bouwen of opslaan?</p>
+<pre><code class="language-bash">npm run lcb:preview-only
+</code></pre>
+<h2>8. Publiceren</h2>
+<p>Voor publicatie:</p>
+<pre><code class="language-bash">npm run build
+npm run lwe:publish-check
+</code></pre>
+<p>Upload daarna alleen de inhoud van:</p>
+<pre><code class="language-txt">_site/
+</code></pre>
+<p>Upload nooit de hele projectmap.</p>
+<h2>9. Belangrijk</h2>
+<p>Gebruik altijd de projectmap waar <code>package.json</code> in staat.</p>
+<p>Voor publiceren gebruik je alleen:</p>
+<pre><code class="language-txt">_site/
+</code></pre>
+<p>De map <code>node_modules/</code> hoef je niet te openen of aan te passen.</p>
+
+      </article>
+    </main>
+  </body>
+</html>

@@ -11,7 +11,7 @@
   "seoChecked": false,
   "assetsChecked": false,
   "lweGuardSnapshot": {
-    "createdAt": "2026-09-10T18:22:36.465Z",
+    "createdAt": "2026-09-11T07:59:26.113Z",
     "phase": "build",
     "files": {
       ".eleventy.js": {
@@ -31,16 +31,12 @@
         "hash": "6a5df5159e07d805cda922f9f94ea2f9cab768bd"
       },
       "package.json": {
-        "size": 1600,
-        "hash": "a2cd2596e6130acf48120098cdbdeea45a9ec9f6"
+        "size": 1257,
+        "hash": "25ca6000f8270226501a67a49b4dd4ddc681bc8c"
       },
       "scripts/lwe-approve-build.js": {
         "size": 2648,
         "hash": "65ea4224da277c58888256c837928294f8bb17de"
-      },
-      "scripts/lwe-control-desktop-release-macos.js": {
-        "size": 1627,
-        "hash": "e5292db3874f8f4122b784056bf3ea5acbf20013"
       },
       "scripts/lwe-images.js": {
         "size": 14338,
@@ -51,12 +47,12 @@
         "hash": "c4208601d40abfdc3b1bbaaceaefbee29b430437"
       },
       "scripts/lwe-next.js": {
-        "size": 48030,
-        "hash": "241ea9924beccbeffd047f215b011c7364e33157"
+        "size": 48070,
+        "hash": "fc8ca93cbdd4ec07b7243816f93fd83911f265c7"
       },
       "scripts/lwe-publish-check.js": {
-        "size": 5533,
-        "hash": "7278a37be1c92d8263359eb361e8928da06bf321"
+        "size": 5573,
+        "hash": "caada096aab4b3091fd3af9074323fab67be5437"
       },
       "scripts/lwe-reset.js": {
         "size": 1582,
@@ -75,8 +71,8 @@
         "hash": "9647c89d8bdb6310c4e6b4a9ac54306cdcb690e7"
       },
       "scripts/lwe-update.js": {
-        "size": 24311,
-        "hash": "7576438bf7723814a3fa51a342b72902e259be5d"
+        "size": 23756,
+        "hash": "06c3ded455aba9be18fc11f1110887990cdb8adb"
       },
       "server.js": {
         "size": 29057,
@@ -130,8 +126,8 @@
     "owner": "LWE process engine",
     "machineOwned": true,
     "updatedBy": "lwe:next",
-    "updatedAt": "2026-09-10T18:22:36.466Z",
-    "signature": "9ea03bdbbc323bb2abd0f38b75a13a1525ce6a7ae53749b306f58f14d45182ba"
+    "updatedAt": "2026-09-11T07:59:26.114Z",
+    "signature": "8ef81756d3f1b72cd598cf9a307b5452387f2f95d29ca76132b18d7014ad7f67"
   },
   "approvedAt": "2026-09-04T19:37:18.572Z"
 }

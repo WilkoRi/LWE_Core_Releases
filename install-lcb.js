@@ -255,6 +255,10 @@ function installRuntime(targetDir, force, mode) {
   copySafe("MANUAL.md", path.join(targetDir, "MANUAL.md"), force);
   copySafe("MANUAL.en.md", path.join(targetDir, "MANUAL.en.md"), force);
   copySafe("MANUAL.de.md", path.join(targetDir, "MANUAL.de.md"), force);
+  copySafe("start-lwe-windows.cmd", path.join(targetDir, "start-lwe-windows.cmd"), force);
+  copySafe("preview-lwe-windows.cmd", path.join(targetDir, "preview-lwe-windows.cmd"), force);
+  copySafe("start-lwe-mac.command", path.join(targetDir, "start-lwe-mac.command"), force);
+  copySafe("preview-lwe-mac.command", path.join(targetDir, "preview-lwe-mac.command"), force);
   for (const file of listSourceFiles("manual_images")) {
     copySafe(file, path.join(targetDir, file), force);
   }
