@@ -61,7 +61,7 @@
         "ignore_intake_colors_logo_or_social_media",
         "break_nav_data_template_contract",
         "break_language_route_relation",
-        "use_unchecked_or_unapproved_images"
+        "use_unapproved_sensitive_images"
       ],
       "requiredBeforeNext": [
         "build_succeeds",

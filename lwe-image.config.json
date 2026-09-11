@@ -28,7 +28,10 @@
       "format": "webp",
       "quality": 84,
       "includeNamePattern": "persoon|person|people|team|portrait|portret|profiel|profile|headshot|voorzitter|secretaris|penningmeester|bestuur|vertrouwens|mario|bouke|martijn",
-      "warnIfAspectRatioOutside": [0.75, 1.33]
+      "warnIfAspectRatioOutside": [
+        0.75,
+        1.33
+      ]
     },
     "logo": {
       "description": "Logo; nooit croppen, verhouding behouden.",
@@ -39,5 +42,6 @@
       "quality": 90,
       "includeNamePattern": "logo"
     }
-  }
+  },
+  "outputNames": {}
 }

@@ -28,6 +28,7 @@ Voorbeelden van SEO Content:
 - Open Graph description
 - social preview image
 - betekenisvolle alt-teksten
+- herkenbare publieke afbeeldingsnamen
 - index/noindex-keuze waar die inhoudelijk nodig is
 
 Voorbeelden van SEO System:
@@ -307,6 +308,18 @@ Controleer:
 
 Voor afbeeldingen gelden de uitgebreide regels uit `10-afbeeldingen.md`. SEO controleert in ieder geval dat inhoudelijke afbeeldingen betekenisvolle alt-tekst hebben en decoratieve afbeeldingen `alt=""` mogen gebruiken.
 
+Voor publieke websiteafbeeldingen kijkt LWE naar drie samenhangende dingen:
+
+- bestandsnaam: herkenbaar en beschrijvend, bijvoorbeeld `rc-racing-jeugdles-den-haag.webp`
+- alt-tekst: beschrijft de inhoud of functie van de afbeelding
+- context: koppen en tekst rond de afbeelding maken duidelijk waarom de afbeelding op die pagina staat
+
+Bronbestanden in `project-input/afbeeldingen/` hoeven niet handmatig hernoemd te worden. Bij verwerking mag LWE een SEO-vriendelijke naam voorstellen voor het publieke bestand in `src/assets/images/processed/`, inclusief bijpassende alt-tekst en te wijzigen verwijzingen. Dit gebeurt eerst als voorstel of dry-run.
+
+Goedgekeurde publieke bestandsnamen kunnen in `lwe-image.config.json` onder `outputNames` worden vastgelegd. Zo blijft de image-pipeline reproduceerbaar en hoeft LWE niet te gokken op basis van vage bronnamen.
+
+Zwakke bestandsnamen en ontbrekende alt-teksten zijn review-waarschuwingen. Ze blokkeren de build niet automatisch. Alleen echte risico's, zoals herkenbare personen of kinderen zonder akkoord, mogen een harde guard-stop veroorzaken.
+
 ## Structured data
 
 Gebruik waar relevant gestructureerde data volgens Schema.org.
@@ -403,6 +416,8 @@ Controleer per pagina voordat je klaar bent:
 - Zijn `hreflang` tags correct bij meertalige sites?
 - Is `x-default`, indien gebruikt, bewust en correct ingericht?
 - Hebben inhoudelijke afbeeldingen passende alt-tekst?
+- Hebben publieke websiteafbeeldingen herkenbare, beschrijvende bestandsnamen?
+- Kloppen bestandsnaam, alt-tekst en omliggende context inhoudelijk met elkaar?
 - Zijn decoratieve afbeeldingen correct herkenbaar als decoratief?
 - Zijn SEO Content-velden in JSON opgenomen?
 - Zijn technische SEO-waarden waar mogelijk afgeleid in plaats van dubbel opgeslagen?

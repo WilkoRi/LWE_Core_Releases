@@ -593,6 +593,28 @@ const likelyScreenshotImageFiles = nonLogoImageFiles.filter((file) =>
 );
 const usedLikelyPersonImages = likelyPersonImageFiles.filter(isImplementedInputImage);
 const usedLikelyScreenshotImages = likelyScreenshotImageFiles.filter(isImplementedInputImage);
+function hasWeakImageFilename(file) {
+  const base = path.basename(String(file || ""), path.extname(String(file || ""))).toLowerCase();
+  return (
+    /(^|[-_])(screenshot|screen|scherm|capture|image|img|dsc|pxl|whatsapp|untitled|naamloos)([-_]|$)/i.test(base) ||
+    /\b\d{3,5}x\d{3,5}\b/.test(base) ||
+    /^[0-9a-f]{8,}(?:-[0-9a-f]{4,}){2,}$/i.test(base) ||
+    /^\d+$/.test(base)
+  );
+}
+const usedProcessedImageOutputs = processedImageManifestItems
+  .filter((item) => item && typeof item.output === "string")
+  .filter((item) => {
+    const outputPublicUrl = publicUrlForProcessedOutput(item.output);
+    return sourceText.includes(item.output) || sourceText.includes(outputPublicUrl) || sourceText.includes(path.basename(item.output));
+  })
+  .map((item) => item.output);
+const sourceImageReferences = [...sourceText.matchAll(/["'=(]([^"'()]+\.(?:png|jpe?g|gif|webp|avif|svg))(?:[?#][^"'()]*)?["')]/gi)]
+  .map((match) => match[1])
+  .filter((value) => value && !/^https?:\/\//i.test(value) && !/^data:/i.test(value));
+const weakPublicImageNames = [...new Set([...implementedNonLogoInputImages, ...usedProcessedImageOutputs, ...sourceImageReferences])]
+  .filter((file) => !/logo/i.test(path.basename(file)))
+  .filter(hasWeakImageFilename);
 const imageSelectionNotes = getPathValue(intake, "assets.imageSelectionNotes");
 const peoplePhotoApproval = hasAffirmativeAnswer(getPathValue(intake, "assets.peoplePhotoApproval"));
 const screenshotApproval = hasAffirmativeAnswer(getPathValue(intake, "assets.screenshotApproval"));
@@ -602,6 +624,7 @@ const placeholderImageSignals = sourceText.match(
 const imgTags = sourceText.match(/<img\b[^>]*>/gi) || [];
 const imageTagsWithoutAlt = imgTags.filter((tag) => !/\salt\s*=/.test(tag));
 const assetSelectionWarnings = [];
+const assetSelectionBlockingWarnings = [];
 
 if (intakeComplete && nonLogoImageFiles.length > 0 && implementedNonLogoInputImages.length === 0 && !isAnswered(imageSelectionNotes)) {
   assetSelectionWarnings.push(
@@ -610,7 +633,7 @@ if (intakeComplete && nonLogoImageFiles.length > 0 && implementedNonLogoInputIma
 }
 
 if (usedLikelyPersonImages.length && !peoplePhotoApproval) {
-  assetSelectionWarnings.push(
+  assetSelectionBlockingWarnings.push(
     `mogelijke personenfoto gebruikt zonder expliciet akkoord: ${usedLikelyPersonImages.join(", ")}`
   );
 }
@@ -627,6 +650,12 @@ if (nonLogoImageFiles.length > 0 && placeholderImageSignals.length) {
 
 if (imageTagsWithoutAlt.length) {
   assetSelectionWarnings.push(`${imageTagsWithoutAlt.length} img-tag(s) zonder betekenisvolle alt-tekst`);
+}
+
+if (weakPublicImageNames.length) {
+  assetSelectionWarnings.push(
+    `zwakke publieke afbeeldingsnaam/namen gevonden; maak bij verwerking SEO-vriendelijke namen: ${weakPublicImageNames.slice(0, 8).join(", ")}${weakPublicImageNames.length > 8 ? ", ..." : ""}`
+  );
 }
 
 const requestedSocialNames = flattenStrings(intake?.socialMedia?.accounts || [])
@@ -718,8 +747,8 @@ if (navContractWarnings.length) {
 if (languageRouteWarnings.length) {
   effectiveBlockedActions.push("break_language_route_relation");
 }
-if (assetSelectionWarnings.length) {
-  effectiveBlockedActions.push("use_unchecked_or_unapproved_images");
+if (assetSelectionBlockingWarnings.length) {
+  effectiveBlockedActions.push("use_unapproved_sensitive_images");
 }
 if (securityPatternWarnings.length) {
   effectiveBlockedActions.push("use_unreviewed_security_risk_pattern");
@@ -793,6 +822,7 @@ const inferred = {
   likelyPersonImages: likelyPersonImageFiles.length ? likelyPersonImageFiles.join(", ") : "none",
   likelyScreenshotImages: likelyScreenshotImageFiles.length ? likelyScreenshotImageFiles.join(", ") : "none",
   assetSelectionWarnings,
+  assetSelectionBlockingWarnings,
   intakeImplementationWarnings: missingImplementationChecks.map((item) => item.label),
   surpriseIntakeFields: surpriseIntakeFields.length ? surpriseIntakeFields.map((item) => item.label).join(", ") : "none",
   stateSignature: stateSignatureStatus.status,
@@ -1068,7 +1098,7 @@ if (guardTarget) {
   if (state.userApprovedBuild !== true) failures.push("userApprovedBuild is niet true");
   if (navContractWarnings.length) failures.push("navigation data/template contract is inconsistent");
   if (languageRouteWarnings.length) failures.push("language route relation is incomplete");
-  if (assetSelectionWarnings.length) failures.push("image asset selection is unchecked or unapproved");
+  if (assetSelectionBlockingWarnings.length) failures.push("sensitive image use is unapproved");
   if (securityPatternWarnings.length) failures.push("security pattern warnings require review");
   if (contentSystemWarnings.length) failures.push("public content contains placeholder, migration or internal text");
   if (stateOwnershipWarnings.length) failures.push("state.json ownership/signature is invalid");
@@ -1091,9 +1121,14 @@ if (guardTarget) {
       console.error("Language route relation warnings:");
       for (const warning of languageRouteWarnings) console.error(`- ${warning}`);
     }
+    if (assetSelectionBlockingWarnings.length) {
+      console.error("");
+      console.error("Sensitive image approval warnings:");
+      for (const warning of assetSelectionBlockingWarnings) console.error(`- ${warning}`);
+    }
     if (assetSelectionWarnings.length) {
       console.error("");
-      console.error("Asset selection warnings:");
+      console.error("Asset review warnings (niet blokkerend):");
       for (const warning of assetSelectionWarnings) console.error(`- ${warning}`);
     }
     if (securityPatternWarnings.length) {

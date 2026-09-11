@@ -25,6 +25,95 @@ Als een bestaand 11ty-project geen `src/assets/` heeft, gebruikt LWE:
 assets/images/processed/
 ```
 
+## SEO-Vriendelijke Afbeeldingsnamen
+
+Bestandsnaam, alt-tekst en pagina-context horen bij elkaar. LWE gebruikt dit als vaste kwaliteitsstap bij beeldverwerking.
+
+Maak onderscheid tussen:
+
+- bronbestand in `project-input/afbeeldingen/`
+- verwerkt websitebestand in `src/assets/images/processed/`
+- alt-tekst en omliggende content in JSON/template
+
+Het bronbestand hoeft niet hernoemd te worden. Klantbestanden zoals `IMG_4827.jpg`, `Screenshot_1.png` of `WhatsApp Image.jpeg` mogen als bron blijven bestaan. De publieke, verwerkte websiteafbeelding krijgt bij voorkeur wel een herkenbare naam.
+
+Voorbeelden:
+
+```txt
+Screenshot_1.png -> rc-auto-jeugdles-hfcc-den-haag.webp
+IMG_4827.jpg -> hfcc-circuit-loosduinen-rijderspodium.webp
+1200x800.png -> educar-rc-lesauto-chassis.webp
+```
+
+Een goede publieke afbeeldingsnaam is kort, leesbaar en beschrijvend:
+
+Presetnamen zoals `general`, `hero`, `person` of `logo` horen niet in de publieke bestandsnaam. Technische suffixen zoals `1536x1152`, `scaled` of `copy` worden bij voorkeur uit de publieke outputnaam gehaald. LWE bewaart de gebruikte preset in `manifest.json`.
+
+- gebruik gewone woorden met koppeltekens
+- gebruik waar zinvol project, onderwerp of locatie
+- gebruik geen willekeurige camera- of exportnamen
+- gebruik geen lange zinnen
+- gebruik geen claims die niet uit beeld of pagina-context blijken
+
+Zwakke namen die LWE moet signaleren zijn onder meer:
+
+- `screenshot*`, `screen*`, `capture*`
+- `image*`, `img_*`, `dsc_*`, `pxl_*`
+- `whatsapp-image*`
+- alleen cijfers of UUID-achtige namen
+- namen die alleen afmetingen bevatten, zoals `1920x1080`
+
+De AI mag op basis van afbeelding, pagina, koppen, omliggende tekst en projectcontext een voorstel doen voor:
+
+- nieuwe processed bestandsnaam
+- alt-tekst per taal
+- eventueel caption of korte context
+- te wijzigen JSON/template-verwijzingen
+
+De AI mag niet doen alsof beeldanalyse zeker is wanneer het beeld of de context twijfelachtig is. Gebruik dan een neutrale beschrijving of markeer `controle nodig`.
+
+Voorbeelden:
+
+```txt
+Goed: Persoon met RC-auto op het circuit van HFCC Racing
+Te stellig zonder bewijs: Kind tijdens jeugdles
+```
+
+Hernoem bestaande gebruikte bestanden niet rechtstreeks zonder plan. LWE moet eerst een dry-run tonen en daarna gecontroleerd alle verwijzingen aanpassen.
+
+Goede namen ontstaan niet betrouwbaar uit de oude bestandsnaam alleen. Als de bronnaam vaag is, moet de AI eerst een voorstel maken op basis van beeldanalyse en pagina-context. Leg goedgekeurde namen vast in `lwe-image.config.json`:
+
+```json
+{
+  "outputNames": {
+    "project-input/afbeeldingen/Screenshot_1.png": "rc-auto-jeugdles-hfcc-den-haag",
+    "IMG_4827.jpg": "hfcc-circuit-loosduinen-rijderspodium"
+  }
+}
+```
+
+Daarna gebruikt `npm run lwe:images` deze naam voor het publieke bestand en blijft de preset in `manifest.json` staan.
+
+## Beeldcontrole En Guard-Ernst
+
+Niet elke beeldwaarschuwing mag de voortgang blokkeren. LWE maakt onderscheid tussen waarschuwingen en harde stops.
+
+Waarschuwing, geen blokkade:
+
+- zwakke bestandsnaam
+- ontbrekende of zwakke alt-tekst
+- mogelijke screenshot of bronbeeld dat nog beoordeeld moet worden
+- afbeelding die mogelijk beter geoptimaliseerd kan worden
+
+Harde stop alleen bij echte risico's, bijvoorbeeld:
+
+- herkenbare personenfoto gebruikt zonder akkoord
+- kinderen of gevoelige personen herkenbaar gebruikt zonder akkoord
+- duidelijke rechten/privacy-risico's
+- bronbeeld wordt overschreven of destructief aangepast
+
+De guard moet de gebruiker helpen de-escaleren. Een melding "mogelijk niet optimaal" is geen reden om de hele workflow vast te zetten.
+
 ## Commando
 
 Eerst altijd droog testen:
@@ -233,6 +322,7 @@ Voorbeeld:
   <button
     type="button"
     class="lcb-image-edit-proxy"
+    data-lcb-only
     data-edit-src-file="content.json"
     data-edit-src-path="pages.home.hero.image">
     Bewerk hero-afbeelding

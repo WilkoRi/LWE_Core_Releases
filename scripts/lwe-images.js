@@ -46,6 +46,7 @@ const defaultConfig = {
   sourceDir: "project-input/afbeeldingen",
   outputDir: "",
   defaultPreset: "general",
+  outputNames: {},
   maxInputBytesWarning: 5 * 1024 * 1024,
   presets: {
     general: {
@@ -104,6 +105,10 @@ function mergeConfig(base, override) {
   return {
     ...base,
     ...override,
+    outputNames: {
+      ...(base.outputNames || {}),
+      ...(override.outputNames || {})
+    },
     presets: {
       ...base.presets,
       ...(override.presets || {})
@@ -267,10 +272,60 @@ function safeBaseName(filePath) {
   return path
     .basename(filePath, path.extname(filePath))
     .normalize("NFKD")
+    .replace(/[\s_]+/g, "-")
     .replace(/[^\w.-]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
     .toLowerCase() || "image";
+}
+
+function publicImageBaseName(filePath) {
+  let name = safeBaseName(filePath);
+  let previous = "";
+
+  while (name && name !== previous) {
+    previous = name;
+    name = name
+      .replace(/(?:-|_)\d{3,5}x\d{3,5}$/i, "")
+      .replace(/(?:-|_)(scaled|resized|compressed|optimized|copy|kopie)$/i, "")
+      .replace(/(?:-|_)(general|hero|person|logo)$/i, "")
+      .replace(/(?:^|[-_])(screenshot|screen|scherm|capture|image|img|dsc|pxl|whatsapp-image|whatsapp)(?:[-_]|$)/i, "-")
+      .replace(/(?:-|_)\d{8,}$/i, "")
+      .replace(/(?:-|_)[0-9a-f]{10,}$/i, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  return name || "image";
+}
+
+function configuredPublicImageBaseName(rel, filePath, config) {
+  const outputNames = config.outputNames && typeof config.outputNames === "object" ? config.outputNames : {};
+  const normalizedRel = rel.split(path.sep).join("/");
+  const candidates = [normalizedRel, path.basename(filePath), safeBaseName(filePath)];
+  const configuredName = candidates.map((key) => outputNames[key]).find((value) => typeof value === "string" && value.trim());
+  return configuredName ? publicImageBaseName(configuredName) : publicImageBaseName(filePath);
+}
+
+function isWeakPublicImageBaseName(baseName) {
+  return (
+    baseName === "image" ||
+    /(^|-)(screenshot|screen|scherm|capture|image|img|dsc|pxl|whatsapp-image|whatsapp)(-|$)/i.test(baseName) ||
+    /\b\d{3,5}x\d{3,5}\b/.test(baseName) ||
+    /(^|-)\d{8,}($|-)/.test(baseName) ||
+    /^[0-9a-f]{10,}$/i.test(baseName)
+  );
+}
+
+function uniqueTargetName(baseName, targetExt, usedNames) {
+  let targetName = `${baseName}${targetExt}`;
+  let index = 2;
+  while (usedNames.has(targetName)) {
+    targetName = `${baseName}-${index}${targetExt}`;
+    index += 1;
+  }
+  usedNames.add(targetName);
+  return targetName;
 }
 
 function compileMatch(pattern) {
@@ -369,6 +424,7 @@ async function main() {
 
   const files = listFiles(sourceDir);
   const plans = [];
+  const usedTargetNames = new Set();
 
   for (const file of files) {
     const ext = path.extname(file).toLowerCase();
@@ -395,11 +451,15 @@ async function main() {
 
     const info = await imageInfo(file);
     const targetExt = outputExtension(preset.format || "webp", ext);
-    const targetName = `${safeBaseName(file)}-${presetName}${targetExt}`;
+    const targetBaseName = configuredPublicImageBaseName(rel, file, config);
+    const targetName = uniqueTargetName(targetBaseName, targetExt, usedTargetNames);
     const target = path.join(outputDir, targetName);
     const targetRel = path.relative(root, target);
     const exists = fs.existsSync(target);
     const warnings = buildWarnings(rel, info, preset, config);
+    if (isWeakPublicImageBaseName(targetBaseName)) {
+      warnings.push("zwakke outputnaam; zet een betere SEO-naam in lwe-image.config.json -> outputNames");
+    }
 
     plans.push({
       rel,
